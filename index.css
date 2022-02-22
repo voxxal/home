@@ -1,12 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
-
+/* #fff9e6  previous color */
 html,
 body {
-  background-color: #fff9e6;
+  background-color: var(--rosewater);
   font-family: "Poppins", sans-serif;
   width: 100%;
   margin: auto;
   max-width: 32em;
+  color: var(--black0);
 }
 
 h1 {
@@ -25,8 +26,8 @@ p {
 }
 
 .icon {
-  background-color: #000000;
-  fill: #fff9e6;
+  background-color: var(--black0);
+  fill: var(--rosewater);
   border-radius: 100%;
   padding: 0.4em;
   margin: 0.2em;
@@ -37,14 +38,14 @@ p {
 }
 
 .icon:hover {
-  background-color: #fff9e6;
-  fill: #000000;
+  background-color: var(--rosewater);
+  fill: var(--black0);
 }
 
 .tooltip {
   width: 120px;
-  background-color: #000000;
-  color: #fff9e6;
+  background-color: var(--black0);
+  color: var(--rosewater);
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
