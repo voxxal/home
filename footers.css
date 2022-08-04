@@ -11,14 +11,27 @@
   }
 }
 
+@keyframes gradient-movement {
+  0%,
+  100% {
+    background-position-x: 0;
+  }
+
+  50% {
+    background-position-x: 100%;
+  }
+}
+
 /* maybe animate the gradient when you regain your sanity */
 .stardust-text {
   position: relative;
   display: inline-block;
   background: linear-gradient(90deg, #00ccff 0%, #d20fc5 100%);
+  background-size: 300%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: gradient-movement 10s infinite linear;
 }
 
 @supports not (-moz-appearance: none) {
@@ -37,7 +50,7 @@
     -webkit-background-clip: none;
     background-clip: none;
     -webkit-text-fill-color: none;
-    animation: fallback-gradient 10s infinite;
+    animation: fallback-gradient 10s infinite linear;
     color: #00ccff;
   }
 }
@@ -49,6 +62,32 @@
 }
 
 /** Love */
+
+@keyframes love-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.love-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: relative;
+  top: 0.25rem;
+  animation: love-pulse 1s infinite ease-in-out;
+}
+
 .love-text {
   color: #dd2e44;
 }
+
+/** Berries */
+
+/** Code */
+
+/** Hands */
