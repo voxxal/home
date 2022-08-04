@@ -11,21 +11,26 @@
   }
 }
 
+/* maybe animate the gradient when you regain your sanity */
 .stardust-text {
   position: relative;
   display: inline-block;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 212, 255, 1) 0%,
-    rgba(210, 15, 197, 1) 100%
-  );
+  background: linear-gradient(90deg, #00ccff 0%, #d20fc5 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@supports not (-moz-appearance: none) {
+  .stardust-text {
+    -webkit-background-clip: none;
+    background-clip: none;
+    -webkit-text-fill-color: none;
+    color: #00ccff;
+  }
 }
 
 .stardust-letter {
-  position: relative;
   display: inline-block;
   animation: stardust 1s infinite ease-in-out;
   animation-delay: calc(0.1s * var(--i));

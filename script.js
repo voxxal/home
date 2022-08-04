@@ -9,7 +9,7 @@ const footers = [
         (c, i) =>
           html`<span style="--i:${i}" class="stardust-letter">${c}</span>`
       )}
-    <span>
+    </span>
   </p>`,
   html`
   <p class="footer-text">Made with <span class="love-text">❤️ Love</span></p>
