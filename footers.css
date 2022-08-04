@@ -1,0 +1,37 @@
+/** Stardust */
+
+@keyframes stardust {
+  0%,
+  100% {
+    transform: translateY(-5px);
+  }
+
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.stardust-text {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 212, 255, 1) 0%,
+    rgba(210, 15, 197, 1) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stardust-letter {
+  position: relative;
+  display: inline-block;
+  animation: stardust 1s infinite ease-in-out;
+  animation-delay: calc(0.1s * var(--i));
+}
+
+/** Love */
+.love-text {
+  color: #dd2e44;
+}

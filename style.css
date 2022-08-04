@@ -1,0 +1,77 @@
+@font-face {
+  font-family: "Renogare";
+  src: url("fonts/Renogare-Regular.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --white: #fff;
+  --dark: #333;
+  --black: #000;
+
+  --rust-brand: #f46623;
+  --typescript-brand: #3178c6;
+  
+  --acolytefight-brand: #00ccff;
+  --furfsky-brand: #fbcc6c;
+}
+
+.rust-color {
+  color: var(--rust-brand);
+}
+
+.typescript-color {
+  color: var(--typescript-brand);
+}
+
+.acolytefight-color {
+  color: var(--acolytefight-brand);
+}
+
+.furfsky-color {
+  color: var(--furfsky-brand);
+}
+
+body {
+  font-family: "Renogare";
+  background-color: var(--black);
+  color: var(--white);
+  margin: 0;
+}
+
+header {
+  height: 80vh;
+}
+
+h1 {
+  font-size: 6rem;
+  margin: 3rem 1rem;
+}
+
+h2 {
+  font-size: 4rem;
+  margin: 3rem 1rem;
+}
+
+.heading {
+  margin: 6rem 1rem;
+}
+
+.heading::before {
+  content: "#";
+  margin-right: 1rem;
+  color: var(--dark);
+}
+
+
+footer {
+  width: 100%;
+  padding: 2rem 0;
+}
+
+footer p {
+  font-size: 1.5rem;
+  position: relative;
+  text-align: center;
+}
