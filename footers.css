@@ -22,10 +22,22 @@
 }
 
 @supports not (-moz-appearance: none) {
+  @keyframes fallback-gradient {
+    0%,
+    100% {
+      color: #00ccff;
+    }
+
+    50% {
+      color: #d20fc5;
+    }
+  }
+
   .stardust-text {
     -webkit-background-clip: none;
     background-clip: none;
     -webkit-text-fill-color: none;
+    animation: fallback-gradient 10s infinite;
     color: #00ccff;
   }
 }
