@@ -54,10 +54,6 @@ a:focus {
   background-size: 100% 0.5rem;
 }
 
-header {
-  height: 100vh;
-}
-
 h1 {
   font-size: 6rem;
   margin: 3rem;
