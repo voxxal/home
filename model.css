@@ -32,8 +32,8 @@
   display: flex;
   background-color: var(--dark);
   margin: 15% auto;
-  width: 70%;
-  padding: 1rem;
+  width: 60%;
+  padding: 2rem;
   border-radius: 0.75rem;
 }
 
