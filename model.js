@@ -47,7 +47,8 @@ const openTechModel = (data) => () => {
 
 const rustModelData = {
   title: "Rust",
-  description: "Rust has to be my favorite language. ",
+  description:
+    "Rust has to be my favorite language. I use it for everything non web related. I wouldn't say I'm the best Rust programmer because there are a lot of concepts within the standard library that I don't fully understand.",
   skill: 65,
   color: "var(--rust-brand)",
 };

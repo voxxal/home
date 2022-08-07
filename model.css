@@ -58,6 +58,10 @@
   width: 60%;
 }
 
+.model-left p {
+  padding-right: 2rem;
+}
+
 .model-right {
   flex-grow: 1;
   width: 40%;
@@ -75,7 +79,7 @@
   height: 100%;
   display: inline-block;
   margin-right: 0.5rem;
-  background-color: #aaa;
+  background-color: #444;
 }
 
 .skill-bar:last-child {
