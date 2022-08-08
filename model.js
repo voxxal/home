@@ -18,7 +18,10 @@ const skillBar = (skill, color) =>
 let modelOpen = false;
 let currentModelData = {};
 
-const techModel = (data) => html` <div class="${classMap({ model: true, open: modelOpen })}">
+const techModel = (data) => html` <div
+  class="${classMap({ model: true, open: modelOpen })}"
+  @click=${closeModel}
+>
   <div class="model-content">
     <div class="model-left">
       <h3 class="model-title">${data.title}</h3>
@@ -35,6 +38,7 @@ const techModel = (data) => html` <div class="${classMap({ model: true, open: mo
 </div>`;
 
 const closeModel = (e) => {
+  if (e.target !== e.currentTarget) return;
   modelOpen = false;
   render(techModel(currentModelData), document.body);
 };
