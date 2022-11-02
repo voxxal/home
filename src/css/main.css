@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap");
+
+::selection {
+    color: white;
+    background: #206BC37f;
+  }
+
+:root {
+    --background: #1a1a1d;
+    --blue: #206BC3;
+    --dark-blue: #354d69;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background-color: var(--background);
+  color: white;
+  font-weight: 500;
+  font-size: 1.25rem;
+  font-family: 'Domine';
+  overflow-x: hidden;
+}
+
+.navbar {
+  height: 6rem;
+  padding: 0 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(100% 100% at 50% -10%, var(--dark-blue) 0%, rgba(0, 0, 0, 0) 70%),
+    linear-gradient(0deg, #1a1a1d00 0%, var(--background) 100%);
+  backdrop-filter: blur(2px);
+  transition: 500ms;
+}
+
+.navbar .logo {
+    flex: 1;
+}
+
+.navbar .links ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.navbar .links li {
+  margin: 0 1rem;
+  display: inline-block;
+}
+
+.navbar::after {
+  content: "";
+  flex: 1;
+}
+
+.content {
+    margin: 0 3rem;
+    margin-top: 16px;
+}

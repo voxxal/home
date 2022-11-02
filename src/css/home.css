@@ -1,0 +1,12 @@
+.hero {
+  font-size: 4rem;
+}
+
+.hero h1 {
+  font-size: 6rem;
+  margin: 0;
+}
+
+.hero .role {
+    color: var(--blue);
+}

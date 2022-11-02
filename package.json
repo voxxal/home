@@ -1,0 +1,15 @@
+{
+    "name": "home",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "eleventy --serve --quiet"
+    },
+    "author": "voxal",
+    "license": "MIT",
+    "devDependencies": {
+      "@11ty/eleventy": "^1.0.1",
+      "@11ty/eleventy-navigation": "^0.3.3"
+    }
+  }
