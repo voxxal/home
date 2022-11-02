@@ -14,16 +14,7 @@ title: voxal
     <title>voxal | {{ title }}</title>
   </head>
   <body data-barba="wrapper">
-    <nav class="navbar">
-        <div class="logo"><a href="/">voxal</a></div>
-        <div class="links">
-            <ul>
-                <a href="/projects"><li>projects</li></a>
-                <li>about</li>
-                <li>contact</li>
-            </ul>
-        </div>
-    </nav>
+    {% include "navbar.njk" %}
     <main class="content" data-barba="container" data-barba-namespace="home">{{ content | safe }}</main>
   </body>
 </html>
