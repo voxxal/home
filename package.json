@@ -1,15 +1,27 @@
 {
-    "name": "home",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-      "start": "eleventy --serve --quiet"
-    },
-    "author": "voxal",
-    "license": "MIT",
-    "devDependencies": {
-      "@11ty/eleventy": "^1.0.1",
-      "@11ty/eleventy-navigation": "^0.3.3"
-    }
-  }
+	"name": "home",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/kit": "^1.5.0",
+		"svelte": "^3.54.0",
+		"svelte-check": "^3.0.1",
+		"tslib": "^2.4.1",
+		"typescript": "^5.0.0",
+		"vite": "^4.3.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"autoprefixer": "^10.4.14",
+		"postcss": "^8.4.23",
+		"tailwindcss": "^3.3.2"
+	}
+}

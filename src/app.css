@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .bubbled {
+    @apply bg-clip-text text-stroke-color-transparent bg-gradient-to-t to-50%;
+  }
+
+  .bubbled-sm {
+    @apply bubbled text-stroke-sm;
+  }
+
+  .bubbled-md {
+    @apply bubbled text-stroke-md;
+  }
+
+  .bubbled-lg {
+    @apply bubbled text-stroke-lg;
+  }
+}
+
+@layer utilities {  
+  .text-stroke-sm {
+    -webkit-text-stroke-width: 0.15rem;
+  }
+  
+  .text-stroke-md {
+    -webkit-text-stroke-width: 0.35rem;
+  }
+  
+  .text-stroke-lg {
+    -webkit-text-stroke-width: 0.5rem;
+  }
+}
