@@ -1,7 +1,7 @@
 const plugin = require("tailwindcss/plugin");
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{html,js,svelte,ts}"],
+  content: ["./src/**/*.{html,js,svelte,ts,md}"],
   theme: {
     extend: {
       colors: {
@@ -9,14 +9,15 @@ export default {
         "dark-navy": "#354d69",
       },
       fontFamily: {
-        sans: ["Domine"],
+        serif: ["Domine"],
       },
       backgroundImage: {
-        "gradient-radial-navbar": "radial-gradient(100% 100% at 50% -10%, var(--tw-gradient-stops))",
+        "navbar": "radial-gradient(100% 100% at 50% -10%, var(--tw-gradient-stops))",
       },
     },
   },
   plugins: [
+    require('@tailwindcss/typography'),
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {
