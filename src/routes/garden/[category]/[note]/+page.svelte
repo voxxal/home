@@ -1,7 +1,8 @@
 <script lang="ts">
   export let data;
+  import Toc from "svelte-toc";
   import "$lib/app.css";
-  import "$lib/prism.css"
+  import "$lib/prism.css";
 
   import Body from "$lib/components/Body.svelte";
   import Navbar from "$lib/components/Navbar.svelte";
@@ -11,12 +12,24 @@
   <Navbar glowColor="from-emerald-800" />
   <main class="px-12 mt-4">
     <header>
-      <h1 class="text-7xl font-medium bubbled-lg from-emerald-600 to-60% pb-2 overflow-hidden">{data.title}</h1>
+      <h1 class="text-7xl font-medium bubbled-lg from-emerald-600 to-60% pb-2 overflow-hidden">
+        {data.title}
+      </h1>
       <p><span class="font-bold">Last Tended:</span> {data.lastUpdated}</p>
     </header>
     <hr class="my-4 border-zinc-600/75" />
-    <article class="mb-16 prose lg:prose-xl prose-invert">
-      <svelte:component this={data.content} />
-    </article>
+    <div class="flex m-auto">
+      <article
+        class="mb-16 prose lg:prose-xl prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-zinc-800 prose-code:rounded prose-code:p-0.5"
+      >
+        <svelte:component this={data.content} />
+      </article>
+      <Toc title="">
+        <li let:heading slot="toc-item">
+          {heading.innerText}
+        </li>
+      </Toc>
+
+    </div>
   </main>
 </Body>

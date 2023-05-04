@@ -8,7 +8,7 @@
 </script>
 
 <nav
-  class="flex items-center justify-center h-24 px-12 bg-navbar transition duration-200 {glowColor} to-70% text-lg after:flex-1 font-medium sticky w-full"
+  class="flex items-center justify-center h-24 px-12 bg-navbar transition duration-200 {glowColor} to-70% text-lg after:flex-1 font-medium w-full"
 >
   <div class="flex-1 logo"><a href="/">voxal</a></div>
   <div>
