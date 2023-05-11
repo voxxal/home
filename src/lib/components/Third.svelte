@@ -12,6 +12,6 @@
   const third = thirdChoices[Math.floor(Math.random() * thirdChoices.length)];
 </script>
 
-<h1 class="text-8xl font-medium bubbled-lg {third.color} to-70% pb-4 overflow-hidden" id="third">
-  <SplitText class="inline-block whitespace-pre thirdIn" text={third.text} />
+<h1 class="overflow-hidden font-medium text-8xl" id="third">
+  <SplitText class="inline-block whitespace-pre thirdIn {third.color} to-70% bubbled-lg pb-4 opacity-0" text={third.text} />
 </h1>
