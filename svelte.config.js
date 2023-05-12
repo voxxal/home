@@ -14,8 +14,7 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 		files: {
-			lib: 'src/lib',
-			assets: 'assets'
+			lib: 'src/lib'
 		}
 	},
 };
