@@ -7,17 +7,18 @@ export default {
       colors: {
         navy: "#206bc3",
         "dark-navy": "#354d69",
+        blot: "#1A1A1D",
       },
       fontFamily: {
         serif: ["Domine"],
       },
       backgroundImage: {
-        "navbar": "radial-gradient(100% 100% at 50% -10%, var(--tw-gradient-stops))",
+        navbar: "radial-gradient(100% 100% at 50% -10%, var(--tw-gradient-stops))",
       },
     },
   },
   plugins: [
-    require('@tailwindcss/typography'),
+    require("@tailwindcss/typography"),
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {

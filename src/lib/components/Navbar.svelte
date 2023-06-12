@@ -18,7 +18,7 @@
           <a
             href={route.url}
             class="p-2 bubbled-md {route.color} {`/${$page.url.pathname.split("/")[1]}` === route.url
-              ? `to-75%`
+              ? `to-60%`
               : `hover:to-50% to-0%`}"
           >
             {route.title}
