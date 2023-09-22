@@ -10,11 +10,13 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@types/prismjs": "^1.26.0",
-		"@types/sql.js": "^1.4.4",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
+		"@types/prismjs": "^1.26.0",
+		"@types/sql.js": "^1.4.4",
+		"lucide-svelte": "^0.279.0",
 		"svelte": "^3.54.0",
+		"svelte-canvas": "^0.9.3",
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",

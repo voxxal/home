@@ -10,7 +10,8 @@ export default {
         blot: "#1A1A1D",
       },
       fontFamily: {
-        serif: ["Domine"],
+        serif: ["Domine", "serif"],
+        sans: ["Inter", "sans-serif"],
       },
       backgroundImage: {
         navbar: "radial-gradient(100% 100% at 50% -10%, var(--tw-gradient-stops))",

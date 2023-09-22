@@ -9,7 +9,7 @@
   <Navbar glowColor={$state.navbarColor} />
   {#key data.pathname}
     <div in:fade={{ duration: 150, delay: 150 }} out:fade={{ duration: 150 }}>
-      <main class="px-12 mt-4">
+      <main>
         <slot />
       </main>
     </div>
