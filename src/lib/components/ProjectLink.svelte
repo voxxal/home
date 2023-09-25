@@ -11,7 +11,7 @@
   <div>
     <img
       src={img}
-      class="fixed top-0 left-0 object-cover w-full h-full transition-all duration-500 ease-out opacity-0 group-hover:opacity-25 group-hover:scale-105 -z-10 vignette-lg"
+      class="fixed top-0 left-0 object-cover w-full h-full transition-all duration-500 ease-out opacity-0 group-hover:opacity-10 group-hover:scale-105 -z-10 vignette-lg"
       alt="project link hover effect"
     />
   </div>

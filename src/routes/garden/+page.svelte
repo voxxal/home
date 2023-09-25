@@ -27,8 +27,8 @@
 
 <div class="px-12 pt-28">
   <header>
-    <h1 class="text-7xl font-medium bubbled-lg from-emerald-600 to-60% pb-2 overflow-hidden">
-      <SplitText class="inline-block opacity-0 titleChar" text="garden" bind:elements />
+    <h1 class="overflow-hidden font-medium text-7xl">
+      <SplitText class="inline-block opacity-0 titleChar bubbled-lg from-emerald-600 to-60% pb-2" text="garden" bind:elements />
     </h1>
     <h2 class="text-2xl font-medium" id="subtitle">tending to the crops</h2>
   </header>
