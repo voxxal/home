@@ -28,11 +28,12 @@
     This year's <a href="https://ctf.osucyber.club/">BuckeyeCTF</a> had a pretty interesting web
     challenge. We were given a kahoot clone that went infintely, and the goal was to get 21
     questions right in a row. The thing was, each question's answer was randomized, so if we were
-    guessing, the chances of getting a streak of 21 questions is
+    guessing, the chances of getting a streak of 21 questions is one in
     <Katex>4^{"{21}"} = 4.3980465111e12</Katex> so guessing over and over again isn't an option. We need
     to find a way to cheat the answer out.
     <img src="/images/blog/infinity-buckeye/wrong-answer.png" alt="Selected wrong answer" />
-    Lets take a look at the code.
+    Lets take a look at the code. We'll only look at the server code because the client code is irrelevant.
+    The server code is a single 210 line file, but the majority of that is taken up by questions.
   </p>
   <div class="grid grid-cols-2 gap-4 px-12 bg-zinc-900">
     <div class="relative">
@@ -73,7 +74,7 @@
       <p class="absolute top-[calc(1.25rem*1.5*58)]">
         And if we get 21 correct in a row it sends us the flag :)
       </p>
-      <div class="absolute top-[calc(1.25rem*1.5*65)]">
+      <div class="absolute top-[calc(1.25rem*1.5*66)]">
         Now we hit the main game loop. The game loop is quite simple and compose of 4 simple steps.
         <ul class="text-lg">
           <li>First initializes all the variables then emits game state.</li>
@@ -147,7 +148,7 @@ async function main(io: Server) {
         scoreboard[socket.id] = 0;
       }
       if (scoreboard[socket.id] >= 21) {
-        socket.emit("flag", process.env.FLAG ?? "bctf{fake_flag}");
+        socket.emit("flag", process.​env.FLAG ?? "bctf{fake_flag}");
       }
     })
   })
@@ -287,10 +288,13 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) }) `}
   </div>
   <div class="grid justify-center h-16 grid-cols-1 grid-rows-1 max-w-[75rem] m-auto px-8 mt-56">
     <div
-      class="self-center h-4 col-start-1 row-start-1 border-2 bg-zinc-700 rounded-xl border-zinc-600"
+      class="self-center h-4 col-start-1 row-start-1 border-2 bg-zinc-700 rounded-xl border-zinc-600 -z-20"
     />
     <div class="relative grid items-center h-16 col-start-1 row-start-1">
-      <div class="absolute px-3 py-2 bg-yellow-700 border border-yellow-500 rounded">
+      <div
+        class="absolute px-3 py-2 bg-yellow-700 border border-yellow-500 rounded"
+        title="The server sends the new questions, firing off the checkers to press one of the buttons"
+      >
         question sent
       </div>
 
@@ -378,6 +382,19 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) }) `}
       </div>
 
       <div
+        class="absolute left-[51rem] -top-4 flex flex-col items-center"
+        title="The lbChecker leaves the game. It is now ready to rejoin at the next question"
+      >
+        <User />
+        <div class="not-prose"><p class="text-xs">leave</p></div>
+      </div>
+      <div class="absolute left-[51.85rem] border h-4 border-dashed" />
+      <div
+        class="h-3 bg-zinc-500 left-[23.7rem] w-[calc(51.85rem-23.7rem)] absolute -z-10"
+        title="Within this bar, the lbChecker is in the game"
+      />
+
+      <div
         class="absolute right-0 px-3 py-2 border rounded bg-fuchsia-700 border-fuchsia-500"
         title="and it repeats!"
       >
@@ -448,13 +465,13 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) })`}
       <div
         class="absolute px-2 py-1 text-xl font-black -top-9 -left-1 bg-navy rounded-tl-md rounded-tr-md"
       >
-        <Flag class="inline mr-1"/>FLAG!
+        <Flag class="inline mr-1" />FLAG!
       </div>
       flag{"{pl3453_d0n7_k1ck_m3_fr0m_7h3_k4h007_468d9bba}"}
     </div>
     <p>
-      Thanks for reading through. I would like to give my thanks to the BuckeyeCTF organizers, this
-      was an incredibly fun ctf to play and I look foward to playing it in future years.
+      Thanks for reading through. I would like to thank the BuckeyeCTF organizers, this was an
+      incredibly fun ctf to play and I look foward to playing it in future years.
     </p>
   </div>
 </article>
