@@ -3,6 +3,7 @@
   import { page } from "$app/stores";
   const routes = [
     { url: "/", title: "home", color: "from-navy" },
+    { url: "/blog", title: "blog", color: "from-purple-600" },
     { url: "/garden", title: "garden", color: "from-emerald-600" },
   ];
 </script>

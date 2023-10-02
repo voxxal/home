@@ -27,10 +27,12 @@
 	"dependencies": {
 		"@tailwindcss/typography": "^0.5.9",
 		"autoprefixer": "^10.4.14",
+		"date-fns": "^2.30.0",
 		"gsap": "^3.11.5",
 		"postcss": "^8.4.23",
 		"prismjs": "^1.29.0",
 		"sql.js": "^1.8.0",
+		"svelte-katex": "^0.1.2",
 		"svelte-toc": "^0.5.5",
 		"tailwindcss": "^3.3.2"
 	}

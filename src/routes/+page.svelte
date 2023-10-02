@@ -2,8 +2,9 @@
   export const ssr = false;
   import state from "$lib/state";
   import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger.js"
   import { onMount } from "svelte";
-  import { slideInConf, slideInConfTo } from "$lib/util";
+  import { slideInConf, slideInConfTo, slideInConfScroll } from "$lib/util";
   import { ChevronDown, Music } from "lucide-svelte";
   import { useLanyard } from "svelte-lanyard";
   import "$lib/app.css";
@@ -12,6 +13,7 @@
   import Third from "$lib/components/Third.svelte";
   import ProjectLink from "$lib/components/ProjectLink.svelte";
 
+  gsap.registerPlugin(ScrollTrigger);
   $state.navbarColor = "from-dark-navy";
 
   let time = Date.now();
@@ -34,8 +36,26 @@
     const interval = setInterval(() => {
 			time = Date.now();
 		}, 1000);
-    const tl = gsap.timeline();
 
+
+    const stl = gsap.timeline(
+      { 
+        paused: true,
+        scrollTrigger: {
+          trigger: "#hero",
+          start: "top top",
+          end: "+=3500",
+          scrub: 2,
+        }
+      }
+    );
+
+    stl.fromTo(".developerIn", slideInConfTo, slideInConfScroll)
+      .fromTo(".designerIn", slideInConfTo, slideInConfScroll, "<")
+      .fromTo(".thirdIn", slideInConfTo, slideInConfScroll, "<")
+      .to(".final-fade-in", { opacity: 1 })
+    const tl = gsap.timeline();
+    ScrollTrigger.disable() 
     tl.fromTo(
       "#heyIm",
       { yPercent: 100, opacity: 0 },
@@ -44,14 +64,18 @@
       .fromTo(".developerIn", slideInConf, slideInConfTo, "-=0.7")
       .fromTo(".designerIn", slideInConf, slideInConfTo, "-=0.7")
       .fromTo(".thirdIn", slideInConf, slideInConfTo, "-=0.7")
+      .call(() => ScrollTrigger.enable()) 
       .to(".final-fade-in", { opacity: 1 });
+
+  
+
     return () => {
 			clearInterval(interval);
 		};
   });
 </script>
 
-<header class="flex flex-col min-h-screen px-12 pt-28">
+<header class="flex flex-col min-h-screen px-12 pt-28" id="hero">
   <div>
     <h2 class="pb-2 text-5xl opacity-0" id="heyIm">
       hey, i'm <span class="bubbled-md from-navy to-60% px-1">aiden.</span>
@@ -113,15 +137,15 @@
     class="bg-gradient-to-t from-[#1DB954] to-zinc-900 p-4 rounded-lg max-w-[70rem]" 
     style="--tw-gradient-to-position: {(percentageThroughSong || 0) * 100}%"
   >
-    <div class="bg-zinc-800 p-8 rounded-lg">
+    <div class="p-8 rounded-lg bg-zinc-800">
       {#if $discord?.spotify}
         <div class="flex gap-8">
-          <img src={$discord.spotify.album_art_url} class="w-64 h-64 rounded-md border-2 border-zinc-600" />
-          <div class="w-full flex flex-col">
+          <img src={$discord.spotify.album_art_url} class="w-64 h-64 border rounded-md border-zinc-600" alt="album cover" />
+          <div class="flex flex-col w-full">
             <div> 
-              <h2 class="text-4xl font-medium">{$discord.spotify.song}</h2>
+              <h2 class="text-4xl font-bold">{$discord.spotify.song}</h2>
               <h3 class="text-2xl text-zinc-400">by <span class="text-zinc-300">{$discord.spotify.artist}</span></h3>
-              <h4 class="text-zinc-400 mt-2">{songTime}</h4>
+              <h4 class="mt-2 text-zinc-400">{songTime}</h4>
             </div>
             <a 
               href="https://open.spotify.com/track/{$discord.spotify.track_id}" 
@@ -131,7 +155,7 @@
               <button 
                 class="bg-[#1DB954] rounded-md w-full py-2 text-zinc-900 text-xl font-bold"
               >
-                <Music class="inline group-hover:scale-105 group-hover:-rotate-12 transition-all"/>
+                <Music class="inline group-hover:-rotate-[10deg] transition-all"/>
                 listen
               </button>
             </a>
