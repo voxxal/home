@@ -24,6 +24,21 @@
 <article
   class="max-w-full mt-16 prose lg:prose-xl prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-zinc-800 prose-code:rounded prose-code:p-1"
 >
+  <div
+    class="relative p-2 m-auto font-mono border-4 rounded-md rounded-tl-none bg-navy/50 border-navy mt-9 w-fit max-w-[65ch]"
+  >
+    <div
+      class="absolute px-2 py-1 text-xl font-black -top-9 -left-1 bg-navy rounded-tl-md rounded-tr-md"
+    >
+      <Flag class="inline mr-1" />CHALLENGE
+    </div>
+    <b>Name: </b>∞!<br />
+    <b>Category: </b>web<br />
+    <b>Author: </b>jm8<br />
+    <b>Description: </b>It's like the popular educational game, but it never ends.<br /><br />
+    https://infinity.chall.pwnoh.io<br /><br />
+    Note: the flag format for this challenge only is flag{"{}"}.
+  </div>
   <p class="max-w-[65ch] m-auto">
     This year's <a href="https://ctf.osucyber.club/">BuckeyeCTF</a> had a pretty interesting web
     challenge. We were given a kahoot clone that went infintely, and the goal was to get 21
@@ -67,7 +82,7 @@
       </p>
       <p class="absolute top-[calc(1.25rem*1.5*46)]">
         It will also listen to any incoming <code>answer</code> messages. If the user already
-        answerd or the time limit is up, it aborts. Otherwise it will
+        answered or the time limit is up, it aborts. Otherwise it will
         <b class="text-white">immediately</b> set their score to 0 if they got it wrong or increment
         their score by one if they got it right.
       </p>
@@ -192,8 +207,9 @@ server.listen(1024);`}
     </p>
     <p>
       The bug that allows us to get the answer before the timer ends is that when a player answers,
-      their score is immediately updated after the server recieves the <code>answer</code> message. Then
-      we can get the players score by getting the gameState to see if they were right or wrong.
+      their score is immediately updated in the scoreboard after the server recieves the
+      <code>answer</code> message. Then we can get the players score by getting the game state to see
+      if they were right or wrong.
     </p>
     <p>
       You might be wondering how that helps us because the game state is only sent out after the
