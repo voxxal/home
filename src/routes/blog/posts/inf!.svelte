@@ -9,7 +9,7 @@
 
 <script>
   import Prism from "$lib/components/Prism.svelte";
-  import { ArrowRight, Crown, Flag, User } from "lucide-svelte";
+  import { ArrowRight, Crown, Flag, User, AlertTriangle } from "lucide-svelte";
   import "prismjs/components/prism-typescript";
   import Katex from "svelte-katex";
 </script>
@@ -24,6 +24,17 @@
 <article
   class="max-w-full mt-16 prose lg:prose-xl prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-zinc-800 prose-code:rounded prose-code:p-1"
 >
+  <div
+    class="relative p-2 m-auto mb-8 font-mono border-4 rounded-md rounded-tl-none bg-amber-600/50 border-amber-600 mt-9 w-fit lg:hidden"
+  >
+    <div
+      class="absolute px-2 py-1 text-xl font-black -top-9 -left-1 bg-amber-600 rounded-tl-md rounded-tr-md"
+    >
+      <AlertTriangle class="inline mr-1" />WARNING
+    </div>
+    This writeup was not designed for small screens. Proceed with caution.
+  </div>
+  <div class="h-[1px]"/>
   <div
     class="relative p-2 m-auto font-mono border-4 rounded-md rounded-tl-none bg-navy/50 border-navy mt-9 w-fit max-w-[65ch]"
   >
