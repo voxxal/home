@@ -14,6 +14,7 @@
       </main>
     </div>
   {/key}
+  <div class="bg-[url(/noise.png)] h-full w-full fixed top-0 left-0 opacity-5 -z-50"/>
 </div>
 
 <style lang="postcss">

@@ -36,7 +36,9 @@
     <h2 class="text-2xl font-medium" id="subtitle">ramblings of a lunatic</h2>
   </header>
   <hr class="my-4 border-zinc-600/75" />
-  {#each data.posts as post} 
-    <BumpLink href="/blog/{post.path}" class="text-8xl bubbled-lg from-purple-600 to-0% hover:to-70%">{post.title}</BumpLink>
-  {/each}
+  <div class="flex flex-col gap-4">
+    {#each data.posts as post} 
+      <BumpLink href="/blog/{post.path}" class="text-8xl bubbled-lg from-purple-600 to-0% hover:to-70%">{post.title}</BumpLink>
+    {/each}
+  </div>
 </div>

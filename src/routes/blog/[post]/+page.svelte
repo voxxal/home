@@ -12,10 +12,10 @@
 {#if data.defaultLayout}
   <div class="px-12 pt-28">
     <header>
-      <h1 class="text-7xl font-medium bubbled-lg from-emerald-600 to-60% pb-2 overflow-hidden">
+      <h1 class="text-7xl font-medium bubbled-lg from-purple-800 to-60% pb-2 overflow-hidden">
         {data.title}
       </h1>
-      <p><span class="font-bold">Last Tended:</span> {data.lastUpdated}</p>
+      <p><span class="font-bold">Published:</span> {data.published}</p>
     </header>
     <hr class="my-4 border-zinc-600/75" />
     <div class="flex m-auto">
