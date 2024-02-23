@@ -27,6 +27,7 @@
     );
   });
 </script>
+<svelte:head><title>voxal | blog</title></svelte:head>
 
 <div class="px-12 pt-28">
   <header>

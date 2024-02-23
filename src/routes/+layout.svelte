@@ -8,7 +8,7 @@
 <div class="min-w-full min-h-screen font-serif text-white selection:bg-navy/50">
   <Navbar glowColor={$state.navbarColor} />
   {#key data.pathname}
-    <div in:fade={{ duration: 150, delay: 150 }} out:fade={{ duration: 150 }}>
+    <div in:fade={{ duration: 75, delay: 75 }} out:fade={{ duration: 75 }}>
       <main>
         <slot />
       </main>

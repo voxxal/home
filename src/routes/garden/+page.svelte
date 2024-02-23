@@ -10,7 +10,7 @@
   $state.navbarColor = "from-emerald-800";
   let elements: HTMLSpanElement[] | undefined;
   onMount(() => {
-    elements?.[0]?.classList.add("ml-1");
+    elements?.[0]?.classList.add("pl-1");
     const tl = gsap.timeline();
     tl.fromTo(".titleChar", slideInConf, slideInConfTo).from(
       "#subtitle",
