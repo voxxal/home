@@ -1,6 +1,5 @@
 <script lang="ts">
   import state from "$lib/state";
-  import "$lib/app.css";
   import SplitText from "$lib/components/SplitText.svelte";
   import { useLanyard } from "svelte-lanyard";
   import { slideInConf, slideInConfTo } from "$lib/util";

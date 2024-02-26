@@ -1,4 +1,5 @@
 <script>
+  import "$lib/app.css";
   import { fade } from "svelte/transition";
   import Navbar from "$lib/components/Navbar.svelte";
   import state from "$lib/state";
@@ -8,8 +9,8 @@
 <div class="min-w-full min-h-screen font-serif text-white selection:bg-navy/50">
   <Navbar glowColor={$state.navbarColor} />
   {#key data.pathname}
-    <div in:fade={{ duration: 75, delay: 75 }} out:fade={{ duration: 75 }}>
-      <main>
+    <div in:fade={{ duration: 75, delay: 75 }} out:fade={{ duration: 75 }} class="h-[calc(100vh-7rem)]">
+      <main class="h-full">
         <slot />
       </main>
     </div>

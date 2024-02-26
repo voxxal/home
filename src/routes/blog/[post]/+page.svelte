@@ -3,7 +3,6 @@
 
   import state from "$lib/state";
   import Toc from "svelte-toc";
-  import "$lib/app.css";
   import "$lib/prism.css";
 
   $state.navbarColor = data.navbarColor;

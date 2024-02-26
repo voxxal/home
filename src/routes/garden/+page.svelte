@@ -3,7 +3,6 @@
   import gsap from "gsap";
   import { onMount } from "svelte";
   import { slideInConf, slideInConfTo } from "$lib/util";
-  import "$lib/app.css";
 
   import SplitText from "$lib/components/SplitText.svelte";
 
