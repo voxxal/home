@@ -2,6 +2,7 @@
   import { type Puzzle, parsePuzFile, type Direction } from "$lib/puzzle";
   import state from "$lib/state";
   import { onMount } from "svelte";
+  import confetti from "canvas-confetti";
   let fileUpload: HTMLInputElement | null = null;
   let puzzle: Puzzle | null = null;
   $state.navbarColor = "from-zinc-600";
@@ -43,7 +44,7 @@
           else puzzle.move("up");
           break;
         default:
-          puzzle.setCell(puzzle.cursor, e.key);
+          if (!puzzle.setCell(puzzle.cursor, e.key)) return;
           if (puzzle.facing === "across") puzzle.move("right");
           else puzzle.move("down");
           break;
@@ -57,9 +58,54 @@
     };
   });
   $: wordInfo = puzzle?.wordInfo() ?? { parts: [], wordNum: 0 };
-  $: win = puzzle?.solution === puzzle?.grid;
+  let win: boolean;
+  $: {
+    // win = true;
+    win = win || puzzle ? puzzle?.solution === puzzle?.grid : false;
+    if (win) {
+      let count = 200;
+      let defaults = {
+        origin: { y: 0.7 },
+      };
+
+      function fire(particleRatio: number, opts: Object) {
+        confetti({
+          ...defaults,
+          ...opts,
+          particleCount: Math.floor(count * particleRatio),
+            colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'],
+            shapes: ['circle'],
+            //@ts-ignore
+            flat: true
+        });
+      }
+
+      fire(0.25, {
+        spread: 26,
+        startVelocity: 55,
+      });
+      fire(0.2, {
+        spread: 60,
+      });
+      fire(0.35, {
+        spread: 100,
+        decay: 0.91,
+        scalar: 0.8,
+      });
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 25,
+        decay: 0.92,
+        scalar: 1.2,
+      });
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 45,
+      });
+    }
+  }
   const color = (puzzle: Puzzle, i: number): string => {
-    if (puzzle.solution[i] === ".") return "bg-zinc-600";
+    if (puzzle.solution[i] === ".") return "";
     if (puzzle.cursor === i) return "bg-navy";
     if (wordInfo.parts.includes(i)) return "bg-dark-navy";
 
@@ -67,7 +113,9 @@
   };
 </script>
 
-<svelte:head><title>voxal | crossword {puzzle ? `- ${puzzle.title} by ${puzzle.author}` : ''}</title></svelte:head>
+<svelte:head>
+  <title>voxal | crossword {puzzle ? `- ${puzzle.title} by ${puzzle.author}` : ""}</title>
+</svelte:head>
 <div class="h-full px-12 pt-28">
   {#if win}<h4>you win! (i promise i'll make it look better later)</h4>{/if}
   {#if puzzle === null}
@@ -84,14 +132,14 @@
   </div>
   {#if puzzle !== null}
     <div class="flex w-full h-full gap-8">
-      <div class="h-full w-fit">
+      <div class="h-full basis-1/2">
         <div class="flex items-start justify-between mb-1">
           <h2 class="text-2xl">{puzzle.title}</h2>
           <h3 class="text-lg">{puzzle.author}</h3>
         </div>
         <div
-          class="grid gap-0.5 aspect-square w-fit bg-zinc-600 p-0.5 h-full"
-          style="grid-template-columns:repeat({puzzle.width}, minmax(0, 1fr));grid-template-rows:repeat({puzzle.height}, minmax(0, 1fr));"
+          class="grid gap-0.5 bg-zinc-600 p-0.5 w-full"
+          style="grid-template-columns:repeat({puzzle.width}, minmax(0, 1fr));grid-template-rows:repeat({puzzle.height}, minmax(0, 1fr));aspect-ratio: {puzzle.width} / {puzzle.height}"
         >
           {#each puzzle.grid as cell, i}
             {@const isBlackCell = puzzle.solution[i] === "."}
@@ -105,8 +153,8 @@
                 puzzle.cursor = i;
               }}
             >
-              <div class="absolute text-sm left-0.5 top-0.5">{puzzle.gridNums[i] ?? ""}</div>
-              <div class="flex items-center justify-center w-full h-full text-4xl font-bold">
+              <div class="absolute text-[1cqw] left-0.5 top-0.5">{puzzle.gridNums[i] ?? ""}</div>
+              <div class="flex items-center justify-center w-full h-full text-[2.5cqw] font-bold">
                 {puzzle.solution[i] !== "." ? puzzle.grid[i] : ""}
               </div>
             </div>

@@ -126,11 +126,12 @@ export class Puzzle {
     return false;
   }
 
-  setCell(i: number, char: string) {
-    if (char.length !== 1 || this.grid[i] === ".") return;
+  setCell(i: number, char: string): boolean {
+    if (char.length !== 1 || this.grid[i] === ".") return false;
     const gridChars = [...this.grid];
     gridChars[i] = char.toUpperCase();
     this.grid = gridChars.join("");
+    return true;
   }
 
   getSol(x: number, y: number): string | undefined {
