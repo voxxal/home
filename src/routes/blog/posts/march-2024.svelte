@@ -3,7 +3,7 @@
     title: "march (of improvement)",
     published: "2024-03-01",
   };
-  const DAY = 5;
+  const DAY = 6;
   const habits = {
     sleep: [
       0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
