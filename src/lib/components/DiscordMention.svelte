@@ -1,0 +1,1 @@
+<span class="bg-[#5865F2]/30 text-[#C9CDFB] rounded py-0.5 px-1">@<slot /></span>

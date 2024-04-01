@@ -12,6 +12,7 @@ export default {
       fontFamily: {
         serif: ["Domine", "serif"],
         sans: ["Inter", "sans-serif"],
+        mono: ["Space Mono", "monospace"],
       },
       backgroundImage: {
         navbar: "radial-gradient(100% 100% at 50% -10%, var(--tw-gradient-stops))",

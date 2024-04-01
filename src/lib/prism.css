@@ -7,7 +7,7 @@
 
 code[class*='language-'],
 pre[class*='language-'] {
-	color: #9efeff;
+	color: #eee;
 	direction: ltr;
 	text-align: left;
 	white-space: pre;
@@ -142,11 +142,11 @@ pre[class*='language-'] {
 }
 
 .token.inserted {
-	background: #00ff00;
+	color: #00ff00;
 }
 
 .token.deleted {
-	background: #ff000d;
+	color: #ff000d;
 }
 
 code.language-css .token.property,

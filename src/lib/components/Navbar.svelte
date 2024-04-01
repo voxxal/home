@@ -22,6 +22,7 @@
             route.url
               ? `to-60%`
               : `hover:to-50% to-0%`}"
+            target="_self"
           >
             {route.title}
           </a>
