@@ -1,0 +1,3 @@
+[submodule "static/25-stupid-captchas"]
+	path = static/25-stupid-captchas
+	url = https://github.com/voxxal/25-stupid-captchas
