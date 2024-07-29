@@ -2,6 +2,7 @@
   export const metadata = {
     title: "march (of improvement)",
     published: "2024-03-01",
+    hidden:true,
   };
   const DAY = 10;
   const habits = {

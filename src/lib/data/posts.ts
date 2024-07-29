@@ -31,6 +31,7 @@ export const posts = Object.entries(
         : undefined,
     };
   })
+  .filter((post) => !post?.hidden)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 function addTimezoneOffset(date) {
