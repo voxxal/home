@@ -68,7 +68,6 @@ export class Re {
 
   concat(inAtom: boolean): TreeNode {
     const lhs = this.meta();
-    // TODO ")" is bad case
     if (!inAtom && this.has(")")) throw new Error("Unmatched )");
     if (!this.atEnd() && !(inAtom && this.has(")")) && !this.has("|")) {
       const rhs = this.concat(inAtom);
@@ -129,12 +128,62 @@ export class Re {
     }
   }
 
+  mergeNodes(lhs: Required<FaState>, rhs: Required<FaState>) {
+    lhs.eTrans = [...lhs.eTrans, ...rhs.eTrans];
+    const keys = new Set([...Object.keys(lhs), ...Object.keys(rhs)]);
+    const newTrans = [];
+    for (const key in keys) {
+      if (lhs.trans[key] && rhs.trans[key]) {
+      }
+    }
+
+    lhs.trans = { ...lhs.trans, ...rhs.trans };
+    lhs.ends = [...lhs.ends, ...rhs.ends];
+  }
+  mergeTransitions(
+    lhs: { [k: string]: FaState },
+    rhs: { [k: string]: FaState }
+  ): { [k: string]: FaState } {
+    const keys = new Set([...Object.keys(lhs), ...Object.keys(rhs)]);
+    for (const key in keys) {
+      if (lhs[key] && rhs[key]) {
+      }
+    }
+  }
+
   fixBackref(state: FaState, toFix: FaState) {
-    console.log("toFix epsilon", toFix);
-    toFix.eTrans[toFix.eTrans.findIndex((s) => s.id === state.id)] = state;
+    let found = false;
+    let visited: FaState[] = [];
+    const rec = (s: FaState) => {
+      for (const i in s.eTrans) {
+        const trans = s.eTrans[i];
+        if (!visited.find((x) => x === trans) && !found) {
+          if (trans.id === toFix.id) {
+            s.eTrans[i] = state;
+            found = true;
+          }
+          visited.push(trans);
+          rec(trans);
+        }
+      }
+
+      for (const i in Object.keys(s.trans)) {
+        const trans = s.eTrans[i];
+        if (!visited.find((x) => x === trans) && !found) {
+          if (trans.id === toFix.id) {
+            s.eTrans[i] = state;
+          }
+          visited.push(trans);
+          rec(trans);
+        }
+      }
+    };
+    rec(toFix);
+    // toFix.eTrans[toFix.eTrans.findIndex((s) => s.id === state.id)] = state;
   }
 
   // TODO (a|a) still crashes
+  // TODO abc* produces a(bc)*?
   constructNfa(node: TreeNode): Required<FaState> {
     if (typeof node === "string") {
       if (node === "") {
@@ -147,12 +196,19 @@ export class Re {
     switch (node.type) {
       case "union": {
         const lhs = this.constructNfa(node.lhs);
+        if (node.lhs === node.rhs) return lhs;
+        // TODO this is a really bandaid fix to a|a
+        // the fix is probably function to merge transisitions that fixes up any nodes
         this.stateId--;
         const rhs = this.constructNfa(node.rhs);
         lhs.eTrans = [...lhs.eTrans, ...rhs.eTrans];
         lhs.trans = { ...lhs.trans, ...rhs.trans };
         lhs.ends = [...lhs.ends, ...rhs.ends];
-        if (typeof node.rhs === "object" && node.rhs.type === "meta" && (node.rhs.rhs as string) !== "?") {
+        if (
+          typeof node.rhs === "object" &&
+          node.rhs.type === "meta" &&
+          (node.rhs.rhs as string) !== "?"
+        ) {
           this.fixBackref(lhs, rhs);
         }
         return lhs;
@@ -166,10 +222,18 @@ export class Re {
         newEnd.trans = rhs.trans;
         newEnd.eTrans = rhs.eTrans;
         lhs.ends = rhs.ends;
+        if (
+          typeof node.rhs === "object" &&
+          node.rhs.type === "meta" &&
+          (node.rhs.rhs as string) !== "?"
+        ) {
+          this.fixBackref(lhs, rhs);
+        }
+
         return lhs;
       }
       case "meta": {
-        // TODO so the issue is due to the nature of loops, the reference to the node that should be destroyed is maintained
+        // TODO ab* produces (ab)*
         const op = node.rhs as string;
         if (op === "?") {
           const lhs = this.constructNfa(node.lhs);
@@ -178,6 +242,7 @@ export class Re {
           lhs.eTrans.push(end);
           return lhs;
         } else if (op === "*" || op === "+") {
+          // TODO + is broken?
           const lhs = this.constructNfa(node.lhs);
           const newEnd = this.coalesseEnds(lhs);
           const accepting = createState(this.stateId++);
