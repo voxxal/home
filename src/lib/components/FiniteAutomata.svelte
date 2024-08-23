@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { isAccepting, type FaState } from "$lib/regex";
-  import { fade } from "svelte/transition";
+  import { isAccepting, type FaState, type TraversalTick } from "$lib/regex";
+  import { blur } from "svelte/transition";
 
   interface Coord {
     rank: number;
@@ -13,7 +13,14 @@
     radius = 20,
     width = 800,
     height = 400,
-  }: { nfa: FaState; radius?: number; width?: number; height?: number } = $props();
+    traversalTick,
+  } = $props<{
+    nfa: FaState;
+    radius?: number;
+    width?: number;
+    height?: number;
+    traversalTick: TraversalTick;
+  }>();
   interface TransitionNode {
     c: string;
     from: FaStateNode;
@@ -42,6 +49,7 @@
       }
       const a = state.id;
       const b = sortedTrans[i][1].id;
+      // TODO include information about whether it is curved or not
       transitions.push({
         c: sortedTrans[i][0],
         from: states[state.id],
@@ -88,7 +96,7 @@
     return counts;
   });
 
-  const statePos = (state: FaStateNode) => ({
+  const statePos = (state: { rank: number; depth: number }) => ({
     x: state.rank * 80 + radius + 2,
     y: ((state.depth + 1) / (1 + rankCounts[state.rank])) * height,
   });
@@ -114,6 +122,21 @@
   // should be good estimate
   const targetHeightToControlHeight = (trans: TransitionNode, targetHeight: number) =>
     2 * targetHeight - 0.5 * statePos(trans.from).y - 0.5 * statePos(trans.to).y;
+  const checkForOverlapStraight = (trans: TransitionNode) => {
+    if (statePos(trans.from).y !== statePos(trans.to).y) return false;
+    const stateHeight = statePos(trans.from).y;
+    for (
+      let i = Math.min(trans.from.rank, trans.to.rank) + 1;
+      i < Math.max(trans.from.rank, trans.to.rank);
+      i++
+    ) {
+      for (let d = 0; d < rankCounts[i]; d++) {
+        if (Math.abs(statePos({ rank: i, depth: d }).y - stateHeight) < 25) {
+          return true;
+        }
+      }
+    }
+  };
 
   $effect(() => {
     console.log("states", states);
@@ -138,88 +161,110 @@
     </marker>
   </defs>
 
-  {#each states as state}
-    {@const { x, y } = statePos(state)}
-    {#key state.id}
-      <g in:fade={{ duration: 150 }} out:fade={{ duration: 150 }}>
-        <circle cx={x} cy={y} r={radius} fill="transparent" stroke="white" stroke-width={2} />
-        {#if isAccepting(state)}
-          <circle cx={x} cy={y} r={radius - 4} fill="transparent" stroke="white" stroke-width={2} />
-        {/if}
-        <text {x} {y} fill="white" dominant-baseline="central" text-anchor="middle">
-          {state.id}
-        </text>
-      </g>
-    {/key}
+  {#each traversalTick as trav}
+    {@const pos = statePos(states[trav.state.id])}
+    <circle
+      cx={pos.x}
+      cy={pos.y}
+      r={radius}
+      class={trav.accepting ? "fill-green-600/20" : "fill-blue-600/20"}
+    />
   {/each}
 
+  {#each states as state}
+    {@const { x, y } = statePos(state)}
+    <!-- {#key statePos(state).x} -->
+    <g transition:blur={{ duration: 200 }}>
+      <circle cx={x} cy={y} r={radius} fill="transparent" stroke="white" stroke-width={2} />
+      {#if isAccepting(state)}
+        <circle
+          cx={x}
+          cy={y}
+          r={radius - 4}
+          fill="transparent"
+          stroke="white"
+          stroke-width={2}
+          transition:blur={{ duration: 200 }}
+        />
+      {/if}
+      <text {x} {y} fill="white" dominant-baseline="central" text-anchor="middle">
+        {state.id}
+      </text>
+    </g>
+    <!-- {/key} -->
+  {/each}
   {#each transitions as trans, i}
     {@const fromPos = statePos(trans.from)}
     {@const toPos = statePos(trans.to)}
-    <!-- TODO check if depth & rank count are equal and if there are any ranks with odd rank count in between. -->
-    {#if !transitions.slice(0, i).find((t) => t.hash === trans.hash)}
-      {@const angle = Math.atan2(toPos.y - fromPos.y, toPos.x - fromPos.x)}
-      {@const fromEdge = {
-        x: fromPos.x + Math.cos(angle) * (radius + 3),
-        y: fromPos.y + Math.sin(angle) * (radius + 3),
-      }}
-      {@const toEdge = {
-        x: toPos.x + Math.cos(Math.PI + angle) * (radius + 6),
-        y: toPos.y + Math.sin(Math.PI + angle) * (radius + 6),
-      }}
-      {@const midpoint = { x: (toEdge.x + fromEdge.x) / 2, y: (toEdge.y + fromEdge.y) / 2 }}
-      <line
-        x1={fromEdge.x}
-        y1={fromEdge.y}
-        x2={toEdge.x}
-        y2={toEdge.y}
-        stroke="white"
-        marker-end="url(#arrow)"
-      />
-      <text
-        x={midpoint.x}
-        y={midpoint.y - 20}
-        font-size={16}
-        fill="white"
-        dominant-baseline="central"
-        text-anchor="middle"
-      >
-        {trans.c}
-      </text>
-    {:else}
-      {@const midRank = (trans.to.rank + trans.from.rank) / 2}
-      {@const controlPos = { x: midRank * 80 + radius + 2, y: controlHeight(trans) }}
-      {@const fromAngle = Math.atan2(controlPos.y - fromPos.y, controlPos.x - fromPos.x)}
 
-      {@const toAngle = Math.atan2(controlPos.y - toPos.y, controlPos.x - toPos.x)}
-      <!-- {@const angle = Math.atan2(toPos.y - fromPos.y, toPos.x - fromPos.x)} -->
-      {@const fromEdge = {
-        x: fromPos.x + Math.cos(fromAngle) * (radius + 3),
-        y: fromPos.y + Math.sin(fromAngle) * (radius + 3),
-      }}
-      {@const toEdge = {
-        x: toPos.x + Math.cos(toAngle) * (radius + 6),
-        y: toPos.y + Math.sin(toAngle) * (radius + 6),
-      }}
+    <g transition:blur={{ duration: 200 }}>
+      <!-- TODO check if depth & rank count are equal and if there are any ranks with odd rank count in between. -->
+      {#if transitions
+        .slice(0, i)
+        .find((t) => t.hash === trans.hash) || checkForOverlapStraight(trans)}
+        {@const midRank = (trans.to.rank + trans.from.rank) / 2}
+        {@const controlPos = { x: midRank * 80 + radius + 2, y: controlHeight(trans) }}
+        {@const fromAngle = Math.atan2(controlPos.y - fromPos.y, controlPos.x - fromPos.x)}
 
-      <path
-        d="M {fromEdge.x} {fromEdge.y} Q {controlPos.x} {controlPos.y}, {toEdge.x} {toEdge.y}"
-        stroke="white"
-        fill="transparent"
-        marker-end="url(#arrow)"
-        data-identifier="FROM: {trans.from.id}, TO: {trans.to.id}"
-      />
-      {@const textY = getQuadraticBezierCenterY(fromEdge.y, controlPos.y, toEdge.y)}
-      <text
-        x={controlPos.x}
-        y={textY + 15}
-        font-size={16}
-        fill="white"
-        dominant-baseline="central"
-        text-anchor="middle"
-      >
-        {trans.c}
-      </text>
-    {/if}
+        {@const toAngle = Math.atan2(controlPos.y - toPos.y, controlPos.x - toPos.x)}
+        <!-- {@const angle = Math.atan2(toPos.y - fromPos.y, toPos.x - fromPos.x)} -->
+        {@const fromEdge = {
+          x: fromPos.x + Math.cos(fromAngle) * (radius + 3),
+          y: fromPos.y + Math.sin(fromAngle) * (radius + 3),
+        }}
+        {@const toEdge = {
+          x: toPos.x + Math.cos(toAngle) * (radius + 6),
+          y: toPos.y + Math.sin(toAngle) * (radius + 6),
+        }}
+
+        <path
+          d="M {fromEdge.x} {fromEdge.y} Q {controlPos.x} {controlPos.y}, {toEdge.x} {toEdge.y}"
+          stroke="white"
+          fill="transparent"
+          marker-end="url(#arrow)"
+          data-identifier="FROM: {trans.from.id}, TO: {trans.to.id}"
+        />
+        {@const textY = getQuadraticBezierCenterY(fromEdge.y, controlPos.y, toEdge.y)}
+        <text
+          x={controlPos.x}
+          y={textY + 15}
+          font-size={16}
+          fill="white"
+          dominant-baseline="central"
+          text-anchor="middle"
+        >
+          {trans.c}
+        </text>
+      {:else}
+        {@const angle = Math.atan2(toPos.y - fromPos.y, toPos.x - fromPos.x)}
+        {@const fromEdge = {
+          x: fromPos.x + Math.cos(angle) * (radius + 3),
+          y: fromPos.y + Math.sin(angle) * (radius + 3),
+        }}
+        {@const toEdge = {
+          x: toPos.x + Math.cos(Math.PI + angle) * (radius + 6),
+          y: toPos.y + Math.sin(Math.PI + angle) * (radius + 6),
+        }}
+        {@const midpoint = { x: (toEdge.x + fromEdge.x) / 2, y: (toEdge.y + fromEdge.y) / 2 }}
+        <line
+          x1={fromEdge.x}
+          y1={fromEdge.y}
+          x2={toEdge.x}
+          y2={toEdge.y}
+          stroke="white"
+          marker-end="url(#arrow)"
+        />
+        <text
+          x={midpoint.x}
+          y={midpoint.y - 20}
+          font-size={16}
+          fill="white"
+          dominant-baseline="central"
+          text-anchor="middle"
+        >
+          {trans.c}
+        </text>
+      {/if}
+    </g>
   {/each}
 </svg>

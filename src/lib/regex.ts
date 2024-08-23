@@ -14,18 +14,23 @@ export interface FaState {
   eTrans: FaState[];
 }
 
+// TODO switch back to state id
+export type TraversalTick = { state: FaState; from: FaState; accepting: boolean; i: number }[];
+
 export class Re {
   re: string;
   i: number;
   stateId: number;
   parsed: TreeNode;
   nfa: FaState;
+  prevTraversal: TraversalTick[];
   constructor(re: string) {
     this.re = re;
     this.i = 0;
     this.stateId = 0;
     this.parsed = this.expr();
     this.nfa = this.constructNfa(this.parsed);
+    this.prevTraversal = [];
   }
 
   atEnd() {
@@ -140,16 +145,6 @@ export class Re {
     lhs.trans = { ...lhs.trans, ...rhs.trans };
     lhs.ends = [...lhs.ends, ...rhs.ends];
   }
-  mergeTransitions(
-    lhs: { [k: string]: FaState },
-    rhs: { [k: string]: FaState }
-  ): { [k: string]: FaState } {
-    const keys = new Set([...Object.keys(lhs), ...Object.keys(rhs)]);
-    for (const key in keys) {
-      if (lhs[key] && rhs[key]) {
-      }
-    }
-  }
 
   fixBackref(state: FaState, toFix: FaState) {
     let found = false;
@@ -183,7 +178,6 @@ export class Re {
   }
 
   // TODO (a|a) still crashes
-  // TODO abc* produces a(bc)*?
   constructNfa(node: TreeNode): Required<FaState> {
     if (typeof node === "string") {
       if (node === "") {
@@ -204,13 +198,13 @@ export class Re {
         lhs.eTrans = [...lhs.eTrans, ...rhs.eTrans];
         lhs.trans = { ...lhs.trans, ...rhs.trans };
         lhs.ends = [...lhs.ends, ...rhs.ends];
-        if (
-          typeof node.rhs === "object" &&
-          node.rhs.type === "meta" &&
-          (node.rhs.rhs as string) !== "?"
-        ) {
-          this.fixBackref(lhs, rhs);
-        }
+        // if (
+        //   typeof node.rhs === "object" &&
+        //   node.rhs.type === "meta" &&
+        //   (node.rhs.rhs as string) !== "?"
+        // ) {
+        //   this.fixBackref(lhs, rhs);
+        // }
         return lhs;
       }
       case "concat": {
@@ -222,34 +216,43 @@ export class Re {
         newEnd.trans = rhs.trans;
         newEnd.eTrans = rhs.eTrans;
         lhs.ends = rhs.ends;
-        if (
-          typeof node.rhs === "object" &&
-          node.rhs.type === "meta" &&
-          (node.rhs.rhs as string) !== "?"
-        ) {
-          this.fixBackref(lhs, rhs);
-        }
+        // if (
+        //   typeof node.rhs === "object" &&
+        //   node.rhs.type === "meta" &&
+        //   (node.rhs.rhs as string) !== "?"
+        // ) {
+        //   this.fixBackref(lhs, rhs);
+        // }
 
         return lhs;
       }
       case "meta": {
-        // TODO ab* produces (ab)*
-        const op = node.rhs as string;
+        const op = node.rhs as "?" | "*" | "+";
         if (op === "?") {
           const lhs = this.constructNfa(node.lhs);
           const end = createState(this.stateId++);
           lhs.ends.push(end);
           lhs.eTrans.push(end);
           return lhs;
-        } else if (op === "*" || op === "+") {
-          // TODO + is broken?
+        } else if (op === "*") {
+          const loopNode = createState(this.stateId++);
           const lhs = this.constructNfa(node.lhs);
           const newEnd = this.coalesseEnds(lhs);
           const accepting = createState(this.stateId++);
-          newEnd.eTrans.push(lhs);
-          newEnd.eTrans.push(accepting);
-          if (op === "*") lhs.eTrans.push(newEnd);
+          loopNode.eTrans.push(lhs);
+          loopNode.eTrans.push(accepting);
+          loopNode.ends = [accepting];
+          newEnd.eTrans.push(loopNode);
+          return loopNode as Required<FaState>;
+        } else if (op === "+") {
+          const lhs = this.constructNfa(node.lhs);
+          const newEnd = this.coalesseEnds(lhs);
+          const loopNode = createState(this.stateId++);
+          const accepting = createState(this.stateId++);
+          loopNode.eTrans.push(lhs);
+          loopNode.eTrans.push(accepting);
           lhs.ends = [accepting];
+          newEnd.eTrans.push(loopNode);
           return lhs;
         }
         // const id = this.stateId++;
@@ -296,27 +299,65 @@ export class Re {
     }
 
     if (Object.keys(state.trans).length !== 0 || state.eTrans.length === 0) nextStates.push(state);
-
     return nextStates;
   }
 
-  getStates(state: FaState) {
-    return this.getStatesRec(state, [], []);
-  }
+  // getStates(state: FaState) {
+  //   let nextStates: FaState[] = [];
+  //   this.getStatesRec(state, nextStates, []);
+  //   const tick = this.prevTraversal[this.prevTraversal.length - 1];
+  //   for (const ns of nextStates) {
+  //     tick.push({ node: ns, from: state, accepting: isAccepting(ns) });
+  //   }
+  //   console.log(nextStates)
+  //   return nextStates;
+  // }
 
+  // TODO okay the issue is every head needs its own consumption
+  // then when a head finishes consuption, it either hits an ending node
+  // or dies off
+  // currently a* breaks
   matchNfa(str: string): boolean {
-    let currentStates = this.getStates(this.nfa);
-    for (const c of str) {
-      let nextStates: FaState[] = [];
-      for (const state of currentStates) {
+    this.prevTraversal = [[{ from: this.nfa, state: this.nfa, accepting: false, i: 0 }]];
+    let currentStates = [{ i: 0, state: this.nfa }];
+    while (currentStates.length !== 0) {
+      // if (
+      //   i === str.length &&
+      //   !currentStates.some((s) => this.getStatesRec(s, [], []).some(isAccepting))
+      // )
+      //   break;
+      let nextStates: { i: number; state: FaState }[] = [];
+      let currentTick: TraversalTick = [];
+      for (const { i, state } of currentStates) {
+        const c = str[i];
+        nextStates = nextStates.concat(state.eTrans.map((st) => ({ i, state: st })));
+        for (const st of state.eTrans) {
+          currentTick.push({ state: st, from: state, accepting: isAccepting(st), i });
+        }
+
+        if (!c) continue;
+
         const nextState = state.trans[c] ?? state.trans["any"];
         if (nextState) {
-          nextStates = nextStates.concat(this.getStates(nextState));
+          nextStates = nextStates.concat({ i: i + 1, state: nextState });
+          currentTick.push({
+            state: nextState,
+            from: state,
+            accepting: isAccepting(nextState),
+            i: i + 1,
+          });
         }
       }
+      this.prevTraversal.push(currentTick);
       currentStates = nextStates;
     }
-    return !!currentStates.find(isAccepting);
+    // TODO okay maybe we don't want it to only match things that consume all characters
+    this.prevTraversal.pop();
+    const foundEnd = this.prevTraversal[this.prevTraversal.length - 1].some(
+      (t) => t.accepting && t.i === str.length
+    );
+    if (!foundEnd) this.prevTraversal.push([]);
+    return foundEnd;
   }
 }
 
