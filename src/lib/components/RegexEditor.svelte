@@ -20,21 +20,21 @@
     return { re, err };
   });
 
-  const { matched, traversal } = $derived.by(() => {
+  const { matched, nfaHeads, ticks } = $derived.by(() => {
     const matched = re?.matchNfa(testString);
-    const traversal = re?.prevTraversal || [];
-    return { matched, traversal };
+    const nfaHeads = re?.nfaHeads ?? [];
+    return { matched, nfaHeads, ticks: re?.nfaTicks ?? -1 };
   });
-  $effect(() => {
-    tick = Math.min(tick, traversal.length);
-  })
 
+  $effect(() => {
+    tick = Math.min(tick, ticks);
+  });
 </script>
 
 <input bind:value={testString} class="text-black {matched ? 'text-green-800' : ''}" />
 
-<FiniteAutomata nfa={re?.nfa ?? createState(0)} traversalTick={traversal[tick]} />
-<input bind:value={tick} type="range" min={0} max={traversal.length - 1}/>
+<FiniteAutomata nfa={re?.nfa ?? createState(0)} {nfaHeads} {tick} str={testString} />
+<input bind:value={tick} type="range" min={0} max={ticks - 1} />
 <input bind:value={regex} class="text-black" />
 {#if err}
   {err}

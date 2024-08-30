@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { isAccepting, type FaState, type TraversalTick } from "$lib/regex";
-  import { blur } from "svelte/transition";
+  import { isAccepting, type FaState, type NfaHead } from "$lib/regex";
+  import { cantor } from "$lib/util";
+  import { blur, fade } from "svelte/transition";
 
   interface Coord {
     rank: number;
@@ -13,14 +14,18 @@
     radius = 20,
     width = 800,
     height = 400,
-    traversalTick,
-  } = $props<{
+    nfaHeads = [],
+    tick = 0,
+    str = "",
+  }: {
     nfa: FaState;
     radius?: number;
     width?: number;
     height?: number;
-    traversalTick: TraversalTick;
-  }>();
+    nfaHeads: NfaHead[];
+    tick: number;
+    str: string;
+  } = $props();
   interface TransitionNode {
     c: string;
     from: FaStateNode;
@@ -54,7 +59,7 @@
         c: sortedTrans[i][0],
         from: states[state.id],
         to: states[sortedTrans[i][1].id],
-        hash: ((a + b) * (a + b + 1)) / 2 + a, // Cantor Pairing Function
+        hash: cantor(a, b),
       });
     }
 
@@ -138,6 +143,29 @@
     }
   };
 
+  const heads = $derived.by(() => {
+    const currentTickHeads = nfaHeads.flatMap(({ start, path }) =>
+      tick >= start && tick < start + path.length ? [path[tick - start]] : [],
+    );
+
+    const map: Record<
+      number,
+      {
+        state: FaState;
+        i: number;
+      }
+    > = {};
+    for (const h of currentTickHeads) {
+      const { state, i } = h;
+      map[cantor(state.id, i)] = h;
+    }
+
+    return Object.values(map);
+  });
+  let hover: { state: FaState; i: number } | null = $state(null);
+  let mouse = $state({ x: 0, y: 0 });
+  $effect(() => console.log(`(${mouse.x}, ${mouse.y})`));
+
   $effect(() => {
     console.log("states", states);
     console.log("transitions", transitions);
@@ -145,7 +173,17 @@
   });
 </script>
 
-<svg viewBox="0 0 {width} {height}" {width} {height}>
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<svg
+  viewBox="0 0 {width} {height}"
+  {width}
+  {height}
+  onmousemove={(e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    mouse = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }}
+>
   <defs>
     <marker
       id="arrow"
@@ -161,20 +199,23 @@
     </marker>
   </defs>
 
-  {#each traversalTick as trav}
-    {@const pos = statePos(states[trav.state.id])}
+  {#each heads as { state, i }}
+    {@const pos = statePos(states[state.id])}
     <circle
       cx={pos.x}
       cy={pos.y}
       r={radius}
-      class={trav.accepting ? "fill-green-600/20" : "fill-blue-600/20"}
+      class={isAccepting(state) ? "fill-green-600/20" : "fill-blue-600/20"}
+      onmouseover={() => (hover = { state, i })}
+      onmouseleave={() => (hover = null)}
+      onfocus={() => {}}
     />
   {/each}
 
   {#each states as state}
     {@const { x, y } = statePos(state)}
     <!-- {#key statePos(state).x} -->
-    <g transition:blur={{ duration: 200 }}>
+    <g transition:blur={{ duration: 200 }} class="pointer-events-none">
       <circle cx={x} cy={y} r={radius} fill="transparent" stroke="white" stroke-width={2} />
       {#if isAccepting(state)}
         <circle
@@ -267,4 +308,50 @@
       {/if}
     </g>
   {/each}
+
+  {#if hover}
+    {@const ch = 9.78333}
+    {@const textLeft = Math.max(mouse.x - (str.length / 2) * ch, 8)}
+    <g transition:fade={{ duration: 100 }}>
+      <rect
+        fill="white"
+        x={textLeft - 8}
+        y={mouse.y - 36}
+        height={32}
+        width={str.length * ch + 16}
+        class="font-mono"
+      >
+      </rect>
+      <text
+        x={textLeft}
+        y={mouse.y - 28}
+        font-size={16}
+        class="font-mono pointer-events-none"
+        fill="black"
+        dominant-baseline="hanging"
+      >
+        {str}
+      </text>
+
+      <rect
+        fill={isAccepting(hover.state) && hover.i === str.length ? "#080" : "#000"}
+        x={textLeft - 4}
+        y={mouse.y - 28 - 4}
+        height={16 + 8}
+        width={hover.i * ch + 4 + +(hover.i === str.length) * 4 + +(hover.i === 0) * -4}
+      >
+      </rect>
+
+      <text
+        x={textLeft}
+        y={mouse.y - 28}
+        font-size={16}
+        class="font-mono pointer-events-none"
+        fill="white"
+        dominant-baseline="hanging"
+      >
+        {str.substring(0, hover.i)}
+      </text>
+    </g>
+  {/if}
 </svg>

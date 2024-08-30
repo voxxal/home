@@ -16,6 +16,13 @@ export interface FaState {
 
 // TODO switch back to state id
 export type TraversalTick = { state: FaState; from: FaState; accepting: boolean; i: number }[];
+export type NfaHead = {
+  path: {
+    state: FaState;
+    i: number;
+  }[];
+  start: number;
+};
 
 export class Re {
   re: string;
@@ -23,14 +30,16 @@ export class Re {
   stateId: number;
   parsed: TreeNode;
   nfa: FaState;
-  prevTraversal: TraversalTick[];
+  nfaHeads: NfaHead[];
+  nfaTicks: number;
   constructor(re: string) {
     this.re = re;
     this.i = 0;
     this.stateId = 0;
     this.parsed = this.expr();
     this.nfa = this.constructNfa(this.parsed);
-    this.prevTraversal = [];
+    this.nfaHeads = [];
+    this.nfaTicks = -1;
   }
 
   atEnd() {
@@ -318,46 +327,51 @@ export class Re {
   // or dies off
   // currently a* breaks
   matchNfa(str: string): boolean {
-    this.prevTraversal = [[{ from: this.nfa, state: this.nfa, accepting: false, i: 0 }]];
-    let currentStates = [{ i: 0, state: this.nfa }];
-    while (currentStates.length !== 0) {
-      // if (
-      //   i === str.length &&
-      //   !currentStates.some((s) => this.getStatesRec(s, [], []).some(isAccepting))
-      // )
-      //   break;
-      let nextStates: { i: number; state: FaState }[] = [];
-      let currentTick: TraversalTick = [];
-      for (const { i, state } of currentStates) {
-        const c = str[i];
-        nextStates = nextStates.concat(state.eTrans.map((st) => ({ i, state: st })));
-        for (const st of state.eTrans) {
-          currentTick.push({ state: st, from: state, accepting: isAccepting(st), i });
-        }
+    this.nfaHeads = [{ path: [{ state: this.nfa, i: 0 }], start: 0 }];
+    const heads = this.nfaHeads;
+    let currentStates = [{ i: 0, id: 0, state: this.nfa }];
+    let tick = 0;
+    let headId = 1;
 
+    while (currentStates.length !== 0) {
+      // && !currentStates.some(({state, i}) => isAccepting(state) && i === str.length)
+      tick++;
+      let nextStates: { i: number; state: FaState; id: number }[] = [];
+      for (const { id, i, state } of currentStates) {
+        const c = str[i];
+        let extendedNode = false;
+        for (const st of state.eTrans) {
+          let newId = extendedNode ? headId++ : ((extendedNode = true), id);
+          nextStates.push({ i, state: st, id: newId });
+          heads[newId] ??= { path: [{ state, i }], start: tick - 1 };
+          heads[newId].path.push({ state: st, i });
+        }
         if (!c) continue;
 
         const nextState = state.trans[c] ?? state.trans["any"];
         if (nextState) {
-          nextStates = nextStates.concat({ i: i + 1, state: nextState });
-          currentTick.push({
-            state: nextState,
-            from: state,
-            accepting: isAccepting(nextState),
-            i: i + 1,
-          });
+          let newId = extendedNode ? headId++ : ((extendedNode = true), id);
+          nextStates.push({ i: i + 1, state: nextState, id: newId });
+          heads[newId] ??= { path: [{ state, i }], start: tick - 1 };
+          heads[newId].path.push({ state: nextState, i: i + 1 });
         }
       }
-      this.prevTraversal.push(currentTick);
+      // this.prevTraversal.push(currentTick);
       currentStates = nextStates;
     }
+    console.log(heads);
     // TODO okay maybe we don't want it to only match things that consume all characters
-    this.prevTraversal.pop();
-    const foundEnd = this.prevTraversal[this.prevTraversal.length - 1].some(
-      (t) => t.accepting && t.i === str.length
-    );
-    if (!foundEnd) this.prevTraversal.push([]);
-    return foundEnd;
+    const accepted = heads
+      .map(({ path }) => path[path.length - 1])
+      .some(({ state, i }) => i === str.length && isAccepting(state));
+    this.nfaTicks = tick + +!accepted;
+    return accepted;
+    // this.prevTraversal.pop();
+    // const foundEnd = this.prevTraversal[this.prevTraversal.length - 1].some(
+    //   (t) => t.accepting && t.i === str.length
+    // );
+    // if (!foundEnd) this.prevTraversal.push([]);
+    // return foundEnd;
   }
 }
 
