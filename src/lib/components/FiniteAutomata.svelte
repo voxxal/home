@@ -31,6 +31,7 @@
     from: FaStateNode;
     to: FaStateNode;
     hash: number;
+    curved: boolean;
   }
   interface DiagramState {
     states: FaStateNode[];
@@ -39,6 +40,7 @@
   }
   const convertRec = (state: FaState, cursor: Coord, diagramState: DiagramState) => {
     const { states, transitions, visited } = diagramState;
+    if (states[state.id]) return diagramState;
 
     states[state.id] = Object.assign(state, cursor);
     const sortedTrans = [
@@ -48,6 +50,7 @@
     sortedTrans.sort((a, b) => a[1].id - b[1].id);
     for (let i = 0; i < sortedTrans.length; i++) {
       // TODO determine rank on # of nodes that can branch from it
+      // (postponed) i think this works fine it was just the silly bug
       if (!visited.find((s) => s === sortedTrans[i][1])) {
         visited.push(sortedTrans[i][1]);
         convertRec(sortedTrans[i][1], { rank: cursor.rank + 1, depth: -1 }, diagramState);
@@ -55,11 +58,13 @@
       const a = state.id;
       const b = sortedTrans[i][1].id;
       // TODO include information about whether it is curved or not
+      // this will need to be a seperate pass
       transitions.push({
         c: sortedTrans[i][0],
         from: states[state.id],
         to: states[sortedTrans[i][1].id],
         hash: cantor(a, b),
+        curved: false,
       });
     }
 
@@ -127,6 +132,8 @@
   // should be good estimate
   const targetHeightToControlHeight = (trans: TransitionNode, targetHeight: number) =>
     2 * targetHeight - 0.5 * statePos(trans.from).y - 0.5 * statePos(trans.to).y;
+  // TODO (c|a)* causes weird case as well, thinking cross depth with a horizontal check
+  // TODO modify to check for diagonal overlap happens with a*b*c*d*
   const checkForOverlapStraight = (trans: TransitionNode) => {
     if (statePos(trans.from).y !== statePos(trans.to).y) return false;
     const stateHeight = statePos(trans.from).y;
@@ -164,7 +171,6 @@
   });
   let hover: { state: FaState; i: number } | null = $state(null);
   let mouse = $state({ x: 0, y: 0 });
-  $effect(() => console.log(`(${mouse.x}, ${mouse.y})`));
 
   $effect(() => {
     console.log("states", states);
