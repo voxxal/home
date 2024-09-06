@@ -19,7 +19,7 @@
   <hr class="my-4 border-zinc-600/75" />
   <div class="flex m-auto">
     <article
-      class="w-full mb-16 prose lg:prose-xl prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-zinc-800 prose-code:rounded prose-code:py-0.5 prose-code:px-1.5"
+      class="w-full mb-16 tw-prose lg:tw-prose-xl tw-prose-invert tw-prose-code:before:content-none tw-prose-code:after:content-none tw-prose-code:bg-zinc-800 tw-prose-code:rounded tw-prose-code:py-0.5 tw-prose-code:px-1.5"
     >
       <svelte:component this={data.content} />
     </article>

@@ -12,7 +12,7 @@ export default {
       fontFamily: {
         serif: ["Domine", "serif"],
         sans: ["Inter", "sans-serif"],
-        mono: ["Space Mono", "monospace"],
+        mono: ["Iosevka", "monospace"],
       },
       backgroundImage: {
         navbar: "radial-gradient(100% 100% at 50% -10%, var(--tw-gradient-stops))",
@@ -20,7 +20,7 @@ export default {
     },
   },
   plugins: [
-    require("@tailwindcss/typography"),
+    require("@tailwindcss/typography")({ className: "tw-prose"}),
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {

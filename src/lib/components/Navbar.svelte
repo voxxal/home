@@ -1,6 +1,7 @@
 <script lang="ts">
   export let glowColor = "from-dark-navy";
   import { page } from "$app/stores";
+  import Logo from "./Logo.svelte";
   const routes = [
     { url: "/", title: "home", color: "from-navy" },
     { url: "/blog", title: "blog", color: "from-purple-600" },
@@ -8,22 +9,19 @@
   ];
 </script>
 
-<nav
-  class="absolute z-50 flex items-center justify-center h-24 px-12 bg-navbar transition duration-200 {glowColor} to-70% text-lg after:flex-1 font-medium w-full"
->
-  <div class="flex-1 logo"><a href="/">voxal</a></div>
-  <div>
-    <ul class="flex-1 p-0 m-0 list-none">
+<nav class="navbar">
+  <div class="navbar-content">
+    <a href="/">
+      {#if `/${$page.url.pathname.split('/')[1]}` !== "/"}
+      <div class="logo">
+        <Logo size="2rem" />
+      </div>
+      {/if}
+    </a>
+    <ul class="navbar-items">
       {#each routes as route}
-        <li class="inline-block mx-2">
-          <a
-            href={route.url}
-            class="p-2 bubbled-md {route.color} {`/${$page.url.pathname.split('/')[1]}` ===
-            route.url
-              ? `to-60%`
-              : `hover:to-50% to-0%`}"
-            target="_self"
-          >
+        <li>
+          <a href={route.url} target="_self">
             {route.title}
           </a>
         </li>
@@ -31,3 +29,42 @@
     </ul>
   </div>
 </nav>
+
+<style>
+  .navbar {
+    top: var(--navbar-top);
+    width: 100%;
+    z-index: 1000;
+    position: absolute;
+  }
+  .navbar-content {
+    /* TODO im gonna have to decide whether to have the star hang off the side or not */
+    max-width: calc(65ch + 4rem);
+    min-height: var(--navbar-height);
+    padding: 0.5rem 2rem;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: var(--radius-4);
+    /* background: oklch(from var(--surface-200) l c h / 0.8); */
+  }
+  
+  .navbar-items {
+    font-size: 1.25rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .logo {
+    margin-right: 1rem;
+    height: 2rem;
+    width: 2rem;
+    transition: rotate 200ms;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .logo:hover {
+    rotate: 45deg;
+  }
+</style>

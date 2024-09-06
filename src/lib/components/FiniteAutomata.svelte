@@ -316,7 +316,8 @@
   {/each}
 
   {#if hover}
-    {@const ch = 9.78333}
+  <!-- TODO recalculate CH -->
+    {@const ch = 9.78333} 
     {@const textLeft = Math.max(mouse.x - (str.length / 2) * ch, 8)}
     <g transition:fade={{ duration: 100 }}>
       <rect

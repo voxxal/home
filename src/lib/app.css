@@ -1,4 +1,86 @@
-@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Inter:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("/fonts/bespoke-serif/font.css");
+@import url("/fonts/gambarino/font.css");
+@import url("/fonts/space-mono/font.css");
+
+:root {
+  /* TODO im pretty sure 900 is supposed to be darkest whoops... its fine :D */
+  --surface-100: oklch(22.24% 0.027 130);
+  --surface-150: oklch(27.24% 0.027 130);
+  --surface-200: oklch(32.24% 0.027 130); /* base */
+  --surface-300: oklch(42.24% 0.027 130);
+  --surface-400: oklch(52.24% 0.027 130);
+  --surface-500: oklch(62.24% 0.027 130);
+  --surface-500: oklch(72.24% 0.027 130);
+
+  --accent-100: oklch(37.54% 0.161 113.52);
+  --accent-200: oklch(47.54% 0.161 113.52);
+  --accent-300: oklch(57.54% 0.161 113.52);
+  --accent-400: oklch(67.54% 0.161 113.52);
+  --accent-500: oklch(77.54% 0.161 113.52);
+  --accent-600: oklch(87.54% 0.161 113.52); /* base */
+
+  --text-primary: oklch(98% 0.03 102);
+  --text-secondary: oklch(70% 0.03 120);
+  --text-em: oklch(98% 0.075 102);
+  --text-link: var(--accent-600);
+
+  --font-body: "Bespoke Serif";
+  --font-display: "Gambarino";
+  --font-mono: "Iosevka";
+  --font-mono-display: "Space Mono";
+
+  --radius-2: 1rem;
+  --radius-4: 2rem;
+
+  --navbar-top: 2rem;
+  --navbar-height: 3rem;
+  --navbar-offset: calc(var(--navbar-top) + var(--navbar-height) + 2rem)
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  background-color: var(--surface-200);
+  color: var(--text-primary);
+  font-family: var(--font-body, monospace);
+  font-size: 16px;
+}
+
+.divider {
+  margin: 2rem;
+  margin-bottom: 1rem;
+  height: 1px;
+  background: var(--surface-300);
+}
+
+.prose {
+  width: 65ch;
+  margin: auto;
+}
+
+.prose p {
+  margin: 1em 0;
+}
+
+.prose a {
+  text-decoration: underline;
+  color: var(--text-link);
+}
+
+.prose em, .prose strong {
+  color: var(--text-em);
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
 
 @tailwind base;
 @tailwind components;

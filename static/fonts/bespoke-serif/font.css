@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Bespoke Serif';
+  src: url('/fonts/bespoke-serif/BespokeSerif-Variable.woff2') format('woff2'),
+       url('/fonts/bespoke-serif/BespokeSerif-Variable.woff') format('woff'),
+       url('/fonts/bespoke-serif/BespokeSerif-Variable.ttf') format('truetype');
+  font-weight: 300 800;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Bespoke Serif';
+  src: url('/fonts/bespoke-serif/BespokeSerif-VariableItalic.woff2') format('woff2'),
+       url('/fonts/bespoke-serif/BespokeSerif-VariableItalic.woff') format('woff'),
+       url('/fonts/bespoke-serif/BespokeSerif-VariableItalic.ttf') format('truetype');
+  font-weight: 300 800;
+  font-display: swap;
+  font-style: italic;
+}
+

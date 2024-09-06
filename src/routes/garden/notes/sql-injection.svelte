@@ -134,7 +134,7 @@ client.query(\`SELECT product_name, price FROM products WHERE product_id = '\${p
   without having the password. Try injecting some SQL to pass the following check.
 </p>
 
-<div class="py-8 font-sans text-center rounded-md not-prose width-full bg-zinc-800">
+<div class="py-8 font-sans text-center rounded-md not-tw-prose width-full bg-zinc-800">
   <h1 class="mb-2 text-xl font-bold">Sign Up</h1>
   <input
     type="text"
@@ -193,7 +193,7 @@ client.query(\`SELECT product_name, price FROM products WHERE product_id = '\${p
 
 <p>Note that when using <code>UNION</code>, both tables need to have the same number of columns</p>
 
-<div class="py-8 font-sans text-center rounded-md not-prose width-full bg-zinc-800">
+<div class="py-8 font-sans text-center rounded-md not-tw-prose width-full bg-zinc-800">
   <h1 class="mb-2 text-xl font-bold">Products</h1>
   <input
     type="text"

@@ -164,11 +164,12 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
 </header>
 
 <article
-  class="relative max-w-3xl mx-auto pb-24 mt-24 px-8 md:px-0 prose-invert prose md:prose-lg prose-code:before:content-none prose-code:after:content-none prose-code:bg-zinc-800 prose-code:rounded prose-code:py-0.5 prose-code:px-1.5 prose-a:text-blue-300"
+  class="relative max-w-3xl mx-auto pb-24 mt-24 px-8 md:px-0 tw-prose-invert tw-prose md:tw-prose-lg tw-prose-code:before:content-none tw-prose-code:after:content-none tw-prose-code:bg-zinc-800 tw-prose-code:rounded tw-prose-code:py-0.5 tw-prose-code:px-1.5 tw-prose-a:text-blue-300"
+  id="article-content"
 >
   {#if headings && elementHeadings}
     <div
-      class="hidden lg:block absolute left-[calc(50%+24rem+2rem)] not-prose h-[100%] w-64 text-base leading-normal"
+      class="hidden lg:block absolute left-[calc(50%+24rem+2rem)] not-tw-prose h-[100%] w-64 text-base leading-normal"
     >
       <div class="sticky left-0 top-14">
         <details open class="text-white">
@@ -222,7 +223,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     doing this. First is to right click your bookmark bar, press Add Page, and in the URL bar copy
     the code in. It will look similar to the model below.
   </p>
-  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-prose">
+  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-tw-prose">
     <h4 class="mb-2">Add Bookmark</h4>
     <label for="name" class="block text-sm">Name</label>
     <input id="name" class="w-full px-2 mb-4 rounded-md bg-zinc-700" value="get flag" />
@@ -302,7 +303,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     what the markup looks like. There are a lot nested elements so we can use a nice feature of
     DevTools, {EXPAND_NAME.toLowerCase()}.
   </p>
-  <div class="m-auto mb-5 not-prose w-fit">
+  <div class="m-auto mb-5 not-tw-prose w-fit">
     <IPrism code={`<body class="picoctf{}" style="margin:0">`} class="relative -z-10" />
     <div class="z-10 ml-8 -mt-4 rounded-md bg-zinc-700 w-fit">
       <div class="px-4 py-2">
@@ -333,7 +334,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     web challenges this isn't nessasary.
   </p>
   <p>The page looks like this:</p>
-  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-prose">
+  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-tw-prose">
     <h2 class="mb-8 text-3xl">Registration</h2>
     <form>
       <label for="full_name">Full Name:</label>
@@ -408,7 +409,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     reply with a response, which is then displayed on your screen. HTTP requests are made up of 3 sections,
     the Request Line, the Headers, and the Body.
   </p>
-  <div class="p-4 font-mono rounded-lg not-prose bg-zinc-800">
+  <div class="p-4 font-mono rounded-lg not-tw-prose bg-zinc-800">
     <div class="flex items-center justify-between px-4 rounded-md bg-green-500/10">
       POST /dashboard HTTP/1.1
       <div class="py-1 font-serif text-base italic text-center">Request Line</div>
@@ -477,7 +478,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   </p>
   <p>A POST request indicates to the server that we want want them to store this data.</p>
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/"
     status={302}
@@ -511,7 +512,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     Anyways we are then redirected to <code>/dashboard</code>, where there is a single input box
     asking for a one time password. It looks something like this.
   </p>
-  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-prose">
+  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-tw-prose">
     <h2 class="mb-4 text-3xl">2fa authentication</h2>
     <form method="POST">
       <input
@@ -531,7 +532,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   </div>
   <p>If we enter anything and press the button, the following request is made:</p>
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/dashboard"
     status={200}
@@ -607,7 +608,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     class="w-full px-2 mb-4 rounded-md bg-zinc-800"
   />
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/dashboard"
     status={200}
@@ -637,7 +638,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   </p>
 
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/dashboard"
     status={200}
@@ -709,7 +710,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     class="w-full px-2 mb-4 rounded-md bg-zinc-800"
   />
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/dashboard"
     status={200}
@@ -851,7 +852,7 @@ await MyModel.find({ name: /john/i }, null, { skip: 10 }).exec();`}
   </p>
 
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://atlas.picoctf.net:63191/login"
     status={200}
@@ -1279,13 +1280,13 @@ console.log(JSON.stringify(out));`}
   </p>
   <p>
     First thing we do is unpack <code>chrome.deb</code>
+  </p>
     <Prism
       code={`$ mkdir chrome
 $ cd chrome
 $ ar x ../chrome.deb`}
       lang="text"
     />
-  </p>
   <p>Inside we'll find two more tar files.</p>
   <Prism
     code={`$ ls
@@ -1666,7 +1667,7 @@ if True:
     browser.
   </p>
   <div
-    class="lg:w-[150%] lg:-translate-x-[16.66666666%] grid grid-rows-1 lg:grid-rows-1 gap-8 lg:grid-cols-2 align-center not-prose my-8"
+    class="lg:w-[150%] lg:-translate-x-[16.66666666%] grid grid-rows-1 lg:grid-rows-1 gap-8 lg:grid-cols-2 align-center not-tw-prose my-8"
   >
     <div class="m-auto w-fit">
       <div class="p-8 m-auto rounded-lg bg-zinc-800">
@@ -1736,7 +1737,7 @@ if True:
     <code>navigator.credientals.get(cred)</code>
     with the same <code>PasswordCredential</code> object, you'll get the following popup.
   </p>
-  <div class="not-prose">
+  <div class="not-tw-prose">
     <div class="m-auto w-fit">
       <div class="p-8 m-auto rounded-lg bg-zinc-800">
         <h3 class="flex items-center gap-2 mb-2 text-2xl">Sign in as</h3>
