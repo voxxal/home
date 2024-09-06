@@ -4,7 +4,7 @@
   import Navbar from "$lib/components/Navbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import state from "$lib/state";
-  export let data;
+  // export let data;
 </script>
 
 <!-- <div class="min-w-full min-h-screen font-serif text-white selection:bg-navy/50">

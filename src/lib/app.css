@@ -34,7 +34,7 @@
 
   --navbar-top: 2rem;
   --navbar-height: 3rem;
-  --navbar-offset: calc(var(--navbar-top) + var(--navbar-height) + 2rem)
+  --navbar-offset: calc(var(--navbar-top) + var(--navbar-height) + 2rem);
 }
 
 html,
@@ -46,10 +46,15 @@ body {
   border: 0;
 }
 
+::selection {
+  background: oklch(from var(--accent-400) l c h / 0.6);
+  color: var(--text-primary);
+}
+
 body {
   background-color: var(--surface-200);
   color: var(--text-primary);
-  font-family: var(--font-body, monospace);
+  font-family: var(--font-body);
   font-size: 16px;
 }
 
@@ -74,7 +79,8 @@ body {
   color: var(--text-link);
 }
 
-.prose em, .prose strong {
+.prose em,
+.prose strong {
   color: var(--text-em);
 }
 

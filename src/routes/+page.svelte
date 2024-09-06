@@ -7,7 +7,7 @@
   const titles = [
     "a computer person",
     "a kindred spirit",
-    "searching for the north star",
+    "searching for that north star",
     "following the compass",
     "a designer i hope",
     "creating a world of his own",
@@ -40,9 +40,9 @@
 <svelte:head><title>Aiden Shi | home</title></svelte:head>
 <section id="landing-intro">
   <div class="landing-logo">
-    <div class="spinner">
+    <!-- <div class="spinner">
       <Logo size="25rem" />
-    </div>
+    </div> -->
   </div>
 
   <h1 class="name-heading"><canvas height="6rem"></canvas><span>Aiden Shi</span></h1>
@@ -85,18 +85,6 @@
     left: -12.5rem;
     top: -6.25rem;
     mask-image: linear-gradient(to bottom right, rgba(0 0 0 / 0.75), rgba(0 0 0 / 0.05) 75%);
-  }
-
-  .landing-logo .spinner {
-    animation: rotate 600s linear infinite;
-  }
-  @keyframes rotate {
-    from {
-      rotate: 0;
-    }
-    to {
-      rotate: 1turn;
-    }
   }
 
   .name-heading {

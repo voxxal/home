@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let glowColor = "from-dark-navy";
   import { page } from "$app/stores";
   import Logo from "./Logo.svelte";
   const routes = [
@@ -7,21 +6,20 @@
     { url: "/blog", title: "blog", color: "from-purple-600" },
     { url: "/garden", title: "garden", color: "from-emerald-600" },
   ];
+  const isHomePage = $derived(`/${$page.url.pathname.split("/")[1]}` === "/");
 </script>
 
 <nav class="navbar">
   <div class="navbar-content">
     <a href="/">
-      {#if `/${$page.url.pathname.split('/')[1]}` !== "/"}
-      <div class="logo">
-        <Logo size="2rem" />
+      <div class="logo {isHomePage && 'large'}">
+        <Logo size={isHomePage ? "25rem" : "2rem"} />
       </div>
-      {/if}
     </a>
     <ul class="navbar-items">
       {#each routes as route}
         <li>
-          <a href={route.url} target="_self">
+          <a href={route.url}>
             {route.title}
           </a>
         </li>
@@ -34,7 +32,7 @@
   .navbar {
     top: var(--navbar-top);
     width: 100%;
-    z-index: 1000;
+    /* z-index: 1000; */
     position: absolute;
   }
   .navbar-content {
@@ -47,9 +45,10 @@
     align-items: center;
     justify-content: space-between;
     border-radius: var(--radius-4);
+    position: relative;
     /* background: oklch(from var(--surface-200) l c h / 0.8); */
   }
-  
+
   .navbar-items {
     font-size: 1.25rem;
     display: flex;
@@ -60,11 +59,35 @@
     margin-right: 1rem;
     height: 2rem;
     width: 2rem;
-    transition: rotate 200ms;
+    position: absolute;
+    left: 2rem;
+    top: 0.5rem;
+    transition: 0s;
     transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .logo:hover {
+  .logo.large {
+    z-index: -10;
+    height: 25rem;
+    width: 25rem;
+    left: -12.5rem;
+    top: 0rem;
+    /* TODO might be able to animate this nicely using @property, also can fix animation by pointing based on rotationn */
+    mask-image: linear-gradient(to bottom right, rgba(0 0 0 / 0.75), rgba(0 0 0 / 0) 75%);
+    animation: rotate 60s linear infinite;
+    transition: 2s;
+  }
+
+  @keyframes rotate {
+    from {
+      rotate: 0;
+    }
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  .logo:not(.large):hover {
     rotate: 45deg;
   }
 </style>
