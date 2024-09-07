@@ -1,5 +1,6 @@
 <script lang="ts">
   import Logo from "$lib/components/Logo.svelte";
+  import Tag from "$lib/components/Tag.svelte";
   import state from "$lib/state";
   import { useLanyard } from "svelte-lanyard";
   $state.navbarColor = "from-dark-navy";
@@ -7,7 +8,7 @@
   const titles = [
     "a computer person",
     "a kindred spirit",
-    "searching for that north star",
+    "searching for the north star",
     "following the compass",
     "a designer i hope",
     "creating a world of his own",
@@ -21,7 +22,6 @@
     "fleeting",
     "human?",
     "beyond help",
-    "a senior",
     "growing",
     "finding himself",
     "a professional idiot",
@@ -32,7 +32,65 @@
     "with you",
     "lonely",
     "resting",
+    "denying the allegations",
+    "building",
     "meowing",
+  ];
+  const websites = [
+    {
+      name: "voxal.dev",
+      technologies: ["svelte"],
+      description: "A personal website. Cherished.",
+      link: "https://voxal.dev",
+      image: "/images/projects/voxal-dev.png",
+      video: "https://placedog.net/480/270",
+    },
+    {
+      name: "Triple Fault",
+      technologies: ["svelte", "tailwind", "three.js"],
+      description: "A page for my robotics team. Designed and built the website.",
+      link: "https://3fault.com",
+      image: "/images/projects/triple-fault.png",
+    },
+    {
+      name: "CCA Club Hub",
+      technologies: ["elm", "rust", "postgresql"],
+      description:
+        "A website for our high school ASB. Think of it as a club social media. Built most of the front and back end.",
+      link: "https://github.com/coding-outreach",
+      image: "/images/projects/ccaclubhub.png",
+    },
+    {
+      name: "CyberClass Camp",
+      technologies: ["svelte", "tailwind", "figma"],
+      description:
+        "CyberClass Camp is a cybersecurity camp that me and my friends ran. Designed and built the website.",
+      link: "https://cyberclasscamp.com",
+      image: "/images/projects/cyberclass.png",
+    },
+    {
+      name: "syscalls",
+      technologies: ["svelte", "tailwind"],
+      description:
+        "Linux syscalls. My friend wrote a script that extracted syscalls details from the linux kernel. I designed and built the front-end.",
+      link: "https://syscalls.pages.dev",
+      image: "/images/projects/syscalls.png",
+    },
+    {
+      name: "CCA Math Bonanza",
+      technologies: ["svelte"],
+      description:
+        "A math competition ran by our high school math club. Designed and built the website.",
+      link: "https://ccamb.org",
+      image: "/images/projects/ccamb.png",
+    },
+    {
+      name: "FurfSky Reborn",
+      technologies: ["next.js", "tailwind", "figma"],
+      description: "Website for downloading the FurfSky Reborn texture pack for Hypixel Skyblock. Built the site.",
+      link: "https://furfsky.net",
+      image: "/images/projects/fsr.png",
+    },
   ];
   const title = titles[Math.floor(Math.random() * titles.length)];
 </script>
@@ -40,13 +98,13 @@
 <svelte:head><title>Aiden Shi | home</title></svelte:head>
 <section id="landing-intro">
   <div class="landing-logo">
-    <!-- <div class="spinner">
+    <div class="spinner">
       <Logo size="25rem" />
-    </div> -->
+    </div>
   </div>
 
   <h1 class="name-heading"><canvas height="6rem"></canvas><span>Aiden Shi</span></h1>
-  <h2 class="name-subheading">is {title}</h2>
+  <h2 class="subheading">is {title}</h2>
 
   <div class="prose">
     <p>
@@ -66,10 +124,29 @@
   </div>
 </section>
 
-<!-- <section id="websites-i-made">
-  <h1>Websites I Made</h1>
-  <p>I make websites for others.</p>
-</section> -->
+<section id="websites">
+  <div class="websites-header">
+    <h2 class="websites-heading">Websites I Made</h2>
+    <h3 class="subheading">My fragments of the internet.</h3>
+  </div>
+  <div class="websites-carousel">
+    {#each websites as { description, name, technologies, link, image, video }}
+      <div class="websites-carousel-item hover-highlight">
+        <a href={link} target="_blank">
+          <img src={image} width="480" alt={description} />
+          <h3>{name}</h3>
+          <div class="technologies">
+            {#each technologies as tag}
+              <Tag {tag} />
+            {/each}
+          </div>
+
+          <p>{description}</p>
+        </a>
+      </div>
+    {/each}
+  </div>
+</section>
 
 <style>
   #landing-intro {
@@ -85,6 +162,47 @@
     left: -12.5rem;
     top: -6.25rem;
     mask-image: linear-gradient(to bottom right, rgba(0 0 0 / 0.75), rgba(0 0 0 / 0.05) 75%);
+    animation: grow-in 1s cubic-bezier(0.34, 1.3, 0.64, 1);
+  }
+
+  @keyframes grow-in {
+    from {
+      left: -8rem;
+      top: -4rem;
+      height: 1rem;
+      width: 1rem;
+      /* mask-image: linear-gradient(to bottom right, rgba(0 0 0 / 0.75), rgba(0 0 0 / 0) 50%); */
+    }
+    to {
+      rotate: 0deg;
+      left: -12.5rem;
+      height: 25rem;
+      width: 25rem;
+    }
+  }
+
+  .landing-logo .spinner {
+    animation:
+      rotate 600s linear infinite 2s,
+      rotate-in 2s ease-out;
+  }
+
+  @keyframes rotate {
+    from {
+      rotate: 0;
+    }
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @keyframes rotate-in {
+    from {
+      rotate: -5deg;
+    }
+    to {
+      rotate: 0;
+    }
   }
 
   .name-heading {
@@ -93,11 +211,11 @@
     font-size: 6rem;
     line-height: 1;
     display: grid;
-  }
 
-  .name-heading canvas {
-    width: 100%;
-    height: 6rem;
+    canvas {
+      width: 100%;
+      height: 6rem;
+    }
   }
 
   .name-heading * {
@@ -105,12 +223,87 @@
     grid-column-start: 1;
   }
 
-  .name-subheading {
+  .subheading {
     font-size: 1.5rem;
     color: var(--text-secondary);
     line-height: 1;
     font-weight: 500;
     font-style: italic;
     margin-bottom: 2rem;
+  }
+
+  #websites {
+    margin-top: 8rem;
+  }
+
+  .websites-header {
+    width: 65ch;
+    margin: auto;
+    & > .subheading {
+      font-size: 1.25rem;
+    }
+  }
+
+  .websites-heading {
+    font-family: var(--font-display);
+    color: var(--text-em);
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .websites-carousel {
+    --space-from-left: calc(50vw - 65ch / 2 - 1rem);
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    overflow: scroll visible;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-400) transparent;
+    scroll-snap-type: x proximity;
+    padding-bottom: 0.5rem;
+    /* padding left + difference between the two */
+    /* idk what the 2rem is here for the math needs to be reexplained (but it works :D) */
+    padding-right: calc(var(--space-from-left) + 65ch - 30rem + 2rem);
+  }
+
+  .websites-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .websites-carousel .websites-carousel-item:first-child {
+    margin-left: var(--space-from-left);
+  }
+
+  .websites-carousel-item {
+    min-width: 30rem;
+    padding: 1rem;
+    position: relative;
+    scroll-margin-left: var(--space-from-left);
+    scroll-snap-align: start;
+
+    a {
+      display: block;
+    }
+
+    .technologies {
+      display: flex;
+      gap: 0.5rem;
+      margin: 0.25rem 0 0.75rem 0;
+      :global(& > *) {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    img {
+      border: 2px solid var(--surface-300);
+      border-radius: var(--radius-2);
+      margin-bottom: 1rem;
+      aspect-ratio: 16 / 9;
+    }
+
+    h3 {
+      font-size: 2rem;
+      font-weight: 500;
+    }
   }
 </style>

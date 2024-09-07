@@ -12,21 +12,6 @@
   import { Calendar, Clock } from "lucide-svelte";
 
   $state.navbarColor = "from-purple-800";
-  let elements: HTMLSpanElement[] | undefined;
-  onMount(() => {
-    elements?.[0]?.classList.add("ml-1");
-    const tl = gsap.timeline();
-    tl.fromTo(".titleChar", slideInConf, slideInConfTo).from(
-      "#subtitle",
-      {
-        duration: 1,
-        yPercent: 100,
-        opacity: 0,
-        ease: "Power4.easeOut",
-      },
-      "-=0.5",
-    );
-  });
 </script>
 
 <svelte:head><title>Aiden Shi | blog</title></svelte:head>
@@ -38,7 +23,7 @@
 </header>
 <div class="posts">
   {#each data.posts as post}
-    <a href="/blog/{post.path}" class="post">
+    <a href="/blog/{post.path}" class="post hover-highlight">
       <h2>{post.title}</h2>
       <!-- todo maybe include hours, also single element is a mess -->
       <div class="metadata">
@@ -75,17 +60,13 @@
   }
 
   .post {
+    position: relative;
     padding: 1rem 2rem;
     margin: 1rem 0;
     display: block;
-    transition: 200ms;
     border-radius: var(--radius-2);
   }
-
-  .post:hover {
-    background: var(--surface-300);
-  }
-
+  
   .post h2 {
     font-size: 2rem;
     font-weight: 500;

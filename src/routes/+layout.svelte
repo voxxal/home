@@ -20,6 +20,7 @@
 </div> -->
 
 <div class="page-wrapper">
+  <div class="grain"></div>
   <Navbar />
   <main>
     <slot />
@@ -34,7 +35,17 @@
     display: flex;
     flex-direction: column;
   }
-
+  .grain {
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/5c/Image_gaussian_noise_example.png);
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0.1;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
   main {
     flex-grow: 1;
     padding-bottom: 4rem;

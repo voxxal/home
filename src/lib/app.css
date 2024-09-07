@@ -4,13 +4,13 @@
 
 :root {
   /* TODO im pretty sure 900 is supposed to be darkest whoops... its fine :D */
-  --surface-100: oklch(22.24% 0.027 130);
-  --surface-150: oklch(27.24% 0.027 130);
-  --surface-200: oklch(32.24% 0.027 130); /* base */
-  --surface-300: oklch(42.24% 0.027 130);
-  --surface-400: oklch(52.24% 0.027 130);
-  --surface-500: oklch(62.24% 0.027 130);
-  --surface-500: oklch(72.24% 0.027 130);
+  --surface-100: oklch(22.24% 0.03 130);
+  --surface-150: oklch(27.24% 0.03 130);
+  --surface-200: oklch(32.24% 0.03 130); /* base */
+  --surface-300: oklch(42.24% 0.03 130);
+  --surface-400: oklch(52.24% 0.03 130);
+  --surface-500: oklch(62.24% 0.03 130);
+  --surface-500: oklch(72.24% 0.03 130);
 
   --accent-100: oklch(37.54% 0.161 113.52);
   --accent-200: oklch(47.54% 0.161 113.52);
@@ -20,7 +20,7 @@
   --accent-600: oklch(87.54% 0.161 113.52); /* base */
 
   --text-primary: oklch(98% 0.03 102);
-  --text-secondary: oklch(70% 0.03 120);
+  --text-secondary: var(--surface-500);
   --text-em: oklch(98% 0.075 102);
   --text-link: var(--accent-600);
 
@@ -29,12 +29,17 @@
   --font-mono: "Iosevka";
   --font-mono-display: "Space Mono";
 
+  --radius-half: 0.25rem;
+  --radius-1: 0.5rem;
   --radius-2: 1rem;
   --radius-4: 2rem;
 
   --navbar-top: 2rem;
   --navbar-height: 3rem;
   --navbar-offset: calc(var(--navbar-top) + var(--navbar-height) + 2rem);
+
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html,
@@ -51,6 +56,10 @@ body {
   color: var(--text-primary);
 }
 
+html {
+  scrollbar-color: var(--surface-400) var(--surface-200);
+}
+
 body {
   background-color: var(--surface-200);
   color: var(--text-primary);
@@ -64,6 +73,51 @@ body {
   height: 1px;
   background: var(--surface-300);
 }
+
+/* only apply to relative elements */
+.hover-highlight::before {
+  display: block;
+  position: absolute;
+  border-radius: var(--radius-2);
+  content: "";
+  left: 0.5rem;
+  top: 0.5rem;
+  width: calc(100% - 1rem);
+  height: calc(100% - 1rem);
+  z-index: -5;
+  transition: 0.5s var(--ease-out-back), background 0.5s var(--ease-out-quint);
+}
+
+.hover-highlight:hover::before {
+  background: var(--surface-300);
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* .hover-highlight::before {
+  --extent-x: 1rem;
+  --extent-y: 1rem;
+  display: block;
+  position: absolute;
+  border-radius: var(--radius-2);
+  content: "";
+  left: calc(-1 * var(--extent-x) / 2);
+  top: calc(-1 * var(--extent-y) / 2);
+  width: calc(100% + var(--extent-x));
+  height: calc(100% + var(--extent-y));
+  z-index: -5;
+  transition: 0.5s var(--ease-out-quint);
+}
+
+.hover-highlight:hover::before {
+  background: var(--surface-300);
+  width: calc(100% + var(--extent-x) * 2);
+  height: calc(100% + var(--extent-y) * 2);
+  left: calc(-1 * var(--extent-x));
+  top: calc(-1 * var(--extent-y));
+} */
 
 .prose {
   width: 65ch;

@@ -1,4 +1,5 @@
 <script lang="ts">
+  export let glowColor = "from-dark-navy";
   import { page } from "$app/stores";
   import Logo from "./Logo.svelte";
   const routes = [
@@ -6,20 +7,25 @@
     { url: "/blog", title: "blog", color: "from-purple-600" },
     { url: "/garden", title: "garden", color: "from-emerald-600" },
   ];
-  const isHomePage = $derived(`/${$page.url.pathname.split("/")[1]}` === "/");
 </script>
 
 <nav class="navbar">
   <div class="navbar-content">
-    <a href="/">
-      <div class="logo {isHomePage && 'large'}">
-        <Logo size={isHomePage ? "25rem" : "2rem"} />
-      </div>
-    </a>
+    <div class="logo-wrapper">
+      {#if $page.url.pathname.split("/")[1] !== ""}
+        <a href="/" class="logo">
+          <Logo size="2rem" />
+        </a>
+        <div class="logo-wordmark">Aiden Shi</div>
+      {/if}
+    </div>
     <ul class="navbar-items">
       {#each routes as route}
         <li>
-          <a href={route.url}>
+          <a
+            href={route.url}
+            class={`/${$page.url.pathname.split("/")[1]}` === route.url ? "selected-item" : ""}
+          >
             {route.title}
           </a>
         </li>
@@ -32,7 +38,7 @@
   .navbar {
     top: var(--navbar-top);
     width: 100%;
-    /* z-index: 1000; */
+    z-index: 1000;
     position: absolute;
   }
   .navbar-content {
@@ -45,7 +51,6 @@
     align-items: center;
     justify-content: space-between;
     border-radius: var(--radius-4);
-    position: relative;
     /* background: oklch(from var(--surface-200) l c h / 0.8); */
   }
 
@@ -55,39 +60,42 @@
     gap: 1rem;
   }
 
+  .selected-item {
+    font-weight: 600;
+  }
+
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .logo {
-    margin-right: 1rem;
     height: 2rem;
     width: 2rem;
-    position: absolute;
-    left: 2rem;
-    top: 0.5rem;
-    transition: 0s;
-    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: rotate 200ms var(--ease-out-back);
+    z-index: 10;
   }
 
-  .logo.large {
-    z-index: -10;
-    height: 25rem;
-    width: 25rem;
-    left: -12.5rem;
-    top: 0rem;
-    /* TODO might be able to animate this nicely using @property, also can fix animation by pointing based on rotationn */
-    mask-image: linear-gradient(to bottom right, rgba(0 0 0 / 0.75), rgba(0 0 0 / 0) 75%);
-    animation: rotate 60s linear infinite;
-    transition: 2s;
+  .logo-wordmark {
+    font-family: var(--font-display);
+    color: var(--text-em);
+    font-size: 2rem;
+    display: block;
+    line-height: 1;
+    transition: 200ms var(--ease-out-back);
+    translate: -15% 0;
+    opacity: 0;
   }
 
-  @keyframes rotate {
-    from {
-      rotate: 0;
-    }
-    to {
-      rotate: 1turn;
-    }
-  }
-
-  .logo:not(.large):hover {
+  .logo:hover {
     rotate: 45deg;
+  }
+
+  .logo:hover + .logo-wordmark {
+    display: block;
+    pointer-events: none;
+    translate: 0% 0;
+    opacity: 1;
   }
 </style>

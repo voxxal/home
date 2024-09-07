@@ -3,7 +3,6 @@ import { format } from "date-fns";
 import { convert } from "html-to-text";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { INIT_CWD } from "$env/static/private";
 
 // we require some server-side APIs to parse all metadata
 if (browser) {
@@ -15,8 +14,7 @@ export const posts = Object.entries(
   import.meta.glob("/src/routes/blog/posts/**/*.svelte", { eager: true })
 )
   .map(([filepath, post]) => {
-    const html = readFileSync(join(INIT_CWD, filepath)).toString(); // TODO its kinda hard to find the file path actually
-    const defaultLayout = post.metadata.defaultLayout ?? true;
+    const html = readFileSync(join(process.cwd(), filepath)).toString(); // TODO its kinda hard to find the file path actually
     const text = convert(html, {
       baseElements: { selectors: ["p", "ul", "li"] },
     });
