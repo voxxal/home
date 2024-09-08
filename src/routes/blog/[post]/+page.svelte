@@ -37,7 +37,7 @@
     font-size: 4rem;
     font-family: var(--font-display);
     color: var(--text-em);
-    line-height: 1;
+    line-height: 1.3;
     text-wrap: balance;
   }
 

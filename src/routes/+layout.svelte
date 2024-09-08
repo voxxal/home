@@ -3,8 +3,14 @@
   import { fade } from "svelte/transition";
   import Navbar from "$lib/components/Navbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
-  import state from "$lib/state";
-  // export let data;
+  // import state from "$lib/state";
+  let scrollbarWidth = $state(0);
+  $effect(() => {
+    const setSBW = () =>
+      (scrollbarWidth = window.innerWidth - document.documentElement.clientWidth);
+    window.addEventListener("resize", setSBW, false);
+    setSBW();
+  });
 </script>
 
 <!-- <div class="min-w-full min-h-screen font-serif text-white selection:bg-navy/50">
@@ -19,7 +25,7 @@
   <div class="bg-[url(/noise.png)] h-full w-full fixed top-0 left-0 opacity-5 -z-50"/>
 </div> -->
 
-<div class="page-wrapper">
+<div class="page-wrapper" style="--scrollbar-width: {scrollbarWidth}px;">
   <div class="grain"></div>
   <Navbar />
   <main>

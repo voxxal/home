@@ -6,7 +6,7 @@
 </script>
 
 <script lang="ts">
-  import RegexEditor from "$lib/components/RegexEditor.svelte";
+  import RegexEditor from "$lib/components/blog/regex/RegexEditor.svelte";
 </script>
 
 <p>Regex is an incredibly powerful tool</p>

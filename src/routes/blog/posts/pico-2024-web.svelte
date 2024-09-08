@@ -19,7 +19,7 @@
   import "prismjs/components/prism-php";
   import "prismjs/components/prism-diff";
   import "prismjs/components/prism-python";
-  import ElementsDfsResult from "$lib/components/ElementsDfsResult.svelte";
+  import ElementsDfsResult from "$lib/components/blog/pico-2024/ElementsDfsResult.svelte";
   import { onMount } from "svelte";
 
   const browser = detect();
@@ -1905,11 +1905,6 @@ print(r.text)`}
 </article>
 
 <style lang="postcss">
-  @font-face {
-    font-family: "Editorial New";
-    src: url("/PPEditorialNew/PPEditorialNew-Regular.otf") format("opentype");
-  }
-
   h1,
   h2,
   h3,
@@ -1918,8 +1913,9 @@ print(r.text)`}
   h6,
   blockquote {
     font-weight: normal !important;
-    font-family: "Editorial New";
+    font-family: var(--font-display);
   }
+  
   blockquote {
     color: theme(colors.zinc.300);
     @apply border-l-2 border-zinc-600;

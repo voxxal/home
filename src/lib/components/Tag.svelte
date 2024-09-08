@@ -24,8 +24,9 @@
 
 <style>
   .tag {
+    /* --semi-transparent-color: color-mix(in oklch, var(--color), rgba(0 0 0 / 0) 60%); */
     background-color: color-mix(in oklch, var(--color), rgba(0 0 0 / 0) 60%);
-    color: color-contrast(var(--color) vs #fff, #000);
+    color: #fff;
     font-family: var(--font-mono-display);
     padding: 0.25rem 0.4rem;
     line-height: 1;

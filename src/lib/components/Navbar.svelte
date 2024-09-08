@@ -3,9 +3,9 @@
   import { page } from "$app/stores";
   import Logo from "./Logo.svelte";
   const routes = [
-    { url: "/", title: "home", color: "from-navy" },
-    { url: "/blog", title: "blog", color: "from-purple-600" },
-    { url: "/garden", title: "garden", color: "from-emerald-600" },
+    { url: "/", title: "home" },
+    { url: "/blog", title: "blog" },
+    // { url: "/garden", title: "garden", color: "from-emerald-600" },
   ];
 </script>
 

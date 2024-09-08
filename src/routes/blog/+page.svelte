@@ -8,7 +8,6 @@
   import "$lib/app.css";
 
   import SplitText from "$lib/components/SplitText.svelte";
-  import BumpLink from "$lib/components/BumpLink.svelte";
   import { Calendar, Clock } from "lucide-svelte";
 
   $state.navbarColor = "from-purple-800";
@@ -18,7 +17,7 @@
 
 <header class="blog-header">
   <h1 class="blog-heading">Blog</h1>
-  <p>I occasionally make blog posts about whatever is on my mind. Many of these are interactive.</p>
+  <p class="prose">I occasionally make blog posts about whatever is on my mind. Many of these are interactive.</p>
   <div class="divider"></div>
 </header>
 <div class="posts">

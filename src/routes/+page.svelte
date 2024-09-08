@@ -252,7 +252,8 @@
   }
 
   .websites-carousel {
-    --space-from-left: calc(50vw - 65ch / 2 - 1rem);
+    /* TODO chrome cant do math apparently */
+    --space-from-left: calc((100vw - 65ch - var(--scrollbar-width)) / 2 - 1rem);
     width: 100%;
     display: flex;
     gap: 2rem;
