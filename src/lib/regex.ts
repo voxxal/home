@@ -28,16 +28,21 @@ export class Re {
   re: string;
   i: number;
   stateId: number;
+  parenStack: "("[];
   parsed: TreeNode;
+  nfaStructures: Required<FaState>[];
   nfa: FaState;
   nfaHeads: NfaHead[];
   nfaTicks: number;
   constructor(re: string) {
     this.re = re;
     this.i = 0;
-    this.stateId = 0;
+    this.stateId = 1;
+    this.parenStack = [];
     this.parsed = this.expr();
+    this.nfaStructures = [];
     this.nfa = this.constructNfa(this.parsed);
+    this.idNfa();
     this.nfaHeads = [];
     this.nfaTicks = -1;
   }
@@ -51,7 +56,7 @@ export class Re {
   }
 
   has(c: string) {
-    return this.re[this.i] == c;
+    return this.re[this.i] === c;
   }
 
   match(c: string) {
@@ -70,21 +75,21 @@ export class Re {
     return this.union();
   }
 
-  union(inAtom: boolean = false): TreeNode {
-    const lhs = this.concat(inAtom);
+  union(): TreeNode {
+    const lhs = this.concat();
     if (!this.atEnd() && this.has("|")) {
       this.match("|");
-      return { type: "union", lhs, rhs: this.union(inAtom) };
+      return { type: "union", lhs, rhs: this.union() };
     }
 
     return lhs;
   }
 
-  concat(inAtom: boolean): TreeNode {
+  concat(): TreeNode {
     const lhs = this.meta();
-    if (!inAtom && this.has(")")) throw new Error("Unmatched )");
-    if (!this.atEnd() && !(inAtom && this.has(")")) && !this.has("|")) {
-      const rhs = this.concat(inAtom);
+    if (this.has(")") && this.parenStack.length === 0) throw new Error("Unmatched )");
+    if (!this.atEnd() && !this.has(")") && !this.has("|")) {
+      const rhs = this.concat();
       return { type: "concat", lhs, rhs };
     }
 
@@ -104,8 +109,10 @@ export class Re {
   atom(): TreeNode {
     if (this.peek() === "(") {
       this.match("(");
-      const exp = this.union(true);
+      this.parenStack.push("(");
+      const exp = this.union();
       this.match(")");
+      this.parenStack.pop();
 
       return exp;
       // return { type: "atom", lhs: exp, rhs: null };
@@ -127,6 +134,10 @@ export class Re {
       return this.next();
     }
 
+    if (this.has("|")) throw new Error("Invaid union");
+
+    if (this.has(")") && this.parenStack.length === 0) throw new Error("Unmatched )");
+
     return this.next();
   }
 
@@ -134,7 +145,7 @@ export class Re {
     if (state.ends.length === 1) {
       return state.ends[0];
     } else {
-      const newEnd = createState(this.stateId++);
+      const newEnd = createState();
       for (const end of state.ends) {
         end.eTrans.push(newEnd);
       }
@@ -142,58 +153,39 @@ export class Re {
     }
   }
 
-  mergeNodes(lhs: Required<FaState>, rhs: Required<FaState>) {
+  mergeNodes(lhs: FaState, rhs: FaState) {
     lhs.eTrans = [...lhs.eTrans, ...rhs.eTrans];
-    const keys = new Set([...Object.keys(lhs), ...Object.keys(rhs)]);
-    const newTrans = [];
-    for (const key in keys) {
+    const keys = new Set([...Object.keys(lhs.trans), ...Object.keys(rhs.trans)]);
+    const newTrans: { [k: string]: FaState } = {};
+
+    for (const key of keys.values()) {
       if (lhs.trans[key] && rhs.trans[key]) {
+        this.mergeNodes(lhs.trans[key], rhs.trans[key]);
+        newTrans[key] = lhs.trans[key];
+      } else if (lhs.trans[key]) {
+        newTrans[key] = lhs.trans[key];
+      } else {
+        newTrans[key] = rhs.trans[key];
       }
     }
 
-    lhs.trans = { ...lhs.trans, ...rhs.trans };
-    lhs.ends = [...lhs.ends, ...rhs.ends];
+    lhs.trans = newTrans;
+    if (lhs.ends && rhs.ends) lhs.ends = [...lhs.ends, ...rhs.ends];
   }
 
-  fixBackref(state: FaState, toFix: FaState) {
-    let found = false;
-    let visited: FaState[] = [];
-    const rec = (s: FaState) => {
-      for (const i in s.eTrans) {
-        const trans = s.eTrans[i];
-        if (!visited.find((x) => x === trans) && !found) {
-          if (trans.id === toFix.id) {
-            s.eTrans[i] = state;
-            found = true;
-          }
-          visited.push(trans);
-          rec(trans);
-        }
-      }
-
-      for (const i in Object.keys(s.trans)) {
-        const trans = s.eTrans[i];
-        if (!visited.find((x) => x === trans) && !found) {
-          if (trans.id === toFix.id) {
-            s.eTrans[i] = state;
-          }
-          visited.push(trans);
-          rec(trans);
-        }
-      }
-    };
-    rec(toFix);
-    // toFix.eTrans[toFix.eTrans.findIndex((s) => s.id === state.id)] = state;
-  }
-
-  // TODO (a|a) still crashes
   constructNfa(node: TreeNode): Required<FaState> {
+    const res = this._constructNfa(node);
+    if (!this.nfaStructures.includes(res)) this.nfaStructures.push(res);
+    return res;
+  }
+
+  _constructNfa(node: TreeNode): Required<FaState> {
     if (typeof node === "string") {
       if (node === "") {
-        return { id: this.stateId++, trans: {}, eTrans: [], ends: [] };
+        return { id: -1, trans: {}, eTrans: [], ends: [] };
       }
-      const id = this.stateId++;
-      const end = createState(this.stateId++);
+      const id = -1;
+      const end = createState();
       return { id, ends: [end], trans: { [node]: end }, eTrans: [] };
     }
     switch (node.type) {
@@ -202,36 +194,22 @@ export class Re {
         if (node.lhs === node.rhs) return lhs;
         // TODO this is a really bandaid fix to a|a
         // the fix is probably function to merge transisitions that fixes up any nodes
-        this.stateId--;
+
         const rhs = this.constructNfa(node.rhs);
-        lhs.eTrans = [...lhs.eTrans, ...rhs.eTrans];
-        lhs.trans = { ...lhs.trans, ...rhs.trans };
-        lhs.ends = [...lhs.ends, ...rhs.ends];
-        // if (
-        //   typeof node.rhs === "object" &&
-        //   node.rhs.type === "meta" &&
-        //   (node.rhs.rhs as string) !== "?"
-        // ) {
-        //   this.fixBackref(lhs, rhs);
-        // }
+        this.nfaStructures.pop();
+
+        this.mergeNodes(lhs, rhs);
         return lhs;
       }
       case "concat": {
         const lhs = this.constructNfa(node.lhs);
         // TODO coalesse ends if there is only one transition from the next node
         const newEnd = this.coalesseEnds(lhs);
-        this.stateId--;
         const rhs = this.constructNfa(node.rhs);
+        this.nfaStructures.pop();
         newEnd.trans = rhs.trans;
         newEnd.eTrans = rhs.eTrans;
         lhs.ends = rhs.ends;
-        // if (
-        //   typeof node.rhs === "object" &&
-        //   node.rhs.type === "meta" &&
-        //   (node.rhs.rhs as string) !== "?"
-        // ) {
-        //   this.fixBackref(lhs, rhs);
-        // }
 
         return lhs;
       }
@@ -239,15 +217,15 @@ export class Re {
         const op = node.rhs as "?" | "*" | "+";
         if (op === "?") {
           const lhs = this.constructNfa(node.lhs);
-          const end = createState(this.stateId++);
+          const end = createState();
           lhs.ends.push(end);
           lhs.eTrans.push(end);
           return lhs;
         } else if (op === "*") {
-          const loopNode = createState(this.stateId++);
+          const loopNode = createState();
           const lhs = this.constructNfa(node.lhs);
           const newEnd = this.coalesseEnds(lhs);
-          const accepting = createState(this.stateId++);
+          const accepting = createState();
           loopNode.eTrans.push(lhs);
           loopNode.eTrans.push(accepting);
           loopNode.ends = [accepting];
@@ -256,44 +234,51 @@ export class Re {
         } else if (op === "+") {
           const lhs = this.constructNfa(node.lhs);
           const newEnd = this.coalesseEnds(lhs);
-          const loopNode = createState(this.stateId++);
-          const accepting = createState(this.stateId++);
+          const loopNode = createState();
+          const accepting = createState();
           loopNode.eTrans.push(lhs);
           loopNode.eTrans.push(accepting);
           lhs.ends = [accepting];
           newEnd.eTrans.push(loopNode);
           return lhs;
         }
-        // const id = this.stateId++;
-        // const lhs = this.constructNfa(node.lhs);
-        // const end = createState(this.stateId++);
-        // if (op === "*" || op === "+") lhs.ends.eTrans.push(lhs);
-        // lhs.ends.eTrans.push(end);
-        // return { id, ends: end, trans: {}, eTrans: op === "+" ? [lhs] : [lhs, end] };
-
-        // switch (node.rhs as string) {
-        //   case "*": {
-        //     const lhs = this.construct(node.lhs);
-        //     const end = createState(this.stateId++);
-        //     lhs.end.eTrans.push(lhs);
-        //     lhs.end.eTrans.push(end);
-        //     return { id, end, trans: {}, eTrans: [lhs, end] };
-        //   }
-        //   case "?": {
-        //     const lhs = this.construct(node.lhs);
-        //     const end = createState(this.stateId++);
-        //     lhs.end.eTrans.push(end);
-        //     return { id, end, trans: {}, eTrans: [lhs, end] };
-        //   }
-        //   case "+": {
-        //     const lhs = this.construct(node.lhs);
-        //     const end = createState(this.stateId++);
-        //     lhs.end.eTrans.push(lhs);
-        //     lhs.end.eTrans.push(end);
-        //     return { id, end, trans: {}, eTrans: [lhs] };
-        //   }
-        // }
       }
+    }
+  }
+
+  idNfa() {
+    this.nfa.id = 0;
+    for (const structure of this.nfaStructures) {
+      this.idNfaState(structure, structure.ends, structure.id === 0);
+    }
+  }
+
+  idNfaState(state: FaState, ends: FaState[], mainProcess: boolean = false) {
+    if (state.id === -1) state.id = this.stateId++;
+    else if (!mainProcess) {
+      // The process of the 0 node must stay a normal process even though it starts with an id
+      if (state.ends) {
+        for (const end of state.ends) {
+          this.idNfaState(end, ends);
+        }
+      } else {
+        for (const next of state.eTrans) {
+          this.idNfaState(next, ends);
+        }
+
+        for (const next of Object.values(state.trans)) {
+          this.idNfaState(next, ends);
+        }
+      }
+      return;
+    }
+    if (ends.includes(state)) return;
+    for (const next of state.eTrans) {
+      this.idNfaState(next, ends);
+    }
+
+    for (const next of Object.values(state.trans)) {
+      this.idNfaState(next, ends);
     }
   }
 
@@ -311,21 +296,6 @@ export class Re {
     return nextStates;
   }
 
-  // getStates(state: FaState) {
-  //   let nextStates: FaState[] = [];
-  //   this.getStatesRec(state, nextStates, []);
-  //   const tick = this.prevTraversal[this.prevTraversal.length - 1];
-  //   for (const ns of nextStates) {
-  //     tick.push({ node: ns, from: state, accepting: isAccepting(ns) });
-  //   }
-  //   console.log(nextStates)
-  //   return nextStates;
-  // }
-
-  // TODO okay the issue is every head needs its own consumption
-  // then when a head finishes consuption, it either hits an ending node
-  // or dies off
-  // currently a* breaks
   matchNfa(str: string): boolean {
     this.nfaHeads = [{ path: [{ state: this.nfa, i: 0 }], start: 0 }];
     const heads = this.nfaHeads;
@@ -375,7 +345,7 @@ export class Re {
   }
 }
 
-export const createState = (id: number): FaState => ({ id, trans: {}, eTrans: [] });
+export const createState = (): FaState => ({ id: -1, trans: {}, eTrans: [] });
 export const isAccepting = (state: FaState) =>
   state.eTrans.length === 0 && Object.keys(state.trans).length === 0;
 

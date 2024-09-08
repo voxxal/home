@@ -34,8 +34,11 @@
     "resting",
     "denying the allegations",
     "building",
+    "not taking himself seriously",
+    "at peace",
     "meowing",
   ];
+  
   const websites = [
     {
       name: "voxal.dev",
