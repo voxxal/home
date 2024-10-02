@@ -5,8 +5,8 @@
   };
 </script>
 
-<p>i made a silly game</p>
-<p>it is out right now</p>
-<p>i am not a robot</p>
+<p>i made a silly game,</p>
+<p>it is out right now,</p>
+<p>i am not a robot,</p>
 
 <p><a href="/25-stupid-captchas/">play here</a></p>

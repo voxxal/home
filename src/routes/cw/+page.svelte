@@ -114,7 +114,7 @@
 </script>
 
 <svelte:head>
-  <title>voxal | crossword {puzzle ? `- ${puzzle.title} by ${puzzle.author}` : ""}</title>
+  <title>Aiden Shi | crossword {puzzle ? `- ${puzzle.title} by ${puzzle.author}` : ""}</title>
 </svelte:head>
 <div class="h-full px-12 pt-28">
   {#if win}<h4>you win! (i promise i'll make it look better later)</h4>{/if}

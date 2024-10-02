@@ -19,7 +19,7 @@
   import "prismjs/components/prism-php";
   import "prismjs/components/prism-diff";
   import "prismjs/components/prism-python";
-  import ElementsDfsResult from "$lib/components/ElementsDfsResult.svelte";
+  import ElementsDfsResult from "$lib/components/blog/pico-2024/ElementsDfsResult.svelte";
   import { onMount } from "svelte";
 
   const browser = detect();
@@ -145,7 +145,6 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
 </script>
 
 <svelte:head>
-  <base target="_blank" />
   <meta property="og:url" content="https://voxal.dev/blog/pico-24-web" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="picoCTF 2024 Web Exploitation Rundown" />
@@ -164,11 +163,12 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
 </header>
 
 <article
-  class="relative max-w-3xl mx-auto pb-24 mt-24 px-8 md:px-0 prose-invert prose md:prose-lg prose-code:before:content-none prose-code:after:content-none prose-code:bg-zinc-800 prose-code:rounded prose-code:py-0.5 prose-code:px-1.5 prose-a:text-blue-300"
+  class="relative max-w-3xl mx-auto pb-24 mt-24 px-8 md:px-0 tw-prose-invert tw-prose md:tw-prose-lg tw-prose-code:before:content-none tw-prose-code:after:content-none tw-prose-code:bg-zinc-800 tw-prose-code:rounded tw-prose-code:py-0.5 tw-prose-code:px-1.5 tw-prose-a:text-blue-300"
+  id="article-content"
 >
   {#if headings && elementHeadings}
     <div
-      class="hidden lg:block absolute left-[calc(50%+24rem+2rem)] not-prose h-[100%] w-64 text-base leading-normal"
+      class="hidden lg:block absolute left-[calc(50%+24rem+2rem)] not-tw-prose h-[100%] w-64 text-base leading-normal"
     >
       <div class="sticky left-0 top-14">
         <details open class="text-white">
@@ -176,15 +176,13 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
           <ul class="leading-relaxed">
             {#each headings as entry}
               <li>
-                <a href="#{entry.id}" target="_self" class="hover:underline">{entry.innerText}</a>
+                <a href="#{entry.id}" class="hover:underline">{entry.innerText}</a>
               </li>
               {#if entry.id === "elements"}
                 <ul class="mb-1 ml-4">
                   {#each elementHeadings as entry}
                     <li>
-                      <a href="#{entry.id}" target="_self" class="hover:underline"
-                        >{entry.innerText}</a
-                      >
+                      <a href="#{entry.id}" class="hover:underline">{entry.innerText}</a>
                     </li>
                   {/each}
                 </ul>{/if}
@@ -197,8 +195,8 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   <h2>Introduction</h2>
   <p>
     picoCTF is an annual CTF comptition hosted by Carnegie Mellon University for highschoolers. Our
-    team <a href="https://amateurs.team">les amateurs</a> plays each year and this year was no different.
-    This year we placed 2nd place.
+    team <a href="https://amateurs.team" target="_blank">les amateurs</a> plays each year and this year
+    was no different. This year we placed 2nd place.
   </p>
   <p>
     I solved all the web challenges for the team, along with some other miscellaneous challenges.
@@ -208,8 +206,9 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
 
   <h2 id="bookmarklet">Bookmarklet</h2>
   <p>
-    <a href="http://titan.picoctf.net:55173/">Bookmarklet</a> was a challenge was about bookmarklets
-    (duh), which are snippets of javascript that can be bookmarked. A bookmarklet was provided in a
+    <a href="http://titan.picoctf.net:55173/" target="_blank">Bookmarklet</a> was a challenge was
+    about bookmarklets (duh), which are snippets of javascript that can be bookmarked. A bookmarklet
+    was provided in a
     <code>textarea</code>, which when ran, gave you the flag.
   </p>
   <Prism code={BOOKMARKLET_SOURCE} />
@@ -222,7 +221,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     doing this. First is to right click your bookmark bar, press Add Page, and in the URL bar copy
     the code in. It will look similar to the model below.
   </p>
-  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-prose">
+  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-tw-prose">
     <h4 class="mb-2">Add Bookmark</h4>
     <label for="name" class="block text-sm">Name</label>
     <input id="name" class="w-full px-2 mb-4 rounded-md bg-zinc-700" value="get flag" />
@@ -261,8 +260,9 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   </p>
   <h2 id="webdecode">WebDecode</h2>
   <p>
-    <a href="http://titan.picoctf.net:57534">WebDecode</a> was an inspector challenge. Clicking
-    through the page, you'll find that the about page tells you to try inspecting on that page (
+    <a href="http://titan.picoctf.net:57534" target="_blank">WebDecode</a> was an inspector
+    challenge. Clicking through the page, you'll find that the about page tells you to try
+    inspecting on that page (
     <Key>Ctrl</Key> + <Key>Shift</Key> + <Key>I</Key>), and if you do, you'll find something
     suspicious sitting there.
   </p>
@@ -288,21 +288,22 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     also right to make educated guesses about what the encoding is.
   </p> -->
   <p>
-    We can use <a href="https://gchq.github.io/CyberChef">CyberChef</a> to decode this. It is
-    personally my tool of choice when it comes to decoding stuff. Addtionally, CyberChef can detect
-    common encodings and automatically decode them for you! Just press the <Wand2 class="inline" /> button
-    after pasting the input and it will automatically decode your input!
+    We can use <a href="https://gchq.github.io/CyberChef" target="_blank">CyberChef</a> to decode
+    this. It is personally my tool of choice when it comes to decoding stuff. Addtionally, CyberChef
+    can detect common encodings and automatically decode them for you! Just press the <Wand2
+      class="inline"
+    /> button after pasting the input and it will automatically decode your input!
   </p>
 
   <h2 id="unminify">Unminify</h2>
   <p>
     This challenge is pretty similar to WebDecode. You are given a
-    <a href="http://titan.picoctf.net:51196/">website</a> and are told to find the flag. Again we
-    can open the inspect menu (<Key>Ctrl</Key> + <Key>Shift</Key> + <Key>I</Key>) and take a look at
-    what the markup looks like. There are a lot nested elements so we can use a nice feature of
-    DevTools, {EXPAND_NAME.toLowerCase()}.
+    <a href="http://titan.picoctf.net:51196/" target="_blank">website</a> and are told to find the
+    flag. Again we can open the inspect menu (<Key>Ctrl</Key> + <Key>Shift</Key> + <Key>I</Key>) and
+    take a look at what the markup looks like. There are a lot nested elements so we can use a nice
+    feature of DevTools, {EXPAND_NAME.toLowerCase()}.
   </p>
-  <div class="m-auto mb-5 not-prose w-fit">
+  <div class="m-auto mb-5 not-tw-prose w-fit">
     <IPrism code={`<body class="picoctf{}" style="margin:0">`} class="relative -z-10" />
     <div class="z-10 ml-8 -mt-4 rounded-md bg-zinc-700 w-fit">
       <div class="px-4 py-2">
@@ -329,11 +330,11 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   <h2 id="introtoburp">IntroToBurp</h2>
   <p>
     Ok the inspector challenges are done. Next up is IntroToBurp. As the name implies, you can use
-    <a href="https://portswigger.net/burp">BurpSuite</a> to solve this challenge, but like all other
-    web challenges this isn't nessasary.
+    <a href="https://portswigger.net/burp" target="_blank">BurpSuite</a> to solve this challenge, but
+    like all other web challenges this isn't nessasary.
   </p>
   <p>The page looks like this:</p>
-  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-prose">
+  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-tw-prose">
     <h2 class="mb-8 text-3xl">Registration</h2>
     <form>
       <label for="full_name">Full Name:</label>
@@ -403,12 +404,13 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   </p>
   <h3>Http Requests</h3>
   <p>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages">HTTP requests</a> are the "text
-    messages" of the internet. Your browser sends HTTP requests to servers which will then process and
-    reply with a response, which is then displayed on your screen. HTTP requests are made up of 3 sections,
-    the Request Line, the Headers, and the Body.
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages" target="_blank"
+      >HTTP requests</a
+    > are the "text messages" of the internet. Your browser sends HTTP requests to servers which will
+    then process and reply with a response, which is then displayed on your screen. HTTP requests are
+    made up of 3 sections, the Request Line, the Headers, and the Body.
   </p>
-  <div class="p-4 font-mono rounded-lg not-prose bg-zinc-800">
+  <div class="p-4 font-mono rounded-lg not-tw-prose bg-zinc-800">
     <div class="flex items-center justify-between px-4 rounded-md bg-green-500/10">
       POST /dashboard HTTP/1.1
       <div class="py-1 font-serif text-base italic text-center">Request Line</div>
@@ -431,8 +433,8 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   <ul>
     <li>
       <b>Request Line:</b> This contains the
-      <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods">Method</a>, path, and HTTP
-      version
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods" target="_blank">Method</a
+      >, path, and HTTP version
     </li>
     <li>
       <b>Headers:</b> This contains key-value pairs with info about the request, info like
@@ -459,11 +461,10 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
 
   <p>
     Many applications use <code>application/json</code> for the body, for instance
-    <a href="#no-sql-injection" target="_self">No Sql Injection</a> uses
+    <a href="#no-sql-injection">No Sql Injection</a> uses
     <code>application/json</code>
     for its forms. File uploads also use the body field, for example if you inspect a file upload in
-    <a href="#trickster" target="_self">Trickster</a>, you'll see the file itself getting uploaded
-    in the body.
+    <a href="#trickster">Trickster</a>, you'll see the file itself getting uploaded in the body.
   </p>
   <p>
     This was a really quick introduction into HTTP requests, but if you still don't understand them,
@@ -477,7 +478,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   </p>
   <p>A POST request indicates to the server that we want want them to store this data.</p>
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/"
     status={302}
@@ -511,7 +512,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     Anyways we are then redirected to <code>/dashboard</code>, where there is a single input box
     asking for a one time password. It looks something like this.
   </p>
-  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-prose">
+  <div class="p-8 m-auto rounded-lg bg-zinc-800 not-tw-prose">
     <h2 class="mb-4 text-3xl">2fa authentication</h2>
     <form method="POST">
       <input
@@ -531,7 +532,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   </div>
   <p>If we enter anything and press the button, the following request is made:</p>
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/dashboard"
     status={200}
@@ -558,8 +559,8 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
 
   <p>
     Lets start messing with the requests to see if we can get anywhere. Again,
-    <a href="https://portswigger.net/burp">BurpSuite</a> can be used to solve the challenge. Here are
-    the steps to modify a request in Burp.
+    <a href="https://portswigger.net/burp" target="_blank">BurpSuite</a> can be used to solve the challenge.
+    Here are the steps to modify a request in Burp.
   </p>
 
   <ol>
@@ -607,7 +608,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     class="w-full px-2 mb-4 rounded-md bg-zinc-800"
   />
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/dashboard"
     status={200}
@@ -637,7 +638,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   </p>
 
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/dashboard"
     status={200}
@@ -709,7 +710,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     class="w-full px-2 mb-4 rounded-md bg-zinc-800"
   />
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://titan.picoctf.net:57434/dashboard"
     status={200}
@@ -732,10 +733,11 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
 
   <p>
     True to its name, there is No SQL Injection, but there NoSQL Injection!
-    <a href="https://en.wikipedia.org/wiki/NoSQL">NoSQL</a> refers to non-relational database
-    structures where all data is stored under one singular data structure. In this challenge, the
-    NoSQL database of choice is MongoDB, and they use a javascript library known as
-    <a href="https://npmjs.com/mongoose"><code>mongoose</code></a> to interface with it.
+    <a href="https://en.wikipedia.org/wiki/NoSQL" target="_blank">NoSQL</a> refers to non-relational
+    database structures where all data is stored under one singular data structure. In this
+    challenge, the NoSQL database of choice is MongoDB, and they use a javascript library known as
+    <a href="https://npmjs.com/mongoose" target="_blank"><code>mongoose</code></a> to interface with
+    it.
   </p>
 
   <p>
@@ -795,8 +797,8 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
 
   <p>
     Lets take a look at
-    <a href="https://mongoosejs.com/docs/api/model.html#Model.find()">the docs</a> for mongoose to
-    see what we can do with objects in the <code>User.f&zwnj;ind</code>.
+    <a href="https://mongoosejs.com/docs/api/model.html#Model.find()" target="_blank">the docs</a>
+    for mongoose to see what we can do with objects in the <code>User.f&zwnj;ind</code>.
   </p>
 
   <Prism
@@ -822,8 +824,9 @@ await MyModel.find({ name: /john/i }, null, { skip: 10 }).exec();`}
 
   <p>
     After a quick google search I stumbled upon
-    <a href="https://stackoverflow.com/questions/52707399">this StackOverflow post</a> which had just
-    the payload I needed
+    <a href="https://stackoverflow.com/questions/52707399" target="_blank"
+      >this StackOverflow post</a
+    > which had just the payload I needed
   </p>
   <Prism
     code={`{
@@ -851,7 +854,7 @@ await MyModel.find({ name: /john/i }, null, { skip: 10 }).exec();`}
   </p>
 
   <HTTP
-    class="p-8 rounded-lg not-prose bg-zinc-800"
+    class="p-8 rounded-lg not-tw-prose bg-zinc-800"
     method="POST"
     url="http://atlas.picoctf.net:63191/login"
     status={200}
@@ -1030,16 +1033,16 @@ after validation, store the uploaded files so that the admin can retrieve them l
   <h2 id="elements">Elements</h2>
 
   <p>
-    Alright its time for the main course! <a href="https://larry.sh/">EhhThing</a>'s annual
-    hellscape, Elements!! Last year, he wrote msfroggenerator2, which was very difficult. I was very
-    excited when I heard he wrote another challenge for this year.
+    Alright its time for the main course! <a href="https://larry.sh/" target="_blank">EhhThing</a>'s
+    annual hellscape, Elements!! Last year, he wrote msfroggenerator2, which was very difficult. I
+    was very excited when I heard he wrote another challenge for this year.
   </p>
 
   <p>
     Before I start talking about the solution, I would like to thank
-    <a href="https://amateurs.team">my team</a> for helping out with this challenge. This challenge could
-    have not been possible without my incredible teammates who constantly push me to be the best I can
-    be, as well as provide assistance whenever possible.
+    <a href="https://amateurs.team" target="_blank">my team</a> for helping out with this challenge.
+    This challenge could have not been possible without my incredible teammates who constantly push me
+    to be the best I can be, as well as provide assistance whenever possible.
   </p>
 
   <p>
@@ -1051,15 +1054,15 @@ after validation, store the uploaded files so that the admin can retrieve them l
     Anyways, onto the solution! The next few pages of words will be full of pure malding and will
     outline everything that we tried before eventually arriving at our solution, so if you want to
     skip that, click here:
-    <a href="#elements-bringing-it-all-together" target="_self">Gimmie Solution!!</a>
+    <a href="#elements-bringing-it-all-together">Gimmie Solution!!</a>
   </p>
   <h3 id="elements-overview" class="elements-heading">Overview</h3>
   <p>
     Lets go through a quick rundown of this challenge. Elements is an
-    <a href="https://neal.fun/infinite-craft/">Infinite Craft</a> clone, and our end goal is to get XSS
-    and bypass the Content Security Policy preventing us from leaking any info. There are 4 important
-    files. This section will be a brief overview of the files, but I recommend you download the challenge
-    yourself and try to understand the files yourself.
+    <a href="https://neal.fun/infinite-craft/" target="_blank">Infinite Craft</a> clone, and our end
+    goal is to get XSS and bypass the Content Security Policy preventing us from leaking any info. There
+    are 4 important files. This section will be a brief overview of the files, but I recommend you download
+    the challenge yourself and try to understand the files yourself.
   </p>
   <ul>
     <li>
@@ -1071,7 +1074,7 @@ after validation, store the uploaded files so that the admin can retrieve them l
       <code>static/index.js</code>: This is the client code, we'll use this file to get XSS, apart
       from giving us XSS it doesn't really need to be analyzed. You get XSS by crafting the "XSS"
       element, which we'll cover in
-      <a href="#elements-getting-eval" target="_self">Getting Eval</a>.
+      <a href="#elements-getting-eval">Getting Eval</a>.
     </li>
     <li>
       <code>chromium.diff/chromium.deb</code>: This is the custom chromium patch that patches one of
@@ -1153,8 +1156,11 @@ after validation, store the uploaded files so that the admin can retrieve them l
   </p>
   <p>
     The way we'll solve it is called DFS or
-    <a href="https://en.wikipedia.org/wiki/Depth-first_search">Depth-First Search</a>, in essence we
-    figure out what two elements we need to create <code>XSS</code> (<code>Exploit</code> and
+    <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search</a
+    >, in essence we figure out what two elements we need to create <code>XSS</code> (<code
+      >Exploit</code
+    >
+    and
     <code>Web Design</code>), then figure out the two elements required to make <code>Exploit</code>
     (<code>Cybersecurity</code> and <code>Vulnerability</code>), then the two elements required to
     make Cybersecurity, until we have a path from the original 4 ingredients to our desired XSS
@@ -1218,8 +1224,9 @@ console.log(JSON.stringify(out));`}
   <h3 id="elements-csp" class="elements-heading">Sweet, Sweet, Hellish CSP</h3>
   <p>
     CSP, or
-    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a> is a
-    web technology that allows a website to control how resources are loaded and used. The challenge
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank"
+      >Content Security Policy</a
+    > is a web technology that allows a website to control how resources are loaded and used. The challenge
     has only started. We need to find a way to bypass the CSP in order to win, because if we don't bypass
     CSP, we won't be able to leak any information, and that includes the flag.
   </p>
@@ -1254,7 +1261,9 @@ console.log(JSON.stringify(out));`}
     </li>
     <li>
       <code>worker-src 'none'</code>: Prevents you from using the
-      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Worker">WebWorkers API</a>.
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Worker" target="_blank"
+        >WebWorkers API</a
+      >.
     </li>
     <li>
       <code>navigate-to 'none'</code>: Disables any form of redirect to another page, even links are
@@ -1279,13 +1288,13 @@ console.log(JSON.stringify(out));`}
   </p>
   <p>
     First thing we do is unpack <code>chrome.deb</code>
-    <Prism
-      code={`$ mkdir chrome
+  </p>
+  <Prism
+    code={`$ mkdir chrome
 $ cd chrome
 $ ar x ../chrome.deb`}
-      lang="text"
-    />
-  </p>
+    lang="text"
+  />
   <p>Inside we'll find two more tar files.</p>
   <Prism
     code={`$ ls
@@ -1309,7 +1318,10 @@ $ ./opt/chromium.org/chromium-unstable/chromium-browser-unstable`}
   </p>
   <p>
     We can use WebRTC by abusing a setting in
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection">
+    <a
+      href="https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection"
+      target="_blank"
+    >
       <code>RTCPeerConnection</code>
     </a>. More specifically the <code>iceServers</code> option (ICE stands for Interactive
     Connectivity Establishment), which allows us to specify a list of <code>STUN</code> servers
@@ -1356,7 +1368,9 @@ index f0948629cb..393e7c77e0 100644
   </p>
 
   <p>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch">DNS prefetch</a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch" target="_blank"
+      >DNS prefetch</a
+    >
     is a browser feature that allows the browser to resolve website IPs through DNS before you click
     on any link. This drastically decreases load times but we can also use it to leak information.
   </p>
@@ -1426,29 +1440,35 @@ index f0948629cb..393e7c77e0 100644
   </p>
   <p>
     At this point smashmaster and I started looking through some more
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API ">web APIs</a>, seeing if any of them
-    could be of any use to us.
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank">web APIs</a>, seeing
+    if any of them could be of any use to us.
   </p>
   <ul>
     <li>
-      <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API">
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API"
+        target="_blank"
+      >
         CSS font loading API
       </a> - Failed: Covered by CSP
     </li>
     <li>
-      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fenced_frame_API">
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fenced_frame_API" target="_blank">
         Fenced Frame API
       </a> - Failed: Covered by CSP + very confusing to use
     </li>
     <li>
-      <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebTransport">
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebTransport" target="_blank">
         <code>WebTransport</code>
       </a>
       - Failed: We thought it was a similar API to WebRTC, and we could somehow pull off an
       <code>iceServers</code> trick but for this, unfortunately, no dice. Also covered by CSP
     </li>
     <li>
-      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API">
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API"
+        target="_blank"
+      >
         Payment Request API
       </a> - Failed: Covered by CSP
     </li>
@@ -1467,48 +1487,49 @@ index f0948629cb..393e7c77e0 100644
     being able to detect that to leak info.
   </p>
   <p>
-    HELLOPERSON looked into some DoS bugs on the <a href="https://issues.chromium.org/"
-      >Chromium Issues</a
+    HELLOPERSON looked into some DoS bugs on the <a
+      href="https://issues.chromium.org/"
+      target="_blank">Chromium Issues</a
     > website. We ended up not using any of these, but they are here for the intrested.
   </p>
   <details>
     <summary>Show DoS Bugs</summary>
     <!-- prettier-ignore -->
     <ul>
-      <li><a href="https://issues.chromium.org/issues/326091489">Tab crashes when setting css cursor to svg with width or height = "128px""</a></li>
-      <li><a href="https://issues.chromium.org/issues/326490765">3.Observed iframe crashes 4.Observed iframe is white in #122.0.6261.69</a></li>
-      <li><a href="https://issues.chromium.org/issues/326091167">Chrome chrashes on page load with error STATUS_ACCESS_VIOLATION</a></li>
-      <li><a href="https://issues.chromium.org/issues/324853421">SVG Memory exhaustion via inline XSLT in IMG tag</a></li>
-      <li><a href="https://issues.chromium.org/issues/40946317">Chrome confused while loading page</a></li>
-      <li><a href="https://issues.chromium.org/issues/40945241">nullptr read during &lt;slot&gt; movement on media query</a></li>
-      <li><a href="https://issues.chromium.org/issues/40286655">CHECK failure with MathML + ::first-letter</a></li>
-      <li><a href="https://issues.chromium.org/issues/40286059">ComputedStyleUtils::ValueForPositionOffset CHECK getting hit in canary</a></li>
-      <li><a href="https://issues.chromium.org/issues/40284926">Integer producing CSS Math functions crash with complex arguments</a></li>
-      <li><a href="https://issues.chromium.org/issues/40935303">Chrome Browser Dos</a></li>
-      <li><a href="https://issues.chromium.org/issues/40934009">Crash occurs in style_resolver.cc when running a HTML file</a></li>
-      <li><a href="https://issues.chromium.org/issues/40930304">Huge clip-path on small composited contents creates huge mask layer</a></li>
-      <li><a href="https://issues.chromium.org/issues/40072212">drop-shadow filters on a separate layer causes dropped frames in the webpage and browser UI</a></li>
-      <li><a href="https://issues.chromium.org/issues/40280103">set opacity of an element to tan(atan2(0.5rem + 1px, 1rem + 1px)) crashes</a></li>
-      <li><a href="https://issues.chromium.org/issues/40064810">inconsistency when selecting :empty on chromium</a></li>
-      <li><a href="https://issues.chromium.org/issues/40930304">Huge clip-path on small composited contents creates huge mask layer</a></li>
-      <li><a href="https://issues.chromium.org/issues/40072212">drop-shadow filters on a separate layer causes dropped frames in the webpage and browser UI</a></li>
-      <li><a href="https://issues.chromium.org/issues/40935303">Chrome Browser Dos</a></li>
-      <li><a href="https://issues.chromium.org/issues/324853421">SVG Memory exhaustion via inline XSLT in IMG tag</a></li>
-      <li><a href="https://issues.chromium.org/issues/40930304">Huge clip-path on small composited contents creates huge mask layer</a></li>
-      <li><a href="https://issues.chromium.org/issues/40072212">drop-shadow filters on a separate layer causes dropped frames in the webpage and browser UI</a></li>
-      <li><a href="https://issues.chromium.org/issues/324853421">SVG Memory exhaustion via inline XSLT in IMG tag</a></li>
-      <li><a href="https://issues.chromium.org/issues/40935303">Chrome Browser Dos</a></li>
-      <li><a href="https://issues.chromium.org/issues/40230793">resizing website viewport eats a lot of memory</a></li>
-      <li><a href="https://issues.chromium.org/issues/40853375">-webkit-animation this suspected memory leak</a></li>
-      <li><a href="https://issues.chromium.org/issues/41323787">[css-contain] Very poor layout performance in Construct 3 PWA</a></li>
-      <li><a href="https://issues.chromium.org/issues/40781192">memory leak in @keyframes CSS animation</a></li>
-      <li><a href="https://issues.chromium.org/issues/40833572">memory leak in svg with animation, if the stacktrace is anything to go by it looks like it would be (CSS) animation objects not being cleaned up.</a></li>
-      <li><a href="https://issues.chromium.org/issues/41361903">blink::Animation objects leak in background tab</a></li>
-      <li><a href="https://issues.chromium.org/issues/41426446">svg stroke-dashoffset animation caused page crash</a></li>
-      <li><a href="https://issues.chromium.org/issues/41272904">SVG infinite animation lead to memory increase and high CPU utilization</a></li>
-      <li><a href="https://issues.chromium.org/issues/324108023">Memory leak with dynamic changes to 'container-type: size'</a></li>
-      <li><a href="https://issues.chromium.org/issues/325835006">Memory leak when using :empty::before after node remove</a></li>
-      <li><a href="https://issues.chromium.org/issues/40073042">asynchronously setting contain: strict causes memory leak</a></li>
+      <li><a href="https://issues.chromium.org/issues/326091489" target="_blank">Tab crashes when setting css cursor to svg with width or height = "128px""</a></li>
+      <li><a href="https://issues.chromium.org/issues/326490765" target="_blank">3.Observed iframe crashes 4.Observed iframe is white in #122.0.6261.69</a></li>
+      <li><a href="https://issues.chromium.org/issues/326091167" target="_blank">Chrome chrashes on page load with error STATUS_ACCESS_VIOLATION</a></li>
+      <li><a href="https://issues.chromium.org/issues/324853421" target="_blank">SVG Memory exhaustion via inline XSLT in IMG tag</a></li>
+      <li><a href="https://issues.chromium.org/issues/40946317" target="_blank">Chrome confused while loading page</a></li>
+      <li><a href="https://issues.chromium.org/issues/40945241" target="_blank">nullptr read during &lt;slot&gt; movement on media query</a></li>
+      <li><a href="https://issues.chromium.org/issues/40286655" target="_blank">CHECK failure with MathML + ::first-letter</a></li>
+      <li><a href="https://issues.chromium.org/issues/40286059" target="_blank">ComputedStyleUtils::ValueForPositionOffset CHECK getting hit in canary</a></li>
+      <li><a href="https://issues.chromium.org/issues/40284926" target="_blank">Integer producing CSS Math functions crash with complex arguments</a></li>
+      <li><a href="https://issues.chromium.org/issues/40935303" target="_blank">Chrome Browser Dos</a></li>
+      <li><a href="https://issues.chromium.org/issues/40934009" target="_blank">Crash occurs in style_resolver.cc when running a HTML file</a></li>
+      <li><a href="https://issues.chromium.org/issues/40930304" target="_blank">Huge clip-path on small composited contents creates huge mask layer</a></li>
+      <li><a href="https://issues.chromium.org/issues/40072212" target="_blank">drop-shadow filters on a separate layer causes dropped frames in the webpage and browser UI</a></li>
+      <li><a href="https://issues.chromium.org/issues/40280103" target="_blank">set opacity of an element to tan(atan2(0.5rem + 1px, 1rem + 1px)) crashes</a></li>
+      <li><a href="https://issues.chromium.org/issues/40064810" target="_blank">inconsistency when selecting :empty on chromium</a></li>
+      <li><a href="https://issues.chromium.org/issues/40930304" target="_blank">Huge clip-path on small composited contents creates huge mask layer</a></li>
+      <li><a href="https://issues.chromium.org/issues/40072212" target="_blank">drop-shadow filters on a separate layer causes dropped frames in the webpage and browser UI</a></li>
+      <li><a href="https://issues.chromium.org/issues/40935303" target="_blank">Chrome Browser Dos</a></li>
+      <li><a href="https://issues.chromium.org/issues/324853421" target="_blank">SVG Memory exhaustion via inline XSLT in IMG tag</a></li>
+      <li><a href="https://issues.chromium.org/issues/40930304" target="_blank">Huge clip-path on small composited contents creates huge mask layer</a></li>
+      <li><a href="https://issues.chromium.org/issues/40072212" target="_blank">drop-shadow filters on a separate layer causes dropped frames in the webpage and browser UI</a></li>
+      <li><a href="https://issues.chromium.org/issues/324853421" target="_blank">SVG Memory exhaustion via inline XSLT in IMG tag</a></li>
+      <li><a href="https://issues.chromium.org/issues/40935303" target="_blank">Chrome Browser Dos</a></li>
+      <li><a href="https://issues.chromium.org/issues/40230793" target="_blank">resizing website viewport eats a lot of memory</a></li>
+      <li><a href="https://issues.chromium.org/issues/40853375" target="_blank">-webkit-animation this suspected memory leak</a></li>
+      <li><a href="https://issues.chromium.org/issues/41323787" target="_blank">[css-contain] Very poor layout performance in Construct 3 PWA</a></li>
+      <li><a href="https://issues.chromium.org/issues/40781192" target="_blank">memory leak in @keyframes CSS animation</a></li>
+      <li><a href="https://issues.chromium.org/issues/40833572" target="_blank">memory leak in svg with animation, if the stacktrace is anything to go by it looks like it would be (CSS) animation objects not being cleaned up.</a></li>
+      <li><a href="https://issues.chromium.org/issues/41361903" target="_blank">blink::Animation objects leak in background tab</a></li>
+      <li><a href="https://issues.chromium.org/issues/41426446" target="_blank">svg stroke-dashoffset animation caused page crash</a></li>
+      <li><a href="https://issues.chromium.org/issues/41272904" target="_blank">SVG infinite animation lead to memory increase and high CPU utilization</a></li>
+      <li><a href="https://issues.chromium.org/issues/324108023" target="_blank">Memory leak with dynamic changes to 'container-type: size'</a></li>
+      <li><a href="https://issues.chromium.org/issues/325835006" target="_blank">Memory leak when using :empty::before after node remove</a></li>
+      <li><a href="https://issues.chromium.org/issues/40073042" target="_blank">asynchronously setting contain: strict causes memory leak</a></li>
     </ul>
   </details>
 
@@ -1597,12 +1618,13 @@ if True:
     in the chromium source. We scanned through <code>LockedMode</code>,
     <code>ModelExecuationAPI</code>, <code>RTCJitterBufferTarget</code>. smashmaster also brought up
     that the
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/CredentialsContainer/"
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/CredentialsContainer/" target="_blank"
       ><code>CredentialContainer</code></a
     >
     from the Credential Management API and how there is an
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/CredentialsContainer/create#iconurl"
-      ><code>iconURL</code></a
+    <a
+      href="https://developer.mozilla.org/en-US/docs/Web/API/CredentialsContainer/create#iconurl"
+      target="_blank"><code>iconURL</code></a
     >
     field in the <code>create()</code> method.
   </p>
@@ -1624,7 +1646,7 @@ if True:
   />
   <p>
     Next up was revising
-    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fencedframe">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fencedframe" target="_blank">
       <code> &lt;fencedframe&gt; </code>
     </a>. Last time we looked at it, we didn't really understand what was going on, so this time we
     tried playing around with it some more. This lead didn't last long though, because I decided to
@@ -1648,13 +1670,14 @@ if True:
   </p>
   <p>
     There are also multiple types of Credentials that you can store, which can be
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Credential">found here</a>. We'll only
-    be looking at
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/PasswordCredential"
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Credential" target="_blank"
+      >found here</a
+    >. We'll only be looking at
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/PasswordCredential" target="_blank"
       ><code>PasswordCredential</code></a
     >
     and
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/FederatedCredential"
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/FederatedCredential" target="_blank"
       ><code>FederatedCredential</code></a
     >
     because those two are the only ones with the <code>iconURL</code> field.
@@ -1666,7 +1689,7 @@ if True:
     browser.
   </p>
   <div
-    class="lg:w-[150%] lg:-translate-x-[16.66666666%] grid grid-rows-1 lg:grid-rows-1 gap-8 lg:grid-cols-2 align-center not-prose my-8"
+    class="lg:w-[150%] lg:-translate-x-[16.66666666%] grid grid-rows-1 lg:grid-rows-1 gap-8 lg:grid-cols-2 align-center not-tw-prose my-8"
   >
     <div class="m-auto w-fit">
       <div class="p-8 m-auto rounded-lg bg-zinc-800">
@@ -1736,7 +1759,7 @@ if True:
     <code>navigator.credientals.get(cred)</code>
     with the same <code>PasswordCredential</code> object, you'll get the following popup.
   </p>
-  <div class="not-prose">
+  <div class="not-tw-prose">
     <div class="m-auto w-fit">
       <div class="p-8 m-auto rounded-lg bg-zinc-800">
         <h3 class="flex items-center gap-2 mb-2 text-2xl">Sign in as</h3>
@@ -1795,8 +1818,9 @@ if True:
     lang="text"
   />
   <p>
-    We'll be using <a href="https://requests.readthedocs.io/en/latest/">python requests</a> to write
-    a solve script here. In the solve script, assign a variable to the output of the script.
+    We'll be using <a href="https://requests.readthedocs.io/en/latest/" target="_blank"
+      >python requests</a
+    > to write a solve script here. In the solve script, assign a variable to the output of the script.
   </p>
   <p>Then we need to craft our XSS payload, here is the one I used.</p>
   <Prism
@@ -1858,8 +1882,8 @@ print(r.text)`}
   <p>
     Figuring out which paths won't lead anywhere takes a good amount of intuition, and that
     intuition can only be built through practice. Speaking of practice, time for shameless plugging
-    time!! Our own CTF, <a href="https://ctftime.org/event/2226">AmateursCTF</a>, is happening April
-    5th! It will be a fun time :)
+    time!! Our own CTF, <a href="https://ctftime.org/event/2226" target="_blank">AmateursCTF</a>, is
+    happening April 5th! It will be a fun time :)
   </p>
   <p>
     Finally, because I was the first to solve elements the way the author intended, EhhThing sent me
@@ -1881,11 +1905,6 @@ print(r.text)`}
 </article>
 
 <style lang="postcss">
-  @font-face {
-    font-family: "Editorial New";
-    src: url("/PPEditorialNew/PPEditorialNew-Regular.otf") format("opentype");
-  }
-
   h1,
   h2,
   h3,
@@ -1894,8 +1913,9 @@ print(r.text)`}
   h6,
   blockquote {
     font-weight: normal !important;
-    font-family: "Editorial New";
+    font-family: var(--font-display);
   }
+  
   blockquote {
     color: theme(colors.zinc.300);
     @apply border-l-2 border-zinc-600;

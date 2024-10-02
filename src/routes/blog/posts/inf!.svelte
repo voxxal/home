@@ -22,7 +22,8 @@
   </div>
 </header>
 <article
-  class="max-w-full mt-16 prose lg:prose-xl prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-zinc-800 prose-code:rounded prose-code:p-1"
+  class="max-w-full mt-16 tw-prose lg:tw-prose-xl tw-prose-invert tw-prose-code:before:content-none tw-prose-code:after:content-none tw-prose-code:bg-zinc-800 tw-prose-code:rounded tw-prose-code:p-1"
+  id="article-content"
 >
   <div
     class="relative p-2 m-auto mb-8 font-mono border-4 rounded-md rounded-tl-none bg-amber-600/50 border-amber-600 mt-9 w-fit lg:hidden"
@@ -349,12 +350,12 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) }) `}
         title="The lbChecker joins the game, getting the gameState with the checkers' score"
       >
         <User />
-        <div class="not-prose"><p class="text-xs">join</p></div>
+        <div class="not-tw-prose"><p class="text-xs">join</p></div>
       </div>
       <div class="absolute left-[23.70rem] border h-4 border-dashed" />
 
       <div
-        class="absolute left-[26rem] w-48 h-52 bg-zinc-700 rounded-md -top-52 not-prose gap-2 flex flex-col"
+        class="absolute left-[26rem] w-48 h-52 bg-zinc-700 rounded-md -top-52 not-tw-prose gap-2 flex flex-col"
         title="This is the scoreboard that the lbChecker recieved."
       >
         <h3 class="font-bold text-center rounded-tr-md rounded-tl-md bg-zinc-800">Scoreboard</h3>
@@ -413,7 +414,7 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) }) `}
         title="The lbChecker leaves the game. It is now ready to rejoin at the next question"
       >
         <User />
-        <div class="not-prose"><p class="text-xs">leave</p></div>
+        <div class="not-tw-prose"><p class="text-xs">leave</p></div>
       </div>
       <div class="absolute left-[51.85rem] border h-4 border-dashed" />
       <div

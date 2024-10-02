@@ -2,36 +2,54 @@
   export let data;
 
   import state from "$lib/state";
-  import Toc from "svelte-toc";
   import "$lib/prism.css";
 
   $state.navbarColor = data.navbarColor;
 </script>
 
-<svelte:head><title>voxal | {data.title}</title></svelte:head>
+<svelte:head><title>Aiden Shi | {data.title}</title></svelte:head>
 
 {#if data.defaultLayout}
-  <div class="px-12 pt-28">
-    <header>
-      <h1 class="text-7xl font-medium bubbled-lg from-purple-800 to-60% pb-2 overflow-hidden">
-        {data.title}
-      </h1>
-      <p><span class="font-bold">Published:</span> {data.published}</p>
-    </header>
-    <hr class="my-4 border-zinc-600/75" />
-    <div class="flex m-auto">
-      <article
-        class="w-full mb-16 prose lg:prose-xl prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-zinc-800 prose-code:rounded prose-code:py-0.5 prose-code:px-1.5"
-      >
-        <svelte:component this={data.content} />
-      </article>
-      <!-- <Toc title="">
-        <li let:heading slot="toc-item">
-          {heading.innerText}
-        </li>
-      </Toc> -->
-    </div>
-  </div>
+  <header class="header">
+    <h1 class="heading">
+      {data.title}
+    </h1>
+
+    <!-- TODO get reading time in here one day -->
+    <h3 class="metadata"><span>Published: </span>{data.published}</h3>
+    <div class="divider"></div>
+  </header>
+  <article class="prose">
+    <svelte:component this={data.content} />
+  </article>
 {:else}
   <svelte:component this={data.content} />
 {/if}
+
+<style>
+  .header {
+    width: 65ch;
+    margin: auto;
+    margin-top: var(--navbar-offset);
+  }
+
+  .heading {
+    font-size: 4rem;
+    font-family: var(--font-display);
+    color: var(--text-em);
+    line-height: 1.1;
+    text-wrap: balance;
+    margin-bottom: 0.5rem;
+  }
+
+  .metadata {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .metadata span {
+    font-weight: 500;
+  }
+</style>
