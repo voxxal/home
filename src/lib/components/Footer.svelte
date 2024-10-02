@@ -110,6 +110,7 @@
     color: var(--text-em);
     font-size: 2rem;
     line-height: 1.5;
+    justify-content: center;
   }
 
   .socials {

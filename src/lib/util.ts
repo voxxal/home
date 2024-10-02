@@ -24,3 +24,23 @@ type Enumerate<N extends number, Acc extends number[] = []> = Acc["length"] exte
 export type Range<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>;
 
 export const cantor = (a: number, b: number) => ((a + b) * (a + b + 1)) / 2 + a;
+
+type CSSUnit =
+  | "%"
+  | "px"
+  | "em"
+  | "rem"
+  | "vh"
+  | "vw"
+  | "vmin"
+  | "vmax"
+  | "lh"
+  | "ch"
+  | "cm"
+  | "mm"
+  | "in"
+  | "px"
+  | "pt"
+  | "pc";
+
+export type CSSLength = `${number}${CSSUnit}`;

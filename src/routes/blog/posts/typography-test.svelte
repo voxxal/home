@@ -2,6 +2,7 @@
   export const metadata = {
     title: "typography test",
     published: "2024-09-07",
+    hidden: true,
   };
 </script>
 

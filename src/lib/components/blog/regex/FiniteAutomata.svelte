@@ -111,19 +111,22 @@
     y: ((state.depth + 1) / (1 + rankCounts[state.rank])) * height,
   });
   const controlHeight = (trans: TransitionNode) => {
-    const rank = (trans.to.rank + trans.from.rank) / 2;
-    // return height;
-    if (rank % 1 > 0) {
-      const low = Math.floor(rank);
-      const high = Math.ceil(rank);
-      const count = Math.max(rankCounts[low], rankCounts[high]);
-      return targetHeightToControlHeight(trans, ((count - 0.4) / count) * height);
-    } else {
-      return targetHeightToControlHeight(
-        trans,
-        ((rankCounts[rank] - 0.4) / rankCounts[rank]) * height,
-      );
-    }
+    const left = Math.min(trans.to.rank, trans.from.rank);
+    const right = Math.max(trans.to.rank, trans.from.rank);
+    const count = Math.max(...rankCounts.slice(left, right));
+    return targetHeightToControlHeight(trans, ((count - 0.4) / count) * height);
+
+    // const rank = (trans.to.rank + trans.from.rank) / 2;
+    // // return height;
+    // if (rank % 1 > 0) {
+    //   const count = Math.max(...rankCounts.slice(trans.to.rank, trans.from.rank))
+    //   return targetHeightToControlHeight(trans, ((count - 0.4) / count) * height);
+    // } else {
+    //   return targetHeightToControlHeight(
+    //     trans,
+    //     ((rankCounts[rank] - 0.4) / rankCounts[rank]) * height,
+    //   );
+    // }
   };
 
   const getQuadraticBezierCenterY = (edge1: number, control: number, edge2: number) =>
@@ -316,8 +319,8 @@
   {/each}
 
   {#if hover}
-  <!-- TODO recalculate CH -->
-    {@const ch = 9.78333} 
+    <!-- TODO recalculate CH -->
+    {@const ch = 8}
     {@const textLeft = Math.max(mouse.x - (str.length / 2) * ch, 8)}
     <g transition:fade={{ duration: 100 }}>
       <rect
@@ -345,7 +348,10 @@
         x={textLeft - 4}
         y={mouse.y - 28 - 4}
         height={16 + 8}
-        width={hover.i * ch + 4 + +(hover.i === str.length) * 4 + +(hover.i === 0) * -4}
+        width={hover.i * ch +
+          4 +
+          +(hover.i === str.length && str.length) * 4 +
+          +(hover.i === 0) * -4}
       >
       </rect>
 

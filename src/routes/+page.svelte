@@ -8,7 +8,7 @@
   const titles = [
     "a computer person",
     "a kindred spirit",
-    "searching for the north star",
+    "searching for that north star",
     "following the compass",
     "a designer i hope",
     "creating a world of his own",
@@ -18,7 +18,6 @@
     "experimenting",
     "a painter of code",
     "something to someone",
-    "temporal",
     "fleeting",
     "human?",
     "beyond help",
@@ -38,7 +37,7 @@
     "at peace",
     "meowing",
   ];
-  
+
   const websites = [
     {
       name: "voxal.dev",
@@ -72,6 +71,14 @@
       image: "/images/projects/cyberclass.png",
     },
     {
+      name: "CCA Aerospace Club",
+      technologies: ["eleventy"],
+      description:
+        "CCA Aerospace Club is a club me and some friends co-founded. Designed and built the website",
+      link: "https://cca-aerospace.club",
+      image: "/images/projects/cca-aerospace.png",
+    },
+    {
       name: "syscalls",
       technologies: ["svelte", "tailwind"],
       description:
@@ -90,7 +97,8 @@
     {
       name: "FurfSky Reborn",
       technologies: ["next.js", "tailwind", "figma"],
-      description: "Website for downloading the FurfSky Reborn texture pack for Hypixel Skyblock. Built the site.",
+      description:
+        "Website for downloading the FurfSky Reborn texture pack for Hypixel Skyblock. Built the site.",
       link: "https://furfsky.net",
       image: "/images/projects/fsr.png",
     },
@@ -111,19 +119,18 @@
 
   <div class="prose">
     <p>
-      In 2007 Aiden Shi invented procrastination. This was widely regarded as a bad move. To this
-      day, he seeks to right his wrong, but hasn't started yet. He says he'll start tomorrow.
+      Hey, I'm Aiden, designer and developer from California. I mess around with computers, making
+      websites, small programs, games, and whatever interests me a the time. I'm especially
+      interested in how we can use computers to <em>augment</em> our learning.
     </p>
     <p>
-      I design and develop things for automatic computational devices. While I'm best at making
-      websites, my heart yearns to be closer to the bytes. I'm also incredibly interested in how we
-      can use computers to <em>augment</em> our learning.
+      This website is a catalogue of my different projects and experiments. I hope you find
+      something interesting here.
     </p>
     <p>
-      This website is a catalogue of my different projects and experiments, but also an expression
-      of myself. I hope you find something interesting here.
+      Feel free to reach out, Discord is the best way to reach me. Details are in the footer. Pardon
+      the dust, this place is still in construction.
     </p>
-    <p>If you are a human consider reaching out and having a chat.</p>
   </div>
 </section>
 
@@ -164,8 +171,8 @@
     z-index: -10;
     left: -12.5rem;
     top: -6.25rem;
-    mask-image: linear-gradient(to bottom right, rgba(0 0 0 / 0.75), rgba(0 0 0 / 0.05) 75%);
-    animation: grow-in 1s cubic-bezier(0.34, 1.3, 0.64, 1);
+    mask-image: linear-gradient(to bottom right, rgba(0 0 0 / 0.5), rgba(0 0 0 / 0.05) 75%);
+    animation: grow-in 1s;
   }
 
   @keyframes grow-in {

@@ -15,7 +15,7 @@
       case "elm": color = "#1293D8"; break;
       case "postgresql": color = "#4169E1"; break;
       case "rust": color = "#CE422B"; break;
-      
+      case "eleventy": color = "#222222"; break;
     }
   });
 </script>

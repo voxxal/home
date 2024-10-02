@@ -36,6 +36,7 @@
 		"html-to-text": "^9.0.5",
 		"postcss": "^8.4.23",
 		"prismjs": "^1.29.0",
+		"shiki": "^1.16.2",
 		"sql.js": "^1.8.0",
 		"svelte-katex": "^0.1.2",
 		"svelte-toc": "^0.5.5",

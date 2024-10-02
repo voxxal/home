@@ -37,8 +37,9 @@
     font-size: 4rem;
     font-family: var(--font-display);
     color: var(--text-em);
-    line-height: 1.3;
+    line-height: 1.1;
     text-wrap: balance;
+    margin-bottom: 0.5rem;
   }
 
   .metadata {
