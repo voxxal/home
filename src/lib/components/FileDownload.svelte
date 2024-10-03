@@ -15,7 +15,7 @@ import { type Snippet } from "svelte";
 
 <span class="file-download">
   <File class="file-icon"/>
-  <a href={path} {download}>
+  <a href={path} download={download ? true : undefined} target="_blank">
     {@render children()}
   </a>
 </span>

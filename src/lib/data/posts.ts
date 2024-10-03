@@ -1,8 +1,6 @@
 import { browser } from "$app/environment";
 import { format } from "date-fns";
 import { convert } from "html-to-text";
-import { readFileSync } from "fs";
-import { join } from "path";
 
 // we require some server-side APIs to parse all metadata
 if (browser) {
@@ -28,6 +26,7 @@ export const posts = Object.entries(
 )
   .map(([filepath, post]: [string, any]) => {
     const html = (postsSources[filepath] as string).toString(); // TODO its kinda hard to find the file path actually
+    // TODO write your own lol, it really shouldn't be that hard.
     const text = convert(html, {
       baseElements: { selectors: ["p", "ul", "li"] },
     });
