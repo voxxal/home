@@ -9,12 +9,22 @@ if (browser) {
   throw new Error(`posts can only be imported server-side`);
 }
 
+interface Post {
+  metadata: {
+    published: string;
+    hidden?: boolean;
+  };
+}
+
+const postsSources = import.meta.glob("/src/routes/blog/posts/**/*.svelte", { eager: true, query: "?raw" })
+
 // Get all posts and add metadata
 export const posts = Object.entries(
   import.meta.glob("/src/routes/blog/posts/**/*.svelte", { eager: true })
 )
-  .map(([filepath, post]) => {
-    const html = readFileSync(join(process.cwd(), filepath)).toString(); // TODO its kinda hard to find the file path actually
+  .map(([filepath, post]: [string, any]) => {
+    
+    const html = (postsSources[filepath] as string).toString(); // TODO its kinda hard to find the file path actually
     const text = convert(html, {
       baseElements: { selectors: ["p", "ul", "li"] },
     });
@@ -43,7 +53,7 @@ export const posts = Object.entries(
   .filter((post) => !post?.hidden)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-function addTimezoneOffset(date) {
+function addTimezoneOffset(date: Date) {
   const offsetInMilliseconds = new Date().getTimezoneOffset() * 60 * 1000;
   return new Date(new Date(date).getTime() + offsetInMilliseconds);
 }
