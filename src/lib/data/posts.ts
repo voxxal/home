@@ -16,14 +16,17 @@ interface Post {
   };
 }
 
-const postsSources = import.meta.glob("/src/routes/blog/posts/**/*.svelte", { eager: true, query: "?raw" })
+const postsSources = import.meta.glob("/src/routes/blog/posts/**/*.svelte", {
+  eager: true,
+  query: "?raw",
+  import: "default",
+});
 
 // Get all posts and add metadata
 export const posts = Object.entries(
   import.meta.glob("/src/routes/blog/posts/**/*.svelte", { eager: true })
 )
   .map(([filepath, post]: [string, any]) => {
-    
     const html = (postsSources[filepath] as string).toString(); // TODO its kinda hard to find the file path actually
     const text = convert(html, {
       baseElements: { selectors: ["p", "ul", "li"] },
