@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         CommonApp Grade Importer
-// @namespace    https://voxal.dev
+// @namespace    https://voxal.dev/blog/capp-grade-importer
 // @version      1
 // @description  Imports grades from Aeries for use in common app. FOR CANYON CREST ACADEMY USAGE ONLY.
 // @author       Aiden Shi
@@ -111,12 +111,16 @@ const fillGrade = async (year, data, details) => {
     const markSelects = box.querySelectorAll(".course__grades mat-select");
 
     await selectFrom(markSelects[0], course.marks[0], true);
+    await sleep(200);
     await selectFrom(markSelects[1], course.marks[1], true);
     const creditInputs = box.querySelectorAll(".course__credits input");
     putInput(creditInputs[0], course.credits[0]);
+    await sleep(200);
     putInput(creditInputs[1], course.credits[1]);
+    await sleep(200);
+    putInput(creditInputs[2], course.credits[0] + course.credits[1]);
 
-    if (!creditInputs[3].checked) creditInputs[3].click();
+    if (creditInputs[3].checked) creditInputs[3].click();
   }
 };
 

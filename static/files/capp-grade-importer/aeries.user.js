@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Aeries Grade Exporter
-// @namespace    https://voxal.dev
+// @namespace    https://voxal.dev/blog/capp-grade-importer
 // @version      1
 // @description  Exports grades from Aeries for use in common app. FOR CANYON CREST ACADEMY USAGE ONLY.
 // @author       Aiden Shi
@@ -11,13 +11,12 @@
 (() => {
   "use strict";
   console.log("hello world");
-  const main = (e) => {
+  const main = async (e) => {
     e.preventDefault();
     const table = document.querySelector(".CourseHistory tbody");
     const result = {};
     let current = null;
     for (const row of table.children) {
-      console.log(row.id);
       if (row.id.includes("trSectionTitle")) {
         const header = row.querySelector(".SectionHeader").innerText;
         const [year, _sep1, schoolName, _sep2, grade, _sep3, term] = header.split(/( \| |\n)/);
@@ -25,7 +24,7 @@
         current = { year, term };
         result[year] ??= { grade: +grade.substring("Grade ".length), courses: {} };
       } else if (row.id.includes("trSectionSpacer")) {
-        //current = null;
+        current = null;
       } else if (row.id.includes("ReadRow1")) {
         if (current == null) continue;
         const [_null, _scId, yr, _mbQtr, grade, courseId, title, rt, cp, nh, mark, credMax, cred] =
