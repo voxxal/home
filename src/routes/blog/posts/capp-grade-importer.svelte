@@ -16,9 +16,9 @@
 <p>I come bearing gifts.</p>
 
 <p>
-  <FileDownload download={false} path="/files/capp-grade-importer/aeries.user.js"
-    >aeries.user.js</FileDownload
-  >
+  <FileDownload download={false} path="/files/capp-grade-importer/aeries.user.js">
+    aeries.user.js
+  </FileDownload>
   and
   <FileDownload download={false} path="/files/capp-grade-importer/common-app.user.js">
     common-app.user.js
@@ -68,4 +68,7 @@
   so I can update it.)
 </p>
 
-<p>Let me know if you have any issues or comments. Best way to reach me is through Discord. It's in the footer.</p>
+<p>
+  Let me know if you have any issues or comments. Best way to reach me is through Discord. It's in
+  the footer.
+</p>

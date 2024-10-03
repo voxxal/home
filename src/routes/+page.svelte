@@ -120,7 +120,7 @@
   <div class="prose">
     <p>
       Hey, I'm Aiden, designer and developer from California. I mess around with computers, making
-      websites, small programs, games, and whatever interests me a the time. I'm especially
+      websites, small programs, games, and whatever interests me at the time. I'm especially
       interested in how we can use computers to <em>augment</em> our learning.
     </p>
     <p>
