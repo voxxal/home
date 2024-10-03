@@ -95,11 +95,17 @@ const fillGrade = async (year, data, details) => {
     else if (title.includes("English") || title.includes("Lang")) await sub("English", true);
     else if (title.includes("AP Calculus")) await sub("Calculus", true);
     else if (title.includes("Calculus")) await sub("Pre-Calculus", true);
+    else if (title.includes("Math 1")) await sub("Algebra", true);
+    else if (title.includes("Math 2")) await sub("Geometry", true);
+    else if (title.includes("Math 3")) await sub("Trigonometry", true);
     else if (title.includes("Comp")) await sub("Computer Science", true);
     else if (title.includes("History")) await sub("History/Social Science", true);
     else if (title.includes("Physics")) await sub("Physics", true);
     else if (title.includes("Chem")) await sub("Chemistry", true);
     else if (title.includes("Bio")) await sub("Biology", true);
+    else if (title.includes("Art") || title.includes("Video"))
+      await sub("Art (Visual or Performing)", true);
+    else if (title.includes("Psych")) await sub("Science (Other)", true);
 
     putInput(box.querySelector(".course__info input[maxlength='100']"), title);
 
@@ -110,9 +116,18 @@ const fillGrade = async (year, data, details) => {
 
     const markSelects = box.querySelectorAll(".course__grades mat-select");
 
-    await selectFrom(markSelects[0], course.marks[0], true);
-    await sleep(200);
-    await selectFrom(markSelects[1], course.marks[1], true);
+    // in case its a pass fail class
+    if (course.marks[0] === "P" || course.marks[1] === "P") {
+      const sfx = " - (Pass/Fail)";
+      await selectFrom(markSelects[0], (course.marks[0] === "P" ? "Pass" : "Fail") + sfx, true);
+      await sleep(200);
+      await selectFrom(markSelects[1], (course.marks[1] === "P" ? "Pass" : "Fail") + sfx, true);
+    } else {
+      await selectFrom(markSelects[0], course.marks[0], true);
+      await sleep(200);
+      await selectFrom(markSelects[1], course.marks[1], true);
+    }
+
     const creditInputs = box.querySelectorAll(".course__credits input");
     putInput(creditInputs[0], course.credits[0]);
     await sleep(200);
