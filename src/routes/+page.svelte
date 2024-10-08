@@ -13,7 +13,6 @@
     "a designer i hope",
     "creating a world of his own",
     "found, maybe lost",
-    "beyond",
     "trying",
     "experimenting",
     "a painter of code",
@@ -35,6 +34,7 @@
     "building",
     "not taking himself seriously",
     "at peace",
+    "a [object String]",
     "meowing",
   ];
 
