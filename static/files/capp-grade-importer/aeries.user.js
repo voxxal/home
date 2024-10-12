@@ -8,11 +8,20 @@
 // @grant        none
 // ==/UserScript==
 
+const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+
 (() => {
   "use strict";
   console.log("hello world");
   const main = async (e) => {
     e.preventDefault();
+    const checkbox = document.querySelector(
+      "#ctl00_MainContent_subHIS_rptHistories_ctl00_chkDateDesc"
+    );
+    if (checkbox.checked) {
+      checkbox.click();
+      await sleep(2000);
+    }
     const table = document.querySelector(".CourseHistory tbody");
     const result = {};
     let current = null;
