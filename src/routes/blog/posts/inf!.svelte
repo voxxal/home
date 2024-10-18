@@ -12,6 +12,7 @@
   import { ArrowRight, Crown, Flag, User, AlertTriangle } from "lucide-svelte";
   import "prismjs/components/prism-typescript";
   import Katex from "svelte-katex";
+  import "$lib/tailwind.css";
 </script>
 
 <header class="flex items-center justify-center h-screen gradient">
@@ -35,7 +36,7 @@
     </div>
     This writeup was not designed for small screens. Proceed with caution.
   </div>
-  <div class="h-[1px]"/>
+  <div class="h-[1px]" />
   <div
     class="relative p-2 m-auto font-mono border-4 rounded-md rounded-tl-none bg-navy/50 border-navy mt-9 w-fit max-w-[65ch]"
   >

@@ -35,6 +35,7 @@
     "not taking himself seriously",
     "at peace",
     "a [object String]",
+    "not in a rush",
     "meowing",
   ];
 

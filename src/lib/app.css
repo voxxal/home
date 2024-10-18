@@ -2,6 +2,7 @@
 @import url("/fonts/gambarino/font.css");
 @import url("/fonts/iosevka/font.css");
 @import url("/fonts/space-mono/font.css");
+@import url("preflight.css");
 
 :root {
   /* TODO im pretty sure 900 is supposed to be darkest whoops... its fine :D */
@@ -96,7 +97,7 @@ body {
 .prose {
   width: 65ch;
   margin: auto;
-  
+
   .oversized {
     position: relative;
     left: 50%;
@@ -194,48 +195,18 @@ body {
     margin-bottom: 0.75em;
     margin-top: 1.5em;
   }
-  
+
   img {
     margin: auto;
   }
-}
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-  .bubbled {
-    @apply bg-clip-text text-stroke-color-transparent bg-gradient-to-t to-50%;
+  img:not(.preserve-width) {
+    width: 100%;
   }
 
-  .bubbled-sm {
-    @apply bubbled text-stroke-sm;
-  }
-
-  .bubbled-md {
-    @apply bubbled text-stroke-md;
-  }
-
-  .bubbled-lg {
-    @apply bubbled text-stroke-lg;
-  }
-}
-
-@layer utilities {
-  .text-stroke-sm {
-    -webkit-text-stroke-width: 0.15rem;
-  }
-
-  .text-stroke-md {
-    -webkit-text-stroke-width: 0.35rem;
-  }
-
-  .text-stroke-lg {
-    -webkit-text-stroke-width: 0.5rem;
-  }
-  .vignette-lg {
-    mask-image: radial-gradient(75% 75% at 50% 50%, #fff 0%, #0000 50%, #0000 100%);
-    -webkit-mask-image: radial-gradient(75% 75% at 50% 50%, #fff 0%, #0000 100%);
+  figcaption {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: 0.5rem;
   }
 }

@@ -26,6 +26,10 @@
   };
 </script>
 
+<script>
+  import "$lib/tailwind.css";
+</script>
+
 <p>
   My life has been a little bit of a mess for the past couple months. I guess you could say that
   this little project of mine is an attempt to improve myself. For the next 30 days I am planning to

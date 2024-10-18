@@ -21,6 +21,7 @@
   import "prismjs/components/prism-python";
   import ElementsDfsResult from "$lib/components/blog/pico-2024/ElementsDfsResult.svelte";
   import { onMount } from "svelte";
+  import "$lib/tailwind.css";
 
   const browser = detect();
   const CONSOLE_KEY = browser?.name === "firefox" ? "K" : "J";
@@ -135,7 +136,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   });
 
   const elementsPayload = () => {
-    const cred = new FederatedCredential({
+    const cred = new (FederatedCredential as any)({
       id: "← this image bypasses csp",
       provider: "https://voxal.dev",
       iconURL: "https://voxal.dev/images/pwned.png",
