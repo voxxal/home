@@ -105,7 +105,7 @@
   .footer-wordmark {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.25rem;
     font-family: var(--font-display);
     color: var(--text-em);
     font-size: 2rem;

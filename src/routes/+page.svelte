@@ -257,11 +257,11 @@
     margin-top: 8rem;
 
     animation:
-      do-not-exist-for-a-period-of-time 250ms,
+      do-not-exist-for-a-certain-period-of-time 250ms,
       intro-slide-in 500ms 250ms;
   }
 
-  @keyframes do-not-exist-for-a-period-of-time {
+  @keyframes do-not-exist-for-a-certain-period-of-time {
     from {
       opacity: 0;
     }
