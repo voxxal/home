@@ -1,9 +1,7 @@
 <script lang="ts">
   import Logo from "$lib/components/Logo.svelte";
   import Tag from "$lib/components/Tag.svelte";
-  import state from "$lib/state";
   import { useLanyard } from "svelte-lanyard";
-  $state.navbarColor = "from-dark-navy";
   const discord = useLanyard("290952090560364545");
   const titles = [
     "a computer person",
@@ -165,6 +163,18 @@
     margin: auto;
     margin-top: var(--navbar-offset);
     position: relative;
+    animation: intro-slide-in 500ms;
+  }
+
+  @keyframes intro-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .landing-logo {
@@ -245,6 +255,19 @@
 
   #websites {
     margin-top: 8rem;
+
+    animation:
+      do-not-exist-for-a-period-of-time 250ms,
+      intro-slide-in 500ms 250ms;
+  }
+
+  @keyframes do-not-exist-for-a-period-of-time {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0;
+    }
   }
 
   .websites-header {

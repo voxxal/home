@@ -1,16 +1,9 @@
 <script lang="ts">
   export let data;
 
-  import state from "$lib/state";
-  import gsap from "gsap";
-  import { onMount } from "svelte";
-  import { slideInConf, slideInConfTo } from "$lib/util";
   import "$lib/app.css";
-
-  import SplitText from "$lib/components/SplitText.svelte";
   import { Calendar, Clock } from "lucide-svelte";
 
-  $state.navbarColor = "from-purple-800";
 </script>
 
 <svelte:head><title>Aiden Shi | blog</title></svelte:head>

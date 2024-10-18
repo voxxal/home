@@ -3,7 +3,6 @@
     title: "∞! writeup",
     published: "2023-10-02",
     defaultLayout: false,
-    navbarColor: "transparent",
   };
 </script>
 

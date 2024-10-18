@@ -1,11 +1,9 @@
 <script lang="ts">
   import { type Puzzle, parsePuzFile, type Direction } from "$lib/puzzle";
-  import state from "$lib/state";
   import { onMount } from "svelte";
   import confetti from "canvas-confetti";
   let fileUpload: HTMLInputElement | null = null;
   let puzzle: Puzzle | null = null;
-  $state.navbarColor = "from-zinc-600";
   onMount(() => {
     if (document.location.hash) {
       const data = atob(document.location.hash.substring(1));

@@ -1,12 +1,10 @@
 <script lang="ts">
-  import state from "$lib/state";
   import gsap from "gsap";
   import { onMount } from "svelte";
   import { slideInConf, slideInConfTo } from "$lib/util";
 
   import SplitText from "$lib/components/SplitText.svelte";
 
-  $state.navbarColor = "from-emerald-800";
   let elements: HTMLSpanElement[] | undefined;
   onMount(() => {
     elements?.[0]?.classList.add("pl-1");

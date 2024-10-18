@@ -1,12 +1,7 @@
 <script lang="ts">
-  export let data;
-
-  import state from "$lib/state";
   import "$lib/app.css";
 
   import FileDownload from "$lib/components/FileDownload.svelte";
-
-  $state.navbarColor = "from-purple-800";
 </script>
 
 <svelte:head><title>Aiden Shi | branding</title></svelte:head>

@@ -1,10 +1,8 @@
 <script lang="ts">
   export let data;
 
-  import state from "$lib/state";
   import "$lib/prism.css";
 
-  $state.navbarColor = data.navbarColor;
 </script>
 
 <svelte:head><title>Aiden Shi | {data.title}</title></svelte:head>

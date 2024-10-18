@@ -1,12 +1,10 @@
 <script lang="ts">
   export let data;
 
-  import state from "$lib/state";
   import Toc from "svelte-toc";
   import "$lib/app.css";
   import "$lib/prism.css";
 
-  $state.navbarColor = "from-emerald-800";
 </script>
 
 <div class="px-12 pt-28">
