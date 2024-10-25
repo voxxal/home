@@ -1,6 +1,5 @@
 <script lang="ts">
   import "$lib/app.css";
-  // lea is so real for this
   import FileDownload from "$lib/components/FileDownload.svelte";
   const colorSpace = "hex";
   const colorCopy = (e: MouseEvent) => {

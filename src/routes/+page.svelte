@@ -25,15 +25,16 @@
     "something else",
     "also known as voxal",
     "tending to something",
-    "with you",
     "lonely",
     "resting",
     "denying the allegations",
     "building",
     "not taking himself seriously",
     "at peace",
-    "a [object String]",
+    "an [object String]",
     "not in a rush",
+    "clueless",
+    "at fault",
     "meowing",
   ];
 
@@ -163,7 +164,7 @@
     margin: auto;
     margin-top: var(--navbar-offset);
     position: relative;
-    animation: intro-slide-in 500ms;
+    animation: intro-slide-in 500ms ease-out;
   }
 
   @keyframes intro-slide-in {
@@ -258,7 +259,7 @@
 
     animation:
       do-not-exist-for-a-certain-period-of-time 250ms,
-      intro-slide-in 500ms 250ms;
+      intro-slide-in 500ms 250ms ease-out;
   }
 
   @keyframes do-not-exist-for-a-certain-period-of-time {
