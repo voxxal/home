@@ -103,7 +103,13 @@ const fillGrade = async (year, data, details) => {
     else if (title.includes("Physics")) await sub("Physics", true);
     else if (title.includes("Chem")) await sub("Chemistry", true);
     else if (title.includes("Bio")) await sub("Biology", true);
-    else if (title.includes("Art") || title.includes("Video") || title.includes("Draw") || title.includes("EVA"))
+    else if (
+      title.includes("Art") ||
+      title.includes("Video") ||
+      title.includes("Draw") ||
+      title.includes("EVA") ||
+      title.includes("Sculpt")
+    )
       await sub("Art (Visual or Performing)", true);
     else if (title.includes("Psych")) await sub("Science (Other)", true);
 
@@ -111,7 +117,8 @@ const fillGrade = async (year, data, details) => {
 
     if (title.includes("AP"))
       await selectFrom(`#${box.id} .course__level`, "Advanced Placement (AP)", true);
-    else if (title.includes("Hon") || title.includes("HP")) await selectFrom(`#${box.id} .course__level`, "Honors", true);
+    else if (title.includes("Hon") || title.includes("HP"))
+      await selectFrom(`#${box.id} .course__level`, "Honors", true);
     else await selectFrom(`#${box.id} .course__level`, "Regular/Standard", true);
 
     const markSelects = box.querySelectorAll(".course__grades mat-select");

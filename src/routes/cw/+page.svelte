@@ -2,6 +2,8 @@
   import { type Puzzle, parsePuzFile, type Direction } from "$lib/puzzle";
   import { onMount } from "svelte";
   import confetti from "canvas-confetti";
+  import "$lib/tailwind.css";
+  
   let fileUpload: HTMLInputElement | null = null;
   let puzzle: Puzzle | null = null;
   onMount(() => {
