@@ -32,7 +32,7 @@
     "not taking himself seriously",
     "at peace",
     "an [object String]",
-    "not in a rush",
+    "in no rush",
     "clueless",
     "at fault",
     "meowing",

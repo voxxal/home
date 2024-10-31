@@ -119,7 +119,7 @@ const fillGrade = async (year, data, details) => {
       await selectFrom(`#${box.id} .course__level`, "Advanced Placement (AP)", true);
     else if (title.includes("Hon") || title.includes("HP"))
       await selectFrom(`#${box.id} .course__level`, "Honors", true);
-    else await selectFrom(`#${box.id} .course__level`, "Regular/Standard", true);
+    else await selectFrom(`#${box.id} .course__level`, "College Prep", true);
 
     const markSelects = box.querySelectorAll(".course__grades mat-select");
 
@@ -140,9 +140,9 @@ const fillGrade = async (year, data, details) => {
     await sleep(200);
     putInput(creditInputs[1], course.credits[1]);
     await sleep(200);
-    putInput(creditInputs[2], course.credits[0] + course.credits[1]);
+    // putInput(creditInputs[2], course.credits[0] + course.credits[1]);
 
-    if (creditInputs[3].checked) creditInputs[3].click();
+    if (!creditInputs[3].checked) creditInputs[3].click();
   }
 };
 
