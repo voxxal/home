@@ -49,7 +49,7 @@ export const posts = Object.entries(
         : undefined,
       wordCount: text.split(/\w/).length,
       readingTime: Math.max(text.split(/\w/).length, 255) / 255,
-      preview: text.substring(0, 65 * 4) + (text.length > 65 * 4 ? "..." : ""),
+      preview: post.description ?? text.substring(0, 65 * 4) + (text.length > 65 * 4 ? "..." : ""),
     };
   })
   .filter((post) => !post?.hidden)

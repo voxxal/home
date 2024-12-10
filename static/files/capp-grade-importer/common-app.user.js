@@ -140,9 +140,9 @@ const fillGrade = async (year, data, details) => {
     await sleep(200);
     putInput(creditInputs[1], course.credits[1]);
     await sleep(200);
-    // putInput(creditInputs[2], course.credits[0] + course.credits[1]);
+    putInput(creditInputs[2], "");
 
-    if (!creditInputs[3].checked) creditInputs[3].click();
+    if (creditInputs[3].checked) creditInputs[3].click();
   }
 };
 
@@ -164,6 +164,8 @@ const populateButtons = (details) => {
 
 (() => {
   "use strict";
+  if (window?.CAGI_INIT) return;
+  window.CAGI_INIT = true
   console.log("hello world");
   let details = null;
   const div = document.createElement("div");
