@@ -1,7 +1,11 @@
 <script lang="ts">
-  export let glowColor = "from-dark-navy";
   import { page } from "$app/stores";
   import Logo from "./Logo.svelte";
+  interface Props {
+    glowColor?: string;
+  }
+
+  let { glowColor = "from-dark-navy" }: Props = $props();
   const routes = [
     { url: "/", title: "home" },
     { url: "/blog", title: "blog" },

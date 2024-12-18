@@ -1,11 +1,13 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { type Puzzle, parsePuzFile, type Direction } from "$lib/puzzle";
   import { onMount } from "svelte";
   import confetti from "canvas-confetti";
   import "$lib/tailwind.css";
   
-  let fileUpload: HTMLInputElement | null = null;
-  let puzzle: Puzzle | null = null;
+  let fileUpload: HTMLInputElement | null = $state(null);
+  let puzzle: Puzzle | null = $state(null);
   onMount(() => {
     if (document.location.hash) {
       const data = atob(document.location.hash.substring(1));
@@ -57,9 +59,9 @@
       document.removeEventListener("keydown", handleKeydown);
     };
   });
-  $: wordInfo = puzzle?.wordInfo() ?? { parts: [], wordNum: 0 };
-  let win: boolean;
-  $: {
+  let wordInfo = $derived(puzzle?.wordInfo() ?? { parts: [], wordNum: 0 });
+  let win: boolean = $state();
+  run(() => {
     // win = true;
     win = win || puzzle ? puzzle?.solution === puzzle?.grid : false;
     if (win) {
@@ -103,7 +105,7 @@
         startVelocity: 45,
       });
     }
-  }
+  });
   const color = (puzzle: Puzzle, i: number): string => {
     if (puzzle.solution[i] === ".") return "";
     if (puzzle.cursor === i) return "bg-navy";
@@ -143,11 +145,11 @@
         >
           {#each puzzle.grid as cell, i}
             {@const isBlackCell = puzzle.solution[i] === "."}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
 
             <div
               class="relative {color(puzzle, i)} select-none {isBlackCell ? '' : 'cursor-pointer'}"
-              on:click={() => {
+              onclick={() => {
                 if (!puzzle || isBlackCell) return;
                 if (puzzle.cursor === i) puzzle.switchFacing();
                 puzzle.cursor = i;
@@ -167,13 +169,13 @@
           <div>
             {#each Object.entries(puzzle.clues.across) as [knum, clue]}
               {@const num = +knum}
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
               <div
                 class="px-4 py-1 text-lg transition-colors rounded-md cursor-pointer {num ===
                   wordInfo.wordNum && puzzle.facing === 'across'
                   ? 'bg-navy'
                   : 'hover:bg-slate-300/10'}"
-                on:click={() => {
+                onclick={() => {
                   if (!puzzle) return;
                   puzzle.facing = "across";
                   puzzle.cursor = puzzle.gridNums.findIndex((x) => x === num) || puzzle.cursor;
@@ -189,13 +191,13 @@
           <div>
             {#each Object.entries(puzzle.clues.down) as [knum, clue]}
               {@const num = +knum}
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
               <div
                 class="px-4 py-1 text-lg transition-colors rounded-md cursor-pointer {num ===
                   wordInfo.wordNum && puzzle.facing === 'down'
                   ? 'bg-navy'
                   : 'hover:bg-slate-300/10'}"
-                on:click={() => {
+                onclick={() => {
                   if (!puzzle) return;
                   puzzle.facing = "down";
                   puzzle.cursor = puzzle.gridNums.findIndex((x) => x === num) || puzzle.cursor;

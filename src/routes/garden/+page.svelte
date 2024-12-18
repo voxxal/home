@@ -5,7 +5,7 @@
 
   import SplitText from "$lib/components/SplitText.svelte";
 
-  let elements: HTMLSpanElement[] | undefined;
+  let elements: HTMLSpanElement[] | undefined = $state();
   onMount(() => {
     elements?.[0]?.classList.add("pl-1");
     const tl = gsap.timeline();

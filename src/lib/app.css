@@ -13,6 +13,7 @@
   --surface-400: oklch(52.24% 0.03 130);
   --surface-500: oklch(62.24% 0.03 130);
   --surface-600: oklch(72.24% 0.03 130);
+  --surface-700: oklch(82.24% 0.03 130);
 
   --accent-100: oklch(37.54% 0.161 113.52);
   --accent-200: oklch(47.54% 0.161 113.52);
@@ -25,7 +26,8 @@
   --accent-900: oklch(117.54% 0.161 113.52);
 
   --text-primary: oklch(98% 0.03 102);
-  --text-secondary: var(--surface-500);
+  --text-secondary: var(--surface-700);
+  --text-tertiary: var(--surface-500);
   --text-em: oklch(98% 0.075 102);
   --text-link: var(--accent-600);
 
@@ -63,9 +65,25 @@ body {
   font-size: 16px;
 }
 
-.divider {
-  margin: 2rem;
+.page-header {
+  width: 65ch;
+  margin: auto;
+  margin-top: var(--navbar-offset);
+  .divider {
+    margin-top: 2rem;
+  }
+}
+
+.page-heading {
+  font-size: 4rem;
+  font-family: var(--font-display);
+  color: var(--text-em);
+  line-height: 1;
   margin-bottom: 1rem;
+}
+
+.divider {
+  margin: 1rem 2rem;
   height: 1px;
   background: var(--surface-300);
 }
@@ -109,6 +127,12 @@ body {
     line-height: 1.5;
   }
 
+
+
+  & > p:first-child {
+    margin-top: 0;
+  }
+
   & > p:last-child {
     margin-bottom: 0;
   }
@@ -138,7 +162,7 @@ body {
   li {
     padding-inline-start: 0.4rem;
     &::marker {
-      color: var(--text-secondary);
+      color: var(--text-tertiary);
     }
   }
 
@@ -205,7 +229,7 @@ body {
   }
 
   figcaption {
-    color: var(--text-secondary);
+    color: var(--text-tertiary);
     font-style: italic;
     margin-top: 0.5rem;
   }

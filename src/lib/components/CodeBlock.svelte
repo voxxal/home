@@ -73,7 +73,7 @@
     gap: 0.5rem;
   }
 
-  .file-details:has(.file-name) {
+  .file-details:has(:global(.file-name)) {
     padding-right: 0.5rem;
   }
 

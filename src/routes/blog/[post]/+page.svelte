@@ -1,7 +1,7 @@
 <script lang="ts">
-  export let data;
 
   import "$lib/prism.css";
+  let { data } = $props();
 
 </script>
 
@@ -18,10 +18,10 @@
     <div class="divider"></div>
   </header>
   <article class="prose">
-    <svelte:component this={data.content} />
+    <data.content />
   </article>
 {:else}
-  <svelte:component this={data.content} />
+  <data.content />
 {/if}
 
 <style>
@@ -41,7 +41,7 @@
   }
 
   .metadata {
-    color: var(--text-secondary);
+    color: var(--text-tertiary);
     display: flex;
     align-items: center;
     gap: 0.25rem;

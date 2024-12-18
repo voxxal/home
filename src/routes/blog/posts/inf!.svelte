@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   export const metadata = {
     title: "∞! writeup",
     published: "2023-10-02",
@@ -35,7 +35,7 @@
     </div>
     This writeup was not designed for small screens. Proceed with caution.
   </div>
-  <div class="h-[1px]" />
+  <div class="h-[1px]"></div>
   <div
     class="relative p-2 m-auto font-mono border-4 rounded-md rounded-tl-none bg-navy/50 border-navy mt-9 w-fit max-w-[65ch]"
   >
@@ -317,7 +317,7 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) }) `}
   <div class="grid justify-center h-16 grid-cols-1 grid-rows-1 max-w-[75rem] m-auto px-8 mt-56">
     <div
       class="self-center h-4 col-start-1 row-start-1 border-2 bg-zinc-700 rounded-xl border-zinc-600 -z-20"
-    />
+></div>
     <div class="relative grid items-center h-16 col-start-1 row-start-1">
       <div
         class="absolute px-3 py-2 bg-yellow-700 border border-yellow-500 rounded"
@@ -352,7 +352,7 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) }) `}
         <User />
         <div class="not-tw-prose"><p class="text-xs">join</p></div>
       </div>
-      <div class="absolute left-[23.70rem] border h-4 border-dashed" />
+      <div class="absolute left-[23.70rem] border h-4 border-dashed"></div>
 
       <div
         class="absolute left-[26rem] w-48 h-52 bg-zinc-700 rounded-md -top-52 not-tw-prose gap-2 flex flex-col"
@@ -416,11 +416,11 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) }) `}
         <User />
         <div class="not-tw-prose"><p class="text-xs">leave</p></div>
       </div>
-      <div class="absolute left-[51.85rem] border h-4 border-dashed" />
+      <div class="absolute left-[51.85rem] border h-4 border-dashed"></div>
       <div
         class="h-3 bg-zinc-500 left-[23.7rem] w-[calc(51.85rem-23.7rem)] absolute -z-10"
         title="Within this bar, the lbChecker is in the game"
-      />
+></div>
 
       <div
         class="absolute right-0 px-3 py-2 border rounded bg-fuchsia-700 border-fuchsia-500"
@@ -486,7 +486,7 @@ winner.on("flag", (flag) => { console.log("FLAG!!!!! " + flag) })`}
       Finally lets just go ahead and use this solve script. Running this script and waiting a while,
       we'll get the flag.
     </p>
-    <div class="h-[1px]" />
+    <div class="h-[1px]"></div>
     <div
       class="relative p-2 m-auto font-mono border-4 rounded-md rounded-tl-none bg-navy/50 border-navy mt-9 w-fit"
     >

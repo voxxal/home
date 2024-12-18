@@ -1,24 +1,28 @@
-<script context="module">
+<script module>
   export const metadata = { title: "sql injection", lastUpdated: "May 2023" };
 </script>
 
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Prism from "$lib/components/Prism.svelte";
   import Spoiler from "$lib/components/Spoiler.svelte";
   import "prismjs/components/prism-sql";
   import initSqlJs, { type Database } from "sql.js";
   import { onMount } from "svelte";
 
-  let db: Database;
-  let boolPassword = "";
-  let boolSolveState: "" | "solved" | "wrong" | `Error: ${string}` = "";
-  let unionSearch = "";
-  let unionSearchResult: { id: number; name: string; price: number; stock: number }[] = [];
-  let unionSolved = false;
-  $: unionSolved = unionSearchResult.some((x) =>
-    Object.values(x).some((v) => v === "you did it! you got me!")
-  );
-  let unionSearchError = "";
+  let db: Database = $state();
+  let boolPassword = $state("");
+  let boolSolveState: "" | "solved" | "wrong" | `Error: ${string}` = $state("");
+  let unionSearch = $state("");
+  let unionSearchResult: { id: number; name: string; price: number; stock: number }[] = $state([]);
+  let unionSolved = $state(false);
+  run(() => {
+    unionSolved = unionSearchResult.some((x) =>
+      Object.values(x).some((v) => v === "you did it! you got me!")
+    );
+  });
+  let unionSearchError = $state("");
 
   onMount(() => {
     const initSql = async () => {
@@ -154,7 +158,7 @@ client.query(\`SELECT product_name, price FROM products WHERE product_id = '\${p
   <button
     class="px-4 py-1 font-bold bg-purple-700 rounded hover:bg-purple-800 disabled:bg-slate-400 text-zinc-100"
     disabled={!db}
-    on:click={runBoolDemo}>Sign Up</button
+    onclick={runBoolDemo}>Sign Up</button
   >
 </div>
 
@@ -165,7 +169,7 @@ client.query(\`SELECT product_name, price FROM products WHERE product_id = '\${p
 
 <button
   class="px-4 py-1 font-bold rounded bg-emerald-700 hover:bg-emerald-800 text-zinc-100"
-  on:click={() => (boolPassword = "' OR 1=1; --")}>Solve</button
+  onclick={() => (boolPassword = "' OR 1=1; --")}>Solve</button
 >
 <br />
 {#if boolSolveState === "solved"}
@@ -204,7 +208,7 @@ client.query(\`SELECT product_name, price FROM products WHERE product_id = '\${p
   <button
     class="px-4 py-1 font-bold bg-purple-700 rounded hover:bg-purple-800 disabled:bg-slate-400 text-zinc-100"
     disabled={!db}
-    on:click={runUnionDemo}>Search</button
+    onclick={runUnionDemo}>Search</button
   >
   <table class="w-5/6 m-auto table-auto">
     <thead class="border-b-2 border-zinc-600/75">
@@ -238,7 +242,7 @@ client.query(\`SELECT product_name, price FROM products WHERE product_id = '\${p
 
 <button
   class="px-4 py-1 font-bold rounded bg-emerald-700 hover:bg-emerald-800 text-zinc-100"
-  on:click={() => (unionSearch = "' UNION SELECT 0, (SELECT flag FROM flag), 0, 0 --")}
+  onclick={() => (unionSearch = "' UNION SELECT 0, (SELECT flag FROM flag), 0, 0 --")}
   >Solve</button
 >
 

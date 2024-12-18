@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   export const metadata = {
     title: "25 stupid captchas",
     published: "2024-07-29",

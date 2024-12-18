@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ElementsDfsResult from './ElementsDfsResult.svelte';
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
 
@@ -13,18 +14,27 @@
     a: DfsResult | null;
     b: DfsResult | null;
   }
-  export let res: DfsResult | null = null;
-  export let x: number;
-  export let y: number;
-  export let visited = new Set();
+  interface Props {
+    res?: DfsResult | null;
+    x: number;
+    y: number;
+    visited?: any;
+  }
+
+  let {
+    res = null,
+    x,
+    y,
+    visited = new Set()
+  }: Props = $props();
   const core = ["Fire", "Water", "Earth", "Air"].includes(res?.result as string);
 
   //   let has = visited.has(res?.result as string);
   // okay this isn't working, will dbg later
   let has = false;
   if (res && !has) visited.add(res.result);
-  let hoverbox: SVGGElement | null = null;
-  let textbox: SVGGElement | null = null;
+  let hoverbox: SVGGElement | null = $state(null);
+  let textbox: SVGGElement | null = $state(null);
   onMount(() => {
     if (!hoverbox || !textbox) return;
     const { height, width, x, y } = textbox.getBBox();
@@ -62,7 +72,7 @@
         class="stroke-2 stroke-white"
       />
     {/key}
-    <svelte:self res={res.a} x={x - res.children * 0.7} y={y + 48} {visited} />
+    <ElementsDfsResult res={res.a} x={x - res.children * 0.7} y={y + 48} {visited} />
   {/if}
   {#if res.b && !has}
     {#key res.b.step}
@@ -76,7 +86,7 @@
         class="stroke-2 stroke-white"
       />
     {/key}
-    <svelte:self res={res.b} x={x + res.children * 0.7} y={y + 48} {visited} />
+    <ElementsDfsResult res={res.b} x={x + res.children * 0.7} y={y + 48} {visited} />
   {/if}
   {#key res.step}
     <g in:fade={{ duration: 150 }} out:fade={{ duration: 150 }}>

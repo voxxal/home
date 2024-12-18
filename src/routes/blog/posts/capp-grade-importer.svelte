@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   import FileDownload from "$lib/components/FileDownload.svelte";
   import { detect } from "detect-browser";
 

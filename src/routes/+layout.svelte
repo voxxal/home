@@ -1,7 +1,12 @@
-<script>
+<script lang="ts">
   import "$lib/app.css";
   import Navbar from "$lib/components/Navbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
   let scrollbarWidth = $state(0);
   $effect(() => {
     const setSBW = () =>
@@ -15,7 +20,7 @@
   <div class="grain"></div>
   <Navbar />
   <main>
-    <slot />
+    {@render children?.()}
   </main>
   <Footer />
 </div>

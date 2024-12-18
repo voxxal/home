@@ -12,8 +12,8 @@
 
 <svelte:head><title>Aiden Shi | branding</title></svelte:head>
 
-<header class="header">
-  <h1 class="heading">Branding</h1>
+<header class="page-header">
+  <h1 class="page-heading">Branding</h1>
   <div class="divider"></div>
 </header>
 <article class="prose">
@@ -116,20 +116,6 @@
 </article>
 
 <style>
-  .header {
-    width: 65ch;
-    margin: auto;
-    margin-top: var(--navbar-offset);
-  }
-
-  .heading {
-    font-size: 4rem;
-    font-family: var(--font-display);
-    color: var(--text-em);
-    line-height: 1;
-    margin-bottom: 1rem;
-  }
-
   .not-italic {
     font-style: normal;
   }

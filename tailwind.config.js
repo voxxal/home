@@ -1,4 +1,4 @@
-const plugin = require("tailwindcss/plugin");
+import twTypography from "@tailwindcss/typography"
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
@@ -19,17 +19,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/typography")({ className: "tw-prose"}),
-    plugin(function ({ matchUtilities, theme }) {
-      matchUtilities(
-        {
-          "text-stroke-color": (value) => ({
-            "-webkit-text-stroke-color": value,
-          }),
-        },
-        { values: theme("colors") }
-      );
-    }),
-  ],
+  plugins: [twTypography({ className: "tw-prose" })],
 };

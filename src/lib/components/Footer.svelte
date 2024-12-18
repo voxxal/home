@@ -31,7 +31,7 @@
           <Logo size="2rem" />
           <h4>Aiden Shi</h4>
         </div>
-        <div style="color:var(--text-secondary);font-style:italic;font-weight:500">
+        <div style="color:var(--text-tertiary);font-style:italic;font-weight:500">
           Have a great {["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"][
             new Date().getDay()
           ]}day!

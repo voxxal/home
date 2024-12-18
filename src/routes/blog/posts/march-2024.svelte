@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   export const metadata = {
     title: "march (of improvement)",
     published: "2024-03-01",

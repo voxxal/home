@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   export const metadata = {
     title: "picoCTF 2024 web rundown",
     published: "2024-03-26",
@@ -36,19 +36,19 @@
     alert(decryptedFlag);
 })();`;
 
-  let itbForm = {
+  let itbForm = $state({
     full_name: "a",
     username: "a",
     phone_number: "a",
     city: "a",
     password: "a",
-  };
-  let itbOtp = "a";
-  let itbBody = "otp=a";
-  $: itbParams = new URLSearchParams(itbBody);
+  });
+  let itbOtp = $state("a");
+  let itbBody = $state("otp=a");
+  let itbParams = $derived(new URLSearchParams(itbBody));
   let itbIncorrect = "Incorrect OTP";
-  $: itbCorrect = `Welcome, ${itbForm.username} you sucessfully bypassed the OTP request.
-Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
+  let itbCorrect = $derived(`Welcome, ${itbForm.username} you sucessfully bypassed the OTP request.
+Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`);
 
   const stopDefault = (e: MouseEvent) => {
     e.preventDefault();
@@ -67,8 +67,8 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   const vis: { [k: string]: boolean } = {};
   const base = ["Fire", "Air", "Water", "Earth"];
   const out: [string, string][] = [];
-  let allowedStep = 0;
-  let step = 0;
+  let allowedStep = $state(0);
+  let step = $state(0);
   interface DfsResult {
     result: string;
     step: number;
@@ -125,9 +125,9 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   };
 
   const callTree = dfs("XSS");
-  $: filteredCallTree = filterCallTree(callTree, allowedStep);
-  let headings: HTMLHeadingElement[] | null = null;
-  let elementHeadings: HTMLHeadingElement[] | null = null;
+  let filteredCallTree = $derived(filterCallTree(callTree, allowedStep));
+  let headings: HTMLHeadingElement[] | null = $state(null);
+  let elementHeadings: HTMLHeadingElement[] | null = $state(null);
   // console.log(JSON.stringify(out))
   onMount(() => {
     headings = [...document.querySelectorAll("h2")].filter((x) => !!x.id);
@@ -239,10 +239,10 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     The nice thing about bookmarklets is that since they are URLs you can drag them to the bookmark
     bar like any other URL. You can drag the below to the bookmark bar to recieve the flag as well.
   </p>
-  <!-- svelte-ignore a11y-invalid-attribute -->
+  <!-- svelte-ignore a11y_invalid_attribute -->
   <a
     class="px-3 py-1 !text-white bg-blue-400 border border-blue-400 rounded-md !font-serif"
-    on:click={stopDefault}
+    onclick={stopDefault}
     href={"javascript:(function() { var encryptedFlag = \"àÒÆÞ¦È¬ëÙ£ÖÓÚåÛÑ¢ÕÓÔÅÐÙí\"; }); alert(`Please don't drag these from websites you don't trust, when you click on these bookmarks, you are executing arbitrary javascript code, which could be dangerous and could lead to an attack known as Self-XSS. \\n\\nPlease stay safe out there!`)"}
   >
     Drag Me
@@ -392,7 +392,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
         name="submit"
         type="submit"
         value="Register"
-        on:click={stopDefault}
+        onclick={stopDefault}
         class="px-3 py-1 text-white bg-blue-400 border border-blue-400 rounded-md cursor-pointer"
       />
     </form>
@@ -525,7 +525,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
       <button
         type="submit"
         class="px-3 text-white bg-blue-400 rounded-md cursor-pointer"
-        on:click={stopDefault}
+        onclick={stopDefault}
         >Submit
       </button>
     </form>
@@ -658,7 +658,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
   <ul>
     <li>
       <a
-        on:click={(e) => {
+        onclick={(e) => {
           itbBody = "key=value";
           stopDefault(e);
         }}
@@ -667,7 +667,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     </li>
     <li>
       <a
-        on:click={(e) => {
+        onclick={(e) => {
           itbBody = "otp";
           stopDefault(e);
         }}
@@ -676,7 +676,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     </li>
     <li>
       <a
-        on:click={(e) => {
+        onclick={(e) => {
           itbBody = "otp=a";
           stopDefault(e);
         }}
@@ -685,7 +685,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     </li>
     <li>
       <a
-        on:click={(e) => {
+        onclick={(e) => {
           itbBody = "some random text";
           stopDefault(e);
         }}
@@ -694,7 +694,7 @@ Your Flag: picoCTF{#0TP_Bypvss_SuCc3$S_2e80f1fd}`;
     </li>
     <li>
       <a
-        on:click={(e) => {
+        onclick={(e) => {
           itbBody = "somethingelse=a&otp=b";
           stopDefault(e);
         }}
@@ -1849,7 +1849,7 @@ print(r.text)`}
   </p>
   <button
     class="px-3 py-1 !text-white bg-blue-400 border border-blue-400 rounded-md !font-serif"
-    on:click={elementsPayload}
+    onclick={elementsPayload}
   >
     Click Me
   </button>

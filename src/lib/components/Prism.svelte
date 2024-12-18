@@ -1,14 +1,22 @@
-<script>
+<script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Prism from "prismjs";
-  let className = ""
   
-  export let code = "";
-  export let lang = "js";
-  let formattedCode = "";
-  $: if (typeof Prism !== "undefined" && code) {
-    formattedCode = Prism.highlight(code, Prism.languages[lang], lang);
+  interface Props {
+    class?: string;
+    code?: string;
+    lang?: string;
   }
-  export { className as class }
+
+  let { class: className = "", code = "", lang = "js" }: Props = $props();
+  let formattedCode = $state("");
+  run(() => {
+    if (typeof Prism !== "undefined" && code) {
+      formattedCode = Prism.highlight(code, Prism.languages[lang], lang);
+    }
+  });
+  
 </script>
 
 <pre class="language-{lang} {className}"><code class="language-{lang}">{@html formattedCode}</code></pre>

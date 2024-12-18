@@ -1,7 +1,16 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { Range } from "$lib/util";
 
-  export let method:
+
+  let methodColor: string | null = $state(null);
+
+  let statusColor: string | null = $state(null);
+
+
+  interface Props {
+    method: 
     | "GET"
     | "HEAD"
     | "POST"
@@ -11,10 +20,41 @@
     | "OPTIONS"
     | "TRACE"
     | "PATCH";
+    url: string;
+    status: Range<100, 599>;
+    reqBody?: {
+    type: string;
+    data: { [k: string]: any } | string;
+  } | null;
+    resCookies?: {
+    [k: string]: {
+      value: string;
+      httpOnly?: boolean;
+      path?: string;
+    };
+  } | null;
+    resHeaders?: {
+    [k: string]: string;
+  } | null;
+    resBody?: {
+    type: string;
+    data: { [k: string]: any } | string;
+  } | null;
+    class?: string;
+  }
 
-  let methodColor: string | null = null;
-
-  $: {
+  let {
+    method,
+    url,
+    status,
+    reqBody = null,
+    resCookies = null,
+    resHeaders = null,
+    resBody = null,
+    class: className = ""
+  }: Props = $props();
+  
+  run(() => {
     switch (method) {
       case "GET":
         methodColor = "text-green-400";
@@ -44,11 +84,8 @@
         methodColor = "text-purple-400";
         break;
     }
-  }
-  export let url: string;
-  export let status: Range<100, 599>;
-  let statusColor: string | null = null;
-  $: {
+  });
+  run(() => {
     if (status >= 200 && status < 300) {
       statusColor = "bg-green-600 text-blot";
     } else if (status >= 300 && status < 400) {
@@ -56,29 +93,7 @@
     } else if (status >= 400 && status < 600) {
       statusColor = "bg-purple-600 text-blot";
     }
-  }
-  export let reqBody: {
-    type: string;
-    data: { [k: string]: any } | string;
-  } | null = null;
-
-  export let resCookies: {
-    [k: string]: {
-      value: string;
-      httpOnly?: boolean;
-      path?: string;
-    };
-  } | null = null;
-  export let resHeaders: {
-    [k: string]: string;
-  } | null = null;
-  export let resBody: {
-    type: string;
-    data: { [k: string]: any } | string;
-  } | null = null;
-
-  let className = "";
-  export { className as class };
+  });
 </script>
 
 <div class={className}>

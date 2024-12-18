@@ -1,8 +1,12 @@
 <script lang="ts">
-  export let text = "";
-  export let elements = Array<HTMLSpanElement>(text.length);
-  let className = "";
-  export { className as class };
+  interface Props {
+    text?: string;
+    elements?: any;
+    class?: string;
+  }
+
+  let { text = "", elements = $bindable(Array<HTMLSpanElement>(text.length)), class: className = "" }: Props = $props();
+  
 </script>
 
 {#each text.split("") as c, i}

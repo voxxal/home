@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   export const metadata = { title: "x window system", lastUpdated: "June 2023" };
 </script>
 

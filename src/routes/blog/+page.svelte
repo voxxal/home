@@ -1,15 +1,15 @@
 <script lang="ts">
-  export let data;
 
   import "$lib/app.css";
   import { Calendar, Clock } from "lucide-svelte";
+  let { data } = $props();
 
 </script>
 
 <svelte:head><title>Aiden Shi | blog</title></svelte:head>
 
-<header class="blog-header">
-  <h1 class="blog-heading">Blog</h1>
+<header class="page-header">
+  <h1 class="page-heading">Blog</h1>
   <p class="prose">I occasionally make blog posts about whatever is on my mind. Many of these are interactive.</p>
   <div class="divider"></div>
 </header>
@@ -32,20 +32,6 @@
 </div>
 
 <style>
-  .blog-header {
-    width: 65ch;
-    margin: auto;
-    margin-top: var(--navbar-offset);
-  }
-
-  .blog-heading {
-    font-size: 4rem;
-    font-family: var(--font-display);
-    color: var(--text-em);
-    line-height: 1;
-    margin-bottom: 1rem;
-  }
-
   .posts {
     width: calc(65ch + 2rem * 2);
     margin: auto;
@@ -66,14 +52,14 @@
   }
 
   .metadata {
-    color: var(--text-secondary);
+    color: var(--text-tertiary);
     display: flex;
     align-items: center;
     gap: 0.25rem;
   }
 
   .metadata-divider {
-    background: var(--text-secondary);
+    background: var(--text-tertiary);
     height: 0.25rem;
     width: 0.25rem;
     margin: 0 0.25rem;

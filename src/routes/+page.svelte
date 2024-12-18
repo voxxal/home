@@ -253,7 +253,7 @@
 
   .subheading {
     font-size: 1.5rem;
-    color: var(--text-secondary);
+    color: var(--text-tertiary);
     line-height: 1;
     font-weight: 500;
     font-style: italic;

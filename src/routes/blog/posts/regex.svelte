@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   export const metadata = {
     title: "how regex works",
     published: "2024-08-22",
