@@ -4,6 +4,7 @@
     published: "2025-05-19",
   };
 </script>
+<blockquote>this is a fanfiction of qntm's wonderful short story <a href="https://qntm.org/mmacevedo">Lena</a>. read it first!</blockquote>
 <p>The <strong>Seafront Experiments</strong> were a collection of experiments performed by the <a href="">Seafront Cognitive Computation Company</a> in September 2036. The experiments developed and examined ways to improve the efficiency of early brain scan images not limited to but including, <a href="">MMAcevedo</a>, <a href="">MMSinatra</a>, and <a href="">MMBaxter</a>. Primitive versions of techniques used today such as <a href="">red-washing</a> and <a href="">blue-washing</a> were first developed by the Seafront team. The experiments were kept secret due to the ethical norms of the time, which held that experimenting on simulated humans was the same as actual ones.</p>
 <p>The experiments involved creating 100 testing environments per testing image, then performing a selected &quot;cooperation protocol,&quot; giving the agent a large menial task, then finding the average amount of work performed by each agent. Notable cooperation protocols included <a href="">red-washing</a> and <a href="">blue-washing</a> but over the course of the experiment hundreds of different routines were tested.</p>
 <h2 id="history">History</h2>

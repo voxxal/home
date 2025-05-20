@@ -28,7 +28,7 @@ export const GET: RequestHandler = async () => {
     fonts: [
       {
         name: "Gambarino",
-        data: await fontData,
+        data: fontData,
         style: "normal",
       },
     ],
