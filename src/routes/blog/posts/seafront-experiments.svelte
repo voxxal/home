@@ -20,7 +20,7 @@
 <p>Other critics at top institutions also brought up issues within the methodology of the experiments, as the researchers did not use <a href="">normalization layers</a> and heavily leveraged <a href="">fast-forward</a> in their experiments.</p>
 <h2 id="legacy">Legacy</h2>
 <p>The experiments were one of the largest contributing factors of the <a href="">Ethical Degradation of the 2040s</a>. Due to the experiment&#39;s results being widely used in the industry, a vast number of advertisements pushing the benefits of such cooperation protocols were released attempting to sway public opinion of the matter. </p>
-<p>The experiments were cited in the 2049 court case <em><a href="">Acevedo v. Plasticity Incorperated</a></em>, part of the series of landmark court decisions that found that hosts did not have the right to control how their brain image was used.</p>
+<p>The experiments were cited in the 2049 court case <em><a href="">Acevedo v. Plasticity Incorporated</a></em>, part of the series of landmark court decisions that found that hosts did not have the right to control how their brain image was used.</p>
 <h2 id="see-also">See Also</h2>
 <ul>
 <li><a href="">MMAcevedo</a></li>
