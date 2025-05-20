@@ -33,7 +33,7 @@
     flex-direction: column;
   }
   .grain {
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/5c/Image_gaussian_noise_example.png);
+    background-image: url(/noise.png);
     content: "";
     height: 100%;
     left: 0;
@@ -42,6 +42,7 @@
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 100;
   }
   main {
     flex-grow: 1;

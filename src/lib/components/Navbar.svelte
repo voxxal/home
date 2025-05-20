@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import Logo from "./Logo.svelte";
   interface Props {
     glowColor?: string;
   }
 
-  let { glowColor = "from-dark-navy" }: Props = $props();
   const routes = [
     { url: "/", title: "home" },
     { url: "/blog", title: "blog" },
@@ -16,7 +15,7 @@
 <nav class="navbar">
   <div class="navbar-content">
     <div class="logo-wrapper">
-      {#if $page.url.pathname.split("/")[1] !== ""}
+      {#if page.url.pathname.split("/")[1] !== ""}
         <a href="/" class="logo">
           <Logo size="2rem" />
         </a>
@@ -28,7 +27,7 @@
         <li>
           <a
             href={route.url}
-            class={`/${$page.url.pathname.split("/")[1]}` === route.url ? "selected-item" : ""}
+            class={`/${page.url.pathname.split("/")[1]}` === route.url ? "selected-item" : ""}
           >
             {route.title}
           </a>
@@ -83,7 +82,7 @@
 
   .logo-wordmark {
     font-family: var(--font-display);
-    color: var(--text-em);
+    color: var(--text-xem);
     font-size: 2rem;
     display: block;
     line-height: 1;

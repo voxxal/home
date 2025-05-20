@@ -47,7 +47,9 @@
   
   .post h2 {
     font-size: 2rem;
-    font-weight: 500;
+    font-family: var(--font-display);
+    color: var(--text-em);
+    /* font-weight: 500; */
     line-height: 1.5;
   }
 

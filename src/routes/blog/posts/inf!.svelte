@@ -2,7 +2,7 @@
   export const metadata = {
     title: "∞! writeup",
     published: "2023-10-02",
-    defaultLayout: false,
+    layout: "none",
   };
 </script>
 

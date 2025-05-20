@@ -107,7 +107,7 @@
     align-items: center;
     gap: 0.25rem;
     font-family: var(--font-display);
-    color: var(--text-em);
+    color: var(--text-xem);
     font-size: 2rem;
     line-height: 1.5;
     justify-content: center;
@@ -115,7 +115,7 @@
 
   .socials {
     margin-left: -0.25rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     align-items: center;
     gap: 0.25rem;

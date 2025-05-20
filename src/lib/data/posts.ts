@@ -30,8 +30,11 @@ export const posts = Object.entries(
     const text = convert(html, {
       baseElements: { selectors: ["p", "ul", "li"] },
     });
+    const postPath = filepath.substring("/src/routes/blog/posts/".length).split("/");
+    if (postPath.length > 1 && postPath.pop() !== "index.svelte") return null;
     return {
       ...post.metadata,
+      filepath,
 
       // generate the slug from the file path
       path: filepath
@@ -49,11 +52,29 @@ export const posts = Object.entries(
         : undefined,
       wordCount: text.split(/\w/).length,
       readingTime: Math.max(text.split(/\w/).length, 255) / 255,
-      preview: post.description ?? text.substring(0, 65 * 4) + (text.length > 65 * 4 ? "..." : ""),
+      preview: text.substring(0, 65 * 4) + (text.length > 65 * 4 ? "..." : ""),
     };
   })
-  .filter((post) => !post?.hidden)
+  .filter((post) => post)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+const splitPath = (path: string) => {
+  const parts = path.split("/");
+  if (parts.length > 1) return { project: parts[0], file: parts[1] };
+  else return { project: null, file: parts[0] };
+};
+
+export const postsMap = Object.fromEntries(
+  posts.map((post) => [
+    post.path,
+    {
+      ...splitPath(
+        post.filepath.substring("/src/routes/blog/posts/".length).replace(".svelte", "")
+      ),
+      manifest: post,
+    },
+  ])
+);
 
 function addTimezoneOffset(date: Date) {
   const offsetInMilliseconds = new Date().getTimezoneOffset() * 60 * 1000;

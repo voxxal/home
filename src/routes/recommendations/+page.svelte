@@ -2,33 +2,63 @@
   import Recommendation from "$lib/components/Recommendation.svelte";
 </script>
 
+<svelte:head><title>Aiden Shi | recommendations</title></svelte:head>
+
 <header class="page-header">
   <h1 class="page-heading">Recommendations</h1>
-  <p class="prose">
-    Media I like. Because star ratings are too hard, everything here is classified as recommended or
-    highly recommended.
-  </p>
+  <p class="prose">Media I like. No particular order.</p>
   <div class="divider"></div>
 </header>
 <article class="recommendations">
   <Recommendation
-    name="For Cryin' Out Loud"
-    artist="FINNEAS"
+    name="Arcane"
+    highly={true}
+    artist="Fortiche"
+    medium="tv show"
+    img="/recommendations/arcane.jpg"
+  >
+    <p>Something will go here eventually</p>
+  </Recommendation>
+  <div class="divider"></div>
+  <Recommendation
+    name="Kaguya-sama: Love Is War"
+    artist="Aka Akasaka"
+    medium="manga"
+    img="/recommendations/kaguya-sama.jpg"
+  >
+    <p>Silly romance 👍</p>
+
+    <p>I dunno what else to say, it's just fun to read.</p>
+  </Recommendation>
+  <div class="divider"></div>
+  <Recommendation name="BLÅHAJ" artist="IKEA" medium="thing" img="/recommendations/blahaj.avif">
+    <p>
+      No joke, one of the best purchases I've made. You have not felt comfort until you have
+      squeezed a <em>BLÅHAJ Soft toy, shark, 39 ¼"</em>.
+    </p>
+  </Recommendation>
+  <div class="divider"></div>
+  <Recommendation
+    name="Landmark"
+    highly={true}
+    artist="Hippo Campus"
     medium="album"
-    img="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1e/f6/6a/1ef66a49-98ed-b22d-eb90-56e5640e09dd/24UMGIM79281.rgb.jpg/600x600bb.jpg"
+    img="/recommendations/landmark.jpg"
   >
     <p>
-      An incredible album by FINNEAS that goes in a different direction as compared to his previous
-      two albums. It's got a much more viberant energy opposed to the sadder tones of his previous
-      works.
+      Hippo Campus' debut album sounds like summer. It's their most cohesive album, almost to the
+      point where the songs start to blur together. But that's part of the charm of this album.
     </p>
     <p>
-      This album has definitely cemented itself as a Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Aliquid ducimus, ab minus quo enim quos dolor sint quaerat maxime sunt nihil
-      quod accusamus eaque veniam repudiandae dicta suscipit alias error.
+      This is the album I turn to when I want to feel both happy and sad at the same time. It's the
+      feeling of being alive.
+    </p>
+    <p>
+      Also <em>Buttercup</em> is an absolute banger, even if you might not vibe with the rest of the
+      album it's still a wonderful track, so upbeat you almost forget about the lyrics.
     </p>
 
-    <p class="fav-track"><span>Favorite Track:</span> For Cryin' Out Loud</p>
+    <p class="fav-track"><span>Favorite Track:</span> Buttercup</p>
   </Recommendation>
   <div class="divider"></div>
   <Recommendation
@@ -36,18 +66,21 @@
     highly={true}
     artist="Hippo Campus"
     medium="album"
-    img="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/7d/e3/0c/7de30c48-b139-2253-9b92-67aa65ea6542/196292441680.jpg/600x600bb.jpg"
+    img="/recommendations/lp3.jpg"
   >
     <p>
       Like Hippo Campus' newer albums, it took me a while to warm up to this album, but when I did,
       it became one of my favorite albums of all time.
     </p>
+
     <p>
-      Each of their albums take a drastic turn in how their band sounds, and this album was no
-      different, completly changing the formula from previous albums like <em>Bambi</em> and
-      <em>Landmark</em> with a new sound. Its combination of trumpets and synths really grew on me, and
-      its nostolgic mood unmatched by any other album.
+      This album feels like the best of living, knowing that these days will never come back. It's a
+      testament to taking risks, not letting your life just pass you by. When I say this album
+      changed my life, I don't lie. Its made me think long and hard about how I want to live my
+      life.
     </p>
+
+    <p>It's by far some of the emotional music I've listened to, give it a listen.</p>
 
     <p class="fav-track"><span>Favorite Track:</span> Boys</p>
   </Recommendation>

@@ -33,6 +33,8 @@
     "in no rush",
     "clueless",
     "at fault",  
+    "an agent of chaos",
+    "an outlander",
     "trying",
     "experimenting",
     "fleeting",
@@ -149,7 +151,7 @@
     {#each websites as { description, name, technologies, link, image, video }}
       <div class="websites-carousel-item hover-highlight">
         <a href={link} target="_blank">
-          <img src={image} width="480" alt={description} />
+          <img src={image} alt={description} />
           <h3>{name}</h3>
           <div class="technologies">
             {#each technologies as tag}
@@ -235,7 +237,7 @@
 
   .name-heading {
     font-family: var(--font-display);
-    color: var(--text-em);
+    color: var(--text-xem);
     font-size: 6rem;
     line-height: 1;
     display: grid;
@@ -340,6 +342,7 @@
       border: 2px solid var(--surface-300);
       border-radius: var(--radius-2);
       margin-bottom: 1rem;
+      width: 30rem;
       aspect-ratio: 16 / 9;
     }
 

@@ -2,7 +2,7 @@
   export const metadata = {
     title: "picoCTF 2024 web rundown",
     published: "2024-03-26",
-    defaultLayout: false,
+    layout: "none",
   };
 </script>
 

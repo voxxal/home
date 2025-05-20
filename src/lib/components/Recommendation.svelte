@@ -4,7 +4,7 @@
     children: Snippet;
     highly?: boolean;
     name: string;
-    medium: "album" | "game" | "manga" | "tv show" | "book";
+    medium: "album" | "song" | "game" | "manga" | "tv show" | "book" | "thing";
     artist: string;
     img: string;
   }
@@ -18,8 +18,9 @@
     <span class="rec-name">{name}</span>
   </h2>
   <h3>{medium} by <span class="rec-artist">{artist}</span></h3>
-  <img src={img} alt="{name} cover art" />
-  <div class="prose">
+  <!-- TODO: dont call it cover art always -->
+  <img src={img} alt="{name} cover art" /> 
+  <div class="prose clear-end">
     {@render children()}
   </div>
 </div>
@@ -64,5 +65,12 @@
   .rec-artist {
     font-family: var(--font-display);
     color: var(--text-secondary);
+  }
+
+  /* https://stackoverflow.com/questions/16568272/ -- Fascinating! */
+  .clear-end:after {
+    content: "";
+    clear: both;
+    display: block;
   }
 </style>
