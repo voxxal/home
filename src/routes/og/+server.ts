@@ -1,13 +1,14 @@
 import satori from "satori";
 import { html as toReactNode } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
-import Gambarino from "../../../static/fonts/gambarino/Gambarino-Regular.ttf";
-import { read } from "$app/server";
+import { readFileSync } from "fs";
+import { join } from "path";
 import type { RequestHandler } from "./$types";
 import OpenGraph from "$lib/components/OpenGraph.svelte";
 import { render } from "svelte/server";
 
-const fontData = read(Gambarino).arrayBuffer();
+const fontPath = join(process.cwd(), "static/fonts/gambarino/Gambarino-Regular.ttf");
+const fontData = readFileSync(fontPath);
 
 const height = 480;
 const width = 640;
