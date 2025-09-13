@@ -25,13 +25,14 @@ export const posts = Object.entries(
   import.meta.glob("/src/routes/blog/posts/**/*.svelte", { eager: true })
 )
   .map(([filepath, post]: [string, any]) => {
+    const postPath = filepath.substring("/src/routes/blog/posts/".length).split("/");
+    if (postPath.length > 1 && postPath.pop() !== "index.svelte") return null;
+
     const html = (postsSources[filepath] as string).toString(); // TODO its kinda hard to find the file path actually
     // TODO write your own lol, it really shouldn't be that hard.
     const text = convert(html, {
       baseElements: { selectors: ["p", "ul", "li"] },
     });
-    const postPath = filepath.substring("/src/routes/blog/posts/".length).split("/");
-    if (postPath.length > 1 && postPath.pop() !== "index.svelte") return null;
     return {
       ...post.metadata,
       filepath,

@@ -1,25 +1,23 @@
 <script lang="ts">
   import Recommendation from "$lib/components/Recommendation.svelte";
+
+  const { data } = $props();
+  const recommendations = data.recommendations;
 </script>
 
-<svelte:head><title>Aiden Shi | recommendations</title></svelte:head>
+<svelte:head><title>Aiden Shi | media i like</title></svelte:head>
 
 <header class="page-header">
-  <h1 class="page-heading">Recommendations</h1>
-  <p class="prose">Media I like. No particular order.</p>
-  <div class="divider"></div>
+  <h1 class="page-heading">Media I Like</h1>
+  <p class="prose">Recommendations to media I like. No particular order.</p>
 </header>
 <article class="recommendations">
-  <Recommendation
-    name="Arcane"
-    highly={true}
-    artist="Fortiche"
-    medium="tv show"
-    img="/recommendations/arcane.jpg"
-  >
-    <p>Something will go here eventually</p>
-  </Recommendation>
-  <div class="divider"></div>
+  {#each recommendations as rec}
+    <div class="divider"></div>
+    <Recommendation {...rec}>
+      {@html rec.html}
+    </Recommendation>
+  {/each}
   <Recommendation
     name="Kaguya-sama: Love Is War"
     artist="Aka Akasaka"

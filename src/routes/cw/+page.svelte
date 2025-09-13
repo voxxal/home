@@ -1,7 +1,7 @@
 <script lang="ts">
   import { run } from 'svelte/legacy';
 
-  import { type Puzzle, parsePuzFile, type Direction } from "$lib/puzzle";
+  import { type Puzzle, parsePuzFile, type Direction } from "./puzzle";
   import { onMount } from "svelte";
   import confetti from "canvas-confetti";
   import "$lib/tailwind.css";

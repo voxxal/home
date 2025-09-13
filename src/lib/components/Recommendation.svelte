@@ -1,20 +1,15 @@
 <script lang="ts">
+  import type { RecommendationMetadata } from "$lib/data/recommendations";
   import type { Snippet } from "svelte";
-  interface Props {
+  interface Props extends RecommendationMetadata {
     children: Snippet;
-    highly?: boolean;
-    name: string;
-    medium: "album" | "song" | "game" | "manga" | "tv show" | "book" | "thing";
-    artist: string;
-    img: string;
   }
-
-  const { children, highly = false, name, artist, medium, img }: Props = $props();
+  const { children, rating, name, artist, medium, img }: Props = $props();
 </script>
 
 <div class="recommendation">
   <h2>
-    I {#if highly}<span class="highly">Highly</span>{/if} Recommend
+    I {#if rating === "highly"}<span class="highly">Highly</span>{/if} Recommend
     <span class="rec-name">{name}</span>
   </h2>
   <h3>{medium} by <span class="rec-artist">{artist}</span></h3>
@@ -57,7 +52,7 @@
   }
 
   .rec-name {
-    font-weight: bold;
+    font-weight: 700;
     font-family: var(--font-display);
     color: var(--text-em);
   }

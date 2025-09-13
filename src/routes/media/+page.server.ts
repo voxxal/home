@@ -1,9 +1,9 @@
-import { posts } from "$lib/data/posts";
+import { recommendations } from "$lib/data/recommendations";
 import { error } from "@sveltejs/kit";
 
 export const load = async () => {
   try {
-    return { posts: posts.filter((post) => !post?.hidden) };
+    return { recommendations };
   } catch (_) {
     throw error(404, "Not found");
   }
