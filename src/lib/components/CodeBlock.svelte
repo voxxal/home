@@ -1,4 +1,4 @@
-<script module>
+<script lang="ts" module>
   import { createHighlighterCoreSync, createJavaScriptRegexEngine } from "shiki";
   import js from "shiki/langs/javascript.mjs";
   import py from "shiki/langs/python.mjs";

@@ -33,7 +33,7 @@
 
 <style>
   .posts {
-    width: calc(65ch + 2rem * 2);
+    max-width: calc(65ch + 2rem * 2);
     margin: auto;
   }
 
@@ -43,6 +43,10 @@
     margin: 1rem 0;
     display: block;
     border-radius: var(--radius-2);
+
+    @media (width < 40rem) {
+      padding: 1rem;
+    }
   }
   
   .post h2 {

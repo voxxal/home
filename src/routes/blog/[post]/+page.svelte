@@ -33,7 +33,7 @@
 
 <style>
   .header {
-    width: 65ch;
+    max-width: 65ch;
     margin: auto;
     margin-top: var(--navbar-offset);
   }
@@ -45,6 +45,10 @@
     line-height: 1.1;
     text-wrap: balance;
     margin-bottom: 0.5rem;
+
+    @media (width < 40rem) {
+      font-size: 3rem;
+    }
   }
 
   .metadata {

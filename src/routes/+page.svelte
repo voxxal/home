@@ -56,6 +56,18 @@
       video: "https://placedog.net/480/270",
     },
     {
+      name: "Veria Labs",
+      technologies: ["astro", "tailwind"],
+      description: "Design work for Veria Labs (YC F25). Designed landing page.",
+      image: "/images/projects/veria-labs.png",
+    },
+    {
+      name: "Dabney House",
+      technologies: ["astro", "svelte", "tailwind"],
+      description: "Commission for CalTech's Dabney House. Designed and built the website.",
+      image: "/images/projects/dabney-house.png",
+    },
+    {
       name: "Triple Fault",
       technologies: ["svelte", "tailwind", "three.js"],
       description: "A page for my robotics team. Designed and built the website.",
@@ -122,7 +134,7 @@
     </div>
   </div>
 
-  <h1 class="name-heading"><canvas height="6rem"></canvas><span>Aiden Shi</span></h1>
+  <h1 class="name-heading">Aiden Shi</h1>
   <h2 class="subheading">is {title}</h2>
 
   <div class="prose">
@@ -168,7 +180,7 @@
 
 <style>
   #landing-intro {
-    width: 65ch;
+    max-width: 65ch;
     margin: auto;
     margin-top: var(--navbar-offset);
     position: relative;
@@ -246,6 +258,10 @@
       width: 100%;
       height: 6rem;
     }
+    
+    @media (width < 40rem) {
+      font-size: 4rem;
+    }
   }
 
   .name-heading * {
@@ -255,6 +271,9 @@
 
   .subheading {
     font-size: 1.5rem;
+    @media (width < 40rem) {
+      font-size: 1.25rem;
+    }
     color: var(--text-tertiary);
     line-height: 1;
     font-weight: 500;
@@ -282,8 +301,13 @@
   .websites-header {
     width: 65ch;
     margin: auto;
+
     & > .subheading {
       font-size: 1.25rem;
+    }
+
+    @media (width < 40rem) {
+      font-size: 1rem;
     }
   }
 
@@ -292,6 +316,10 @@
     color: var(--text-em);
     font-size: 3rem;
     line-height: 1;
+
+    @media (width < 40rem) {
+      font-size: 2.25rem;
+    }
   }
 
   .websites-carousel {
@@ -299,6 +327,7 @@
     --space-from-left: calc((100vw - 65ch - var(--scrollbar-width)) / 2 - 1rem);
     width: 100%;
     display: flex;
+    
     gap: 2rem;
     overflow: scroll visible;
     scrollbar-width: thin;
@@ -308,14 +337,15 @@
     /* padding left + difference between the two */
     /* idk what the 2rem is here for the math needs to be reexplained (but it works :D) */
     padding-right: calc(var(--space-from-left) + 65ch - 30rem + 2rem);
+
+    @media (width < 40rem) {
+      flex-direction: column;
+      gap: 3rem;
+    }
   }
 
   .websites-carousel::-webkit-scrollbar {
     display: none;
-  }
-
-  .websites-carousel .websites-carousel-item:first-child {
-    margin-left: var(--space-from-left);
   }
 
   .websites-carousel-item {
@@ -324,6 +354,10 @@
     position: relative;
     scroll-margin-left: var(--space-from-left);
     scroll-snap-align: start;
+
+    &:first-child {
+      margin-left: var(--space-from-left);
+    }
 
     a {
       display: block;
@@ -349,6 +383,19 @@
     h3 {
       font-size: 2rem;
       font-weight: 500;
+    }
+    
+    @media (width < 40rem) {
+      padding: 0;
+      min-width: 0rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      img {
+        width: auto;
+      }
     }
   }
 </style>

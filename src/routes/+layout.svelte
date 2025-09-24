@@ -32,6 +32,7 @@
     display: flex;
     flex-direction: column;
   }
+
   .grain {
     background-image: url(/noise.png);
     content: "";
@@ -44,8 +45,10 @@
     width: 100%;
     z-index: 100;
   }
+  
   main {
     flex-grow: 1;
+    padding: 0 1.5rem;
     padding-bottom: 4rem;
   }
 </style>
