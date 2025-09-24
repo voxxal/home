@@ -341,6 +341,7 @@
     @media (width < 40rem) {
       flex-direction: column;
       gap: 3rem;
+      padding-right: 0;
     }
   }
 
