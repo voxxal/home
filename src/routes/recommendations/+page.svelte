@@ -88,7 +88,7 @@
 
 <style>
   .recommendations {
-    width: 65ch;
+    max-width: 65ch;
     margin: auto;
   }
 
