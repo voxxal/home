@@ -59,12 +59,14 @@
       name: "Veria Labs",
       technologies: ["astro", "tailwind"],
       description: "Design work for Veria Labs (YC F25). Designed landing page.",
+      link: "https://verialabs.com",
       image: "/images/projects/veria-labs.png",
     },
     {
       name: "Dabney House",
       technologies: ["astro", "svelte", "tailwind"],
       description: "Commission for CalTech's Dabney House. Designed and built the website.",
+      link: "https://dabney.house"
       image: "/images/projects/dabney-house.png",
     },
     {
