@@ -66,7 +66,7 @@
       name: "Dabney House",
       technologies: ["astro", "svelte", "tailwind"],
       description: "Commission for CalTech's Dabney House. Designed and built the website.",
-      link: "https://dabney.house"
+      link: "https://dabney.house",
       image: "/images/projects/dabney-house.png",
     },
     {
