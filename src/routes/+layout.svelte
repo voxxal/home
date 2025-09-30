@@ -48,7 +48,9 @@
   
   main {
     flex-grow: 1;
-    padding: 0 1.5rem;
+    @media (width < 40rem) {
+      padding: 0 1.5rem;
+    }
     padding-bottom: 4rem;
   }
 </style>
