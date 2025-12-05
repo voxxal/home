@@ -1,5 +1,5 @@
 <script>
-  import { Mail, BSk } from "lucide-svelte";
+  import { Mail } from "lucide-svelte";
   import Logo from "./Logo.svelte";
 </script>
 

@@ -14,7 +14,7 @@ export interface RecommendationMetadata {
 }
 
 export const recommendations = Object.entries(
-  import.meta.glob("/src/routes/media/entries/*.svelte", { eager: true })
+  import.meta.glob("/src/routes/recommendations/entries/*.svelte", { eager: true })
 ).map(([filepath, rec]: [string, any]) => {
   return {
     ...(rec.metadata as RecommendationMetadata),
