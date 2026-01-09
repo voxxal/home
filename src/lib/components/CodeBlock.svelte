@@ -5,11 +5,13 @@
   import html from "shiki/langs/html.mjs";
   import css from "shiki/langs/css.mjs";
   import bash from "shiki/langs/bash.mjs";
+  import toml from "shiki/langs/toml.mjs";
+  import fish from "shiki/langs/fish.mjs";
 
   const shiki = createHighlighterCoreSync({
     engine: createJavaScriptRegexEngine(),
     themes: [everforestDark],
-    langs: [html, css, js, py, bash],
+    langs: [html, css, js, py, bash, toml, fish],
   });
   
   export const highlight = (start: number, end?: number): DecorationItem => ({
@@ -27,7 +29,7 @@
 
   const {
     code = "",
-    lang,
+    lang = "text",
     file = "",
     decorations,
     maxHeight,
@@ -93,7 +95,7 @@
   }
 
   .file-details {
-    background: var(--accent-100);
+    background: var(--surface-200);
     border-radius: var(--radius-half);
     display: flex;
     align-items: center;
@@ -114,7 +116,7 @@
   .file-details .language {
     font-weight: 800;
     color: var(--text-em);
-    background: var(--accent-200);
+    background: var(--surface-100);
     border-radius: var(--radius-half);
     padding: 0rem 0.5rem;
     font-family: var(--font-mono);
@@ -147,7 +149,7 @@
 
   .copy-button {
     border-radius: var(--radius-half);
-    background: var(--accent-100);
+    background: var(--surface-100);
     padding: 0.25rem 0.5rem;
     transition: 200ms;
   }
