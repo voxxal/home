@@ -48,17 +48,17 @@
   ];
   const websites = [
     {
-      name: "voxal.dev",
+      name: "aiden.kaiqi.sh",
       technologies: ["svelte"],
       description: "A personal website. Cherished.",
-      link: "https://voxal.dev",
+      link: "https://aiden.kaiqi.sh",
       image: "/images/projects/voxal-dev.png",
       video: "https://placedog.net/480/270",
     },
     {
       name: "Veria Labs",
       technologies: ["astro", "tailwind"],
-      description: "Design work for Veria Labs (YC F25). Designed landing page.",
+      description: "Design work for Veria Labs (YC F25). Designed and built their website.",
       link: "https://verialabs.com",
       image: "/images/projects/veria-labs.png",
     },
