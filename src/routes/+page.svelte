@@ -141,17 +141,17 @@
 
   <div class="prose">
     <p>
-      Hey, I'm Aiden, designer and developer from California. I mess around with computers, making
-      websites, small programs, games, and whatever interests me at the time. I'm especially
-      interested in how we can use computers to <em>augment</em> our learning.
+      Hey, I'm Aiden, designer and developer from California. I mess around with computers; making
+      websites, small programs, games, and whatever else interests me at the time. I love to dig into
+      systems— technical or otherwise, and understand them deeply. In the process, I hope to bring a
+      little more beauty into the world.
     </p>
     <p>
-      This website is a catalogue of my different projects and experiments. I hope you find
+      This website is an (incomplete) catalogue of my different projects and experiments. I hope you find
       something interesting here.
     </p>
     <p>
-      Feel free to reach out, Discord is the best way to reach me. Details are in the footer. Pardon
-      the dust, this place is still in construction.
+      You might not believe it, but the flowers will bloom again.
     </p>
   </div>
 </section>
